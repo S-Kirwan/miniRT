@@ -1,7 +1,7 @@
 NAME    = miniRT
 
 CC      = cc
-CFLAGS  = -Wall -Wextra -Werror -g3 -O0 -Iinc
+CFLAGS  = -Wall -Wextra -Werror -g3 -O3 -Iinc
 
 SRC_DIR     = src/
 OBJ_DIR     = obj/
@@ -13,14 +13,14 @@ LIBFT_A     = $(LIBFT_DIR)/libft.a
 LIBFT_LIB   = -L$(LIBFT_DIR) -lft
 
 SRC    = main.c \
+		 parsing/validate_file.c \
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
 
-OBJS    = $(SRC:.c=.o)
-OBJECTS = $(addprefix $(OBJ_DIR), $(OBJS))
+OBJS = $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)%.o, $(SRCS))
 
 $(OBJ_DIR)%.o : $(SRC_DIR)%.c | $(OBJ_DIR)
-	mkdir -p $(OBJ_DIR)
+	mkdir -p $(OBJ_DIR)/$(dir $*)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 all: $(LIBFT_A) $(NAME)
@@ -28,11 +28,11 @@ all: $(LIBFT_A) $(NAME)
 $(LIBFT_A):
 	$(MAKE) -sC $(LIBFT_DIR)
 
-$(NAME): $(OBJECTS)
-	$(CC) $(CFLAGS) $(OBJECTS) -I$(INC_DIR) $(LIBFT_LIB) -lm -o $(NAME)
+$(NAME): $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -I$(INC_DIR) $(LIBFT_LIB) -lm -o $(NAME)
 
 clean:
-	rm -f $(OBJECTS)
+	rm -rf $(OBJ_DIR)
 	$(MAKE) -sC $(LIBFT_DIR) clean
 
 fclean: clean
@@ -41,7 +41,4 @@ fclean: clean
 
 re: fclean all
 
-run: all
-	./$(NAME)
-
-.PHONY: all clean fclean re run
+.PHONY: all clean fclean re

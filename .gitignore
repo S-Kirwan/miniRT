@@ -1,0 +1,5 @@
+obj/
+lib/libft/*.o
+miniRT
+compile_flags.txt
+libft.a
