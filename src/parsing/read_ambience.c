@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   read_ambience.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/25 11:23:16 by skirwan           #+#    #+#             */
-/*   Updated: 2025/11/25 13:12:13 by skirwan          ###   ########.fr       */
+/*   Created: 2025/11/25 14:38:54 by skirwan           #+#    #+#             */
+/*   Updated: 2025/11/25 17:49:01 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 #include "parsing.h"
+#include <stdlib.h>
 
-int	main(int argc, char **argv)
+void	read_ambience(t_data *data, t_parser *parser, int scene_fd)
 {
-	t_data	*data;
-	int		scene_fd;
+	t_light	*light;
 
-	if ((scene_fd = validate_file(argc, argv)) == -1)
-		return (1);
-	if (receive_scene(data, scene_fd) == -1)
-		return (1);
-	return (0);
+	if (parser->ambience != 0)
+		exit(EXIT_FAILURE); // Only one ambience element allowed + full cleanup required
+	light = malloc(sizeof(*light));
+	if (light == NULL)
+		exit(EXIT_FAILURE); // full cleanup required
+
 }

@@ -1,26 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   read_light.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/25 11:23:16 by skirwan           #+#    #+#             */
-/*   Updated: 2025/11/25 13:12:13 by skirwan          ###   ########.fr       */
+/*   Created: 2025/11/25 14:54:52 by skirwan           #+#    #+#             */
+/*   Updated: 2025/11/25 15:16:13 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 #include "parsing.h"
 
-int	main(int argc, char **argv)
+void	read_light(t_data *data, t_parser *parser, int scene_fd)
 {
-	t_data	*data;
-	int		scene_fd;
-
-	if ((scene_fd = validate_file(argc, argv)) == -1)
-		return (1);
-	if (receive_scene(data, scene_fd) == -1)
-		return (1);
-	return (0);
+	if (parser->light != 0)
+		exit(EXIT_FAILURE); // Only one light element allowed
+	
 }
