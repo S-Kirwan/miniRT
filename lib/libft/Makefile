@@ -6,7 +6,7 @@
 #    By: skirwan <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/15 12:28:52 by skirwan           #+#    #+#              #
-#    Updated: 2025/05/01 13:19:04 by skirwan          ###   ########.fr        #
+#    Updated: 2025/11/26 12:50:41 by skirwan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,6 +61,7 @@ SOURCES = ft_atoi.c \
 			gnl_utils.c \
 			ft_lstnewint.c \
 			ft_atol.c \
+			ft_atof.c \
 
 OBJECTS = $(SOURCES:%.c=%.o)
 

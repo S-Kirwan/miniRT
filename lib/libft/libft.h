@@ -6,7 +6,7 @@
 /*   By: skirwan <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 11:55:13 by skirwan           #+#    #+#             */
-/*   Updated: 2025/05/01 13:18:12 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/11/26 12:45:14 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,5 +105,6 @@ char				*read_file(int fd, char *buffer);
 
 t_list				*ft_lstnewint(int num);
 long				ft_atol(const char *nptr);
+double				ft_atof(char *str);
 
 #endif
