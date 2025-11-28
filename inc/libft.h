@@ -6,7 +6,7 @@
 /*   By: skirwan <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 11:55:13 by skirwan           #+#    #+#             */
-/*   Updated: 2025/05/01 13:18:12 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/11/28 13:07:03 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int					ft_strncmp(const char *s1, const char *s2, size_t n);
 int					ft_atoi(const char *str);
 int					ft_isalpha(int c);
 int					ft_isdigit(int c);
+int					ft_isspace(int c);
 int					ft_isalnum(int c);
 int					ft_isascii(int c);
 int					ft_isprint(int c);
@@ -106,4 +107,5 @@ char				*read_file(int fd, char *buffer);
 t_list				*ft_lstnewint(int num);
 long				ft_atol(const char *nptr);
 
+double				ft_atof(char *str);
 #endif

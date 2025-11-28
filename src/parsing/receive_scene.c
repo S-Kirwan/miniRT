@@ -14,28 +14,42 @@
 #include "parsing.h"
 #include "miniRT.h"
 
-int	read_scene(t_data *data, t_parser *parser, int scene_fd)
+int	read_over_spaces(int scene_fd)
+{
+	ssize_t	bytes_read;
+	char	buffer;
+
+	buffer = ' ';
+	while (buffer == ' ' || buffer == '\t')
+		bytes_read = read(scene_fd, &buffer, 1);
+	if (bytes_read < 0)
+		return (perror("Error\nread"), READ_ERROR);
+	if (!ft_isdigit(buffer))
+		return (INVALID_CHARACTER);
+	return (buffer);
+}
+
+int	read_scene(t_data *data, t_parser *parser)
 {
 	char	*buffer;
 
-	while (read(scene_fd, buffer, 1) > 0)
+	buffer = get_next_line(parser->scene_fd);
+	while (buffer != NULL)
 	{
-		if (*buffer == ' ' || *buffer == '\n')
-			continue;
-		else if (*buffer == 'A')
-			read_ambience(data, parser, scene_fd);
+		while (*buffer == ' ' || *buffer == '\t')
+			buffer++;
+		if (*buffer == 'A')
+			read_ambience(data->ambience, parser, buffer + 1);
 		else if (*buffer == 'C')
-			read_camera(data, parser, scene_fd);
+			read_camera(data, parser, buffer);
 		else if (*buffer == 'L')
-			read_light(data, parser, scene_fd);
-		else if (*buffer == 'p')
-			read_plane;
+			read_light(data, parser, buffer);
 		else if (*buffer == 's')
-			read_sphere;
-		else if (*buffer == 'c')
-			read_cylinder;
-		else
-			return (-1); // requires exit function to free mallocs in data struct
+			read_light(data, parser, buffer);
+		else if (*buffer == 'C')
+			read_camera(data, parser, buffer);
+		else if (*buffer == 'C')
+			read_camera(data, parser, buffer);
 	}
 	return (0);
 }
@@ -45,6 +59,5 @@ int	receive_scene(t_data *data, int scene_fd)
 	t_parser	*parser;
 
 	ft_bzero(parser, sizeof(*parser));
-
-	return (0);
-}
+	parser->scene_fd = scene_fd;
+return (0); }
