@@ -1,15 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt.h                                           :+:      :+:    :+:   */
+/*   screen.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/11 19:54:11 by aramos            #+#    #+#             */
-/*   Updated: 2025/12/11 19:54:56 by aramos           ###   ########.fr       */
+/*   Created: 2025/12/11 19:53:41 by aramos            #+#    #+#             */
+/*   Updated: 2025/12/11 19:53:57 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft/libft.h"
-#include "../minilibx-linux/mlx.h"
-#include "../minilibx-linux/mlx_int.h"
+#include "minirt.h"

@@ -54,15 +54,18 @@ $(NAME): $(OBJ) $(LIBFT) $(MLX_LIB)
 
 #Create Libraries
 $(LIBFT):
+	@echo "\n${CYAN} ==libft= ${DEF_COLOR}"
 	@make --no-print-directory -C $(LIBFT_DIR)
 
 $(MLX_LIB):
+	@echo "\n${CYAN} ==minilibx== ${DEF_COLOR}"
 	@make --no-print-directory -C $(MLX_DIR)
 
 #Compile .c into Object Files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
-	@echo "\n{MAGENTA} ~ ${BROWN} Compiling... ${MAGENTA}-> -> -> ${CYAN}$< ${DEF_COLOR}\n"
+	@echo "\n${CYAN} ==$(NAME)== ${DEF_COLOR}"
+	@echo "${MAGENTA} ~ ${BROWN} Compiling... ${MAGENTA}-> ${CYAN}$< ${DEF_COLOR}\n"
 	@$(CC) $(CFLAGS) -I/usr/include -I$(MLX_DIR)mlx -c $< -o $@
 
 #Build All
@@ -72,15 +75,14 @@ all: $(NAME)
 clean:
 	@rm -rf $(OBJ_DIR)
 	@make --no-print-directory -C $(LIBFT_DIR) clean
-	@make --no-print-directory -c $(MLX_DIR) clean
+	@make --no-print-directory -C $(MLX_DIR) clean
 	@echo "\n${GREEN} Cleaned $(OBJ_DIR) ${DEF_COLOR}"
 
 #Remove Everything
 fclean: clean
 	@rm -f $(NAME)
 	@make --no-print-directory -C $(LIBFT_DIR) fclean
-	@make --no-print-directory -C $(MLX_DIR) fclean
-	@echo "\n${GREEN} Cleaned $(NAME) ${DEF_COLOR}"
+	@echo "${GREEN} Cleaned $(NAME) ${DEF_COLOR}\n"
 
 #Rebuild Everything
 re: fclean all
