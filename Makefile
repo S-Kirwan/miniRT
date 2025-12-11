@@ -60,7 +60,21 @@ $(LIBFT):
 
 $(MLX_LIB):
 	@echo "\n${CYAN} ==minilibx== ${DEF_COLOR}"
-	@make --no-print-directory -C $(MLX_DIR) > /dev/null 2>&1
+	@{ \
+		bar=""; \
+		max=50;\
+		while :; do \
+			bar="$${bar}#"; \
+			printf "\r${GREEN}[%-${max}s] ${DEF_COLOR}" "$$bar"; \
+			sleep 0.1; \
+		done \
+		} & \
+		PID=$$!; \
+		make --no-print-directory -C $(MLX_DIR) > /dev/null 2>&1; \
+		kill $$PID >/dev/null 2>&1 || true; \
+		printf "\r$$(tput cols)s\r"; \
+		printf "[%0.s#]" $$(seq 1 $$max); \
+		printf "done\n"
 
 #Compile .c into Object Files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
