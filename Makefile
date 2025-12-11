@@ -31,7 +31,7 @@ LIBFT_DIR = ./libft
 LIBFT = $(LIBFT_DIR)/libft.a
 MLX_DIR = minilibx-linux
 MLX_LIB = $(MLX_DIR)/libmlx.a
-MLX = -L$(MLX_DIR) -lmlx -L/usr/lib -lXert -lX11 -lm -lz
+MLX = -L$(MLX_DIR) -lmlx -L/usr/lib -lXext -lX11 -lm -lz
 
 #Target names
 NAME = miniRT
@@ -41,7 +41,8 @@ OBJ_DIR = build
 SRC_DIR = src
 
 #Source Files
-SRC = $(SRC_DIR)/screen.c
+SRC =	main.c\
+		$(SRC_DIR)/screen.c
 
 #Objects and Dependencies
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
@@ -50,7 +51,7 @@ DEP = $(OBJ:.o=.d)
 #Create Program
 $(NAME): $(OBJ) $(LIBFT) $(MLX_LIB)
 	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MLX) -o $@
-	@echo "\n{GREEN} Created $(NAME) ${DEF_COLOR}\n"
+	@echo "\n${GREEN} Created $(NAME) ${DEF_COLOR}\n"
 
 #Create Libraries
 $(LIBFT):
@@ -59,7 +60,7 @@ $(LIBFT):
 
 $(MLX_LIB):
 	@echo "\n${CYAN} ==minilibx== ${DEF_COLOR}"
-	@make --no-print-directory -C $(MLX_DIR)
+	@make --no-print-directory -C $(MLX_DIR) > /dev/null 2>&1
 
 #Compile .c into Object Files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
@@ -75,14 +76,14 @@ all: $(NAME)
 clean:
 	@rm -rf $(OBJ_DIR)
 	@make --no-print-directory -C $(LIBFT_DIR) clean
-	@make --no-print-directory -C $(MLX_DIR) clean
-	@echo "\n${GREEN} Cleaned $(OBJ_DIR) ${DEF_COLOR}"
+	@make --no-print-directory -C $(MLX_DIR) clean > /dev/null 2>&1
+	@echo "${YELLOW} Cleaned $(OBJ_DIR) ${DEF_COLOR}"
 
 #Remove Everything
 fclean: clean
 	@rm -f $(NAME)
 	@make --no-print-directory -C $(LIBFT_DIR) fclean
-	@echo "${GREEN} Cleaned $(NAME) ${DEF_COLOR}\n"
+	@echo "${YELLOW} Cleaned $(NAME) ${DEF_COLOR}"
 
 #Rebuild Everything
 re: fclean all
