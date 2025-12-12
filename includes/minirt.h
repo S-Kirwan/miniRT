@@ -1,19 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/11 20:58:14 by aramos            #+#    #+#             */
-/*   Updated: 2025/12/11 20:58:35 by aramos           ###   ########.fr       */
+/*   Created: 2025/12/11 19:54:11 by aramos            #+#    #+#             */
+/*   Updated: 2025/12/11 19:54:56 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minirt.h"
-
-int	main(void)
-{
-	printf("Hello World");
-	return (0);
-}
+#include "../libft/libft.h"
+#include "../minilibx-linux/mlx.h"
+#include "../minilibx-linux/mlx_int.h"
