@@ -61,20 +61,18 @@ $(LIBFT):
 $(MLX_LIB):
 	@echo "\n${CYAN} ==minilibx== ${DEF_COLOR}"
 	@{ \
-		bar=""; \
-		max=50;\
-		while :; do \
-			bar="$${bar}#"; \
-			printf "\r${GREEN}[%-${max}s] ${DEF_COLOR}" "$$bar"; \
-			sleep 0.1; \
-		done \
-		} & \
-		PID=$$!; \
+		 bar=""; \
+		 max=50;\
+		 while :; do \
+		 	bar="$${bar}#"; \
+		 	printf "\r${GREEN}[%-${max}s] ${DEF_COLOR}" "$$bar"; \
+		 	sleep 0.08; \
+		 done \
+		 } & \
+		 PID=$$!; \
 		make --no-print-directory -C $(MLX_DIR) > /dev/null 2>&1; \
-		kill $$PID >/dev/null 2>&1 || true; \
-		printf "\r$$(tput cols)s\r"; \
-		printf "[%0.s#]" $$(seq 1 $$max); \
-		printf "done\n"
+		 kill $$PID >/dev/null 2>&1 || true; \
+		 printf "\n%0.s" $$(seq 1 $$max);
 
 #Compile .c into Object Files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
