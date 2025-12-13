@@ -10,4 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#include "../includes/minirt.h"
+
+int	src_main(void)
+{
+	ft_printf("All Working Now");
+	return (0);
+}

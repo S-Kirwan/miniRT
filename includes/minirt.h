@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "../libft/libft.h"
 #include "../minilibx-linux/mlx.h"
-#include "../minilibx-linux/mlx_int.h"
+
+int	src_main();

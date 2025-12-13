@@ -14,6 +14,6 @@
 
 int	main(void)
 {
-	printf("Hello World");
+	src_main();
 	return (0);
 }
