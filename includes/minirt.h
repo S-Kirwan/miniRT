@@ -14,4 +14,4 @@
 #include "../libft/libft.h"
 #include "../minilibx-linux/mlx.h"
 
-int	src_main();
+int	screen();

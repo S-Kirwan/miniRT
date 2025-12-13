@@ -14,6 +14,6 @@
 
 int	main(void)
 {
-	src_main();
+	screen();
 	return (0);
 }

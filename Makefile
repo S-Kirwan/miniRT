@@ -46,7 +46,8 @@ SRC =	main.c\
 
 #Objects and Dependencies
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
-DEP = $(OBJ:.o=.d)
+# DEP = $($(OBJ_DIR)/%.o=$(OBJ_DIR)/%.d)
+# DEP = $(OBJ:.o=.d)
 
 #Create Program
 $(NAME): $(OBJ) $(LIBFT) $(MLX_LIB)

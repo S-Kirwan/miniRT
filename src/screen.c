@@ -12,8 +12,11 @@
 
 #include "../includes/minirt.h"
 
-int	src_main(void)
+int	screen(void)
 {
-	ft_printf("All Working Now");
-	return (0);
+	void	*mlx = mlx = mlx_init();
+	void	*win = mlx_new_window(mlx, 500, 500, "Testing purposes");
+	printf ("%p", win);
+	mlx_loop(mlx);
+	return (1);
 }
