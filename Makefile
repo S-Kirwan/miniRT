@@ -90,7 +90,7 @@ clean:
 	@rm -rf $(OBJ_DIR)
 	@make --no-print-directory -C $(LIBFT_DIR) clean
 	@make --no-print-directory -C $(MLX_DIR) clean > /dev/null 2>&1
-	@echo -e "${YELLOW} Cleaned $(OBJ_DIR) ${DEF_COLOR}"
+	@echo -e "${YELLOW} Cleaned $(OBJ_DIR) miniRT ${DEF_COLOR}"
 
 #Remove Everything
 fclean: clean
