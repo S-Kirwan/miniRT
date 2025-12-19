@@ -52,15 +52,15 @@ OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 #Create Program
 $(NAME): $(OBJ) $(LIBFT) $(MLX_LIB)
 	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MLX) -o $@
-	@echo -e "\n${GREEN} Created $(NAME) ${DEF_COLOR}\n"
+	@echo "\n${GREEN} Created $(NAME) ${DEF_COLOR}\n"
 
 #Create Libraries
 $(LIBFT):
-	@echo -e "\n${CYAN} ==libft= ${DEF_COLOR}"
+	@echo "\n${CYAN} ==libft= ${DEF_COLOR}"
 	@make --no-print-directory -C $(LIBFT_DIR)
 
 $(MLX_LIB):
-	@echo -e "\n${CYAN} ==minilibx== ${DEF_COLOR}"
+	@echo "\n${CYAN} ==minilibx== ${DEF_COLOR}"
 	@{ \
 		 bar=""; \
 		 max=50;\
@@ -78,8 +78,8 @@ $(MLX_LIB):
 #Compile .c into Object Files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
-	@echo -e "\n${CYAN} ==$(NAME)== ${DEF_COLOR}"
-	@echo -e "${MAGENTA} ~ ${BROWN} Compiling... ${MAGENTA}-> ${CYAN}$< ${DEF_COLOR}\n"
+	@echo "\n${CYAN} ==$(NAME)== ${DEF_COLOR}"
+	@echo "${MAGENTA} ~ ${BROWN} Compiling... ${MAGENTA}-> ${CYAN}$< ${DEF_COLOR}\n"
 	@$(CC) $(CFLAGS) -I/usr/include -I$(MLX_DIR)mlx -c $< -o $@
 
 #Build All
@@ -90,13 +90,13 @@ clean:
 	@rm -rf $(OBJ_DIR)
 	@make --no-print-directory -C $(LIBFT_DIR) clean
 	@make --no-print-directory -C $(MLX_DIR) clean > /dev/null 2>&1
-	@echo -e "${YELLOW} Cleaned $(OBJ_DIR) miniRT ${DEF_COLOR}"
+	@echo "${YELLOW} Cleaned $(OBJ_DIR) miniRT ${DEF_COLOR}"
 
 #Remove Everything
 fclean: clean
 	@rm -f $(NAME)
 	@make --no-print-directory -C $(LIBFT_DIR) fclean
-	@echo -e "${YELLOW} Cleaned $(NAME) ${DEF_COLOR}"
+	@echo "${YELLOW} Cleaned $(NAME) ${DEF_COLOR}"
 
 #Rebuild Everything
 re: fclean all
