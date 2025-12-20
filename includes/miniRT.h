@@ -20,6 +20,8 @@
 
 typedef struct s_data
 {
+	void				*mlx;
+	void				*win;
 	struct s_ambience	*ambience;
 	struct s_camera		*camera;
 	struct s_light		*lights;

@@ -40,17 +40,33 @@ void	init(t_data *all)
 	all->camera->fov = 90;
 }
 
+void	scan_screen(t_data *all)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (y < HEIGHT)
+	{
+		x = 0;
+		while (x < WIDTH)
+		{
+			mlx_pixel_put(all->mlx, all->win, x, y, 0xFFFFFF);
+			x++;
+		}
+		y++;
+	}
+}
+
 int	main(void)
 {
 	t_data	all;
-	void	*mlx;
-	void	*win;
 	
 	init(&all);
-	mlx = mlx_init();
-	win = mlx_new_window(mlx, WIDTH, HEIGHT, "Testing purposes");
-	mlx_pixel_put(mlx, win, WIDTH / 2, HEIGHT / 2, 0xFFFFFF);
-	mlx_loop(mlx);
+	all.mlx = mlx_init();
+	all.win = mlx_new_window(all.mlx, WIDTH, HEIGHT, "Testing purposes");
+	scan_screen(&all);
+	mlx_loop(all.mlx);
 	return (0);
 
 }
