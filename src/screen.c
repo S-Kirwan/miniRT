@@ -13,7 +13,6 @@
 #include "../includes/minirt.h"
 #include "../includes/miniRT.h"
 #include "../includes/parsing.h"
-#include <math.h>
 
 #define WIDTH 500
 #define HEIGHT 500

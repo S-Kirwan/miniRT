@@ -15,20 +15,22 @@
 
 # include <unistd.h>
 # include <fcntl.h>
+# include <float.h>
 # include <sys/stat.h>
 # include "libft.h"
 
-typedef struct	s_vector
+typedef struct	s_vector//Struct to do math and store temp values
 {
 	float	x;
 	float	y;
 	float	z;
+	int		p;//1 if its a point, 0 if its a vector(with direction)
 }	t_vector;
 
 typedef struct s_data
 {
-	void				*mlx;
-	void				*win;
+	void				*mlx;//to store the minilibx variables in the general one
+	void				*win;//same as above
 	struct s_ambience	*ambience;
 	struct s_camera		*camera;
 	struct s_light		*lights;
