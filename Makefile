@@ -41,8 +41,7 @@ OBJ_DIR = build
 SRC_DIR = src
 
 #Source Files
-SRC =	main.c\
-		$(SRC_DIR)/screen.c
+SRC =	$(SRC_DIR)/screen.c
 
 #Objects and Dependencies
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
