@@ -13,6 +13,7 @@
 #include "../includes/minirt.h"
 #include "../includes/miniRT.h"
 #include "../includes/parsing.h"
+#include <math.h>
 
 #define WIDTH 500
 #define HEIGHT 500
@@ -40,6 +41,27 @@ void	init(t_data *all)
 	all->camera->fov = 90;
 }
 
+void render(t_data *all)
+{
+    int x, y;
+    float t;
+    
+    for (y = 0; y < HEIGHT; y++)
+    {
+        for (x = 0; x < WIDTH; x++)
+        {
+            t_vector ray_dir = get_ray_direction(all->camera, x, y);
+            if (sphere_hit(all->spheres, all->camera, ray_dir, &t))
+                mlx_pixel_put(all->mlx, all->win, x, y, 0xFFFFFF);
+                              // rgb_to_hex(all->spheres->red,
+                              //            all->spheres->green,
+                              //            all->spheres->blue));
+            else
+                mlx_pixel_put(all->mlx, all->win, x, y, 0x000000);
+        }
+    }
+}
+
 void	scan_screen(t_data *all)
 {
 	int	x;
@@ -65,7 +87,7 @@ int	main(void)
 	init(&all);
 	all.mlx = mlx_init();
 	all.win = mlx_new_window(all.mlx, WIDTH, HEIGHT, "Testing purposes");
-	scan_screen(&all);
+	render(&all);
 	mlx_loop(all.mlx);
 	return (0);
 

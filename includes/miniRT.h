@@ -18,6 +18,13 @@
 # include <sys/stat.h>
 # include "libft.h"
 
+typedef struct	s_vector
+{
+	float	x;
+	float	y;
+	float	z;
+}	t_vector;
+
 typedef struct s_data
 {
 	void				*mlx;
