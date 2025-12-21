@@ -44,6 +44,9 @@ void	init(t_data *all)
 	normalize(&all->camera->normal);
 }
 
+//Normalizes a vector which has to have x y and z values already. It modifies it 
+//dirrectly, so a pointer is needed. And is better to have a t_vector type in the
+//struct to be able to access the original info if needed
 void	normalize(t_vector	*v)
 {
 	float		len;
