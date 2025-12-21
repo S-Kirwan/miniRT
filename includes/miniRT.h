@@ -14,6 +14,7 @@
 # define MINIRT_H
 
 # include <unistd.h>
+# include <math.h>
 # include <fcntl.h>
 # include <float.h>
 # include <sys/stat.h>

@@ -59,26 +59,26 @@ void	normalize(t_vector	*v)
 	v->z /= len;
 }
 
-void render(t_data *all)
-{
-    int x, y;
-    float t;
-    
-    for (y = 0; y < HEIGHT; y++)
-    {
-        for (x = 0; x < WIDTH; x++)
-        {
-            // t_vector ray_dir = get_ray_direction(all->camera, x, y);
-            if (sphere_hit(all->spheres, all->camera, ray_dir, &t))
-                mlx_pixel_put(all->mlx, all->win, x, y, 0xFFFFFF);
-                              // rgb_to_hex(all->spheres->red,
-                              //            all->spheres->green,
-                              //            all->spheres->blue));
-            else
-                mlx_pixel_put(all->mlx, all->win, x, y, 0x000000);
-        }
-    }
-}
+// void render(t_data *all)
+// {
+//     int x, y;
+//     float t;
+//
+//     for (y = 0; y < HEIGHT; y++)
+//     {
+//         for (x = 0; x < WIDTH; x++)
+//         {
+//             t_vector ray_dir = get_ray_direction(all->camera, x, y);
+//             if (sphere_hit(all->spheres, all->camera, ray_dir, &t))
+//                 mlx_pixel_put(all->mlx, all->win, x, y, 0xFFFFFF);
+//                               // rgb_to_hex(all->spheres->red,
+//                               //            all->spheres->green,
+//                               //            all->spheres->blue));
+//             else
+//                 mlx_pixel_put(all->mlx, all->win, x, y, 0x000000);
+//         }
+//     }
+// }
 
 void	scan_screen(t_data *all)
 {
