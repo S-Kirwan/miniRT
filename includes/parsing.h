@@ -60,5 +60,7 @@ void	read_light(t_data *data, t_parser *parser, char *line);
 
 // read_cylinder.c
 
+//screen.c
+t_vector	normalize(t_vector	v);
 #endif
 

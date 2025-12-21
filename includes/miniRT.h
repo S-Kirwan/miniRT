@@ -53,13 +53,14 @@ typedef struct s_ambience
 
 typedef struct s_camera
 {
-	float	x;
-	float	y;
-	float	z;
-	float	x_orientation;
-	float	y_orientation;
-	float	z_orientation;
-	int		fov;
+	float		x;
+	float		y;
+	float		z;
+	float		x_orientation;
+	float		y_orientation;
+	float		z_orientation;
+	int			fov;
+	t_vector	normal;
 }	t_camera;
 
 typedef struct s_light

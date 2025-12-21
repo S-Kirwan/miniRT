@@ -36,8 +36,24 @@ void	init(t_data *all)
 	all->camera->z = 20;
 	all->camera->x_orientation = 0.0;
 	all->camera->y_orientation = 0.0;
-	all->camera->z_orientation = 1.0;
+	all->camera->z_orientation = 0.999;
 	all->camera->fov = 90;
+	all->camera->normal.x = all->camera->x_orientation;
+	all->camera->normal.y = all->camera->y_orientation;
+	all->camera->normal.z = all->camera->z_orientation;
+	normalize(&all->camera->normal);
+}
+
+void	normalize(t_vector	*v)
+{
+	float		len;
+
+	len = sqrt((v->x * v->x) + (v->y * v->y) + (v->z * v->z));
+	if (len == 0)
+		return ;
+	v->x /= len;
+	v->y /= len;
+	v->z /= len;
 }
 
 void render(t_data *all)
@@ -49,7 +65,7 @@ void render(t_data *all)
     {
         for (x = 0; x < WIDTH; x++)
         {
-            t_vector ray_dir = get_ray_direction(all->camera, x, y);
+            // t_vector ray_dir = get_ray_direction(all->camera, x, y);
             if (sphere_hit(all->spheres, all->camera, ray_dir, &t))
                 mlx_pixel_put(all->mlx, all->win, x, y, 0xFFFFFF);
                               // rgb_to_hex(all->spheres->red,
@@ -86,7 +102,6 @@ int	main(void)
 	init(&all);
 	all.mlx = mlx_init();
 	all.win = mlx_new_window(all.mlx, WIDTH, HEIGHT, "Testing purposes");
-	render(&all);
 	mlx_loop(all.mlx);
 	return (0);
 
