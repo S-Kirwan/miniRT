@@ -44,6 +44,15 @@ void	init(t_data *all)
 	normalize(&all->camera->normal);
 }
 
+//Formula for raytracing is P(t) = O + tD
+//O is the camera position (x,y,z)
+//D is the orientation vector + pixel offset from camera orientation vector
+//t is the distance of the ray
+void	raytracing()
+{
+	
+}
+
 //Normalizes a vector which has to have x y and z values already. It modifies it 
 //dirrectly, so a pointer is needed. And is better to have a t_vector type in the
 //struct to be able to access the original info if needed
@@ -59,26 +68,26 @@ void	normalize(t_vector	*v)
 	v->z /= len;
 }
 
-// void render(t_data *all)
-// {
-//     int x, y;
-//     float t;
-//
-//     for (y = 0; y < HEIGHT; y++)
-//     {
-//         for (x = 0; x < WIDTH; x++)
-//         {
-//             t_vector ray_dir = get_ray_direction(all->camera, x, y);
-//             if (sphere_hit(all->spheres, all->camera, ray_dir, &t))
-//                 mlx_pixel_put(all->mlx, all->win, x, y, 0xFFFFFF);
-//                               // rgb_to_hex(all->spheres->red,
-//                               //            all->spheres->green,
-//                               //            all->spheres->blue));
-//             else
-//                 mlx_pixel_put(all->mlx, all->win, x, y, 0x000000);
-//         }
-//     }
-// }
+ void render(t_data *all)
+ {
+     int x, y;
+     float t;
+
+     for (y = 0; y < HEIGHT; y++)
+     {
+         for (x = 0; x < WIDTH; x++)
+         {
+             t_vector ray_dir = get_ray_direction(all->camera, x, y);
+             if (sphere_hit(all->spheres, all->camera, ray_dir, &t))
+                 mlx_pixel_put(all->mlx, all->win, x, y, 0xFFFFFF);
+                               // rgb_to_hex(all->spheres->red,
+                               //            all->spheres->green,
+                               //            all->spheres->blue));
+             else
+                 mlx_pixel_put(all->mlx, all->win, x, y, 0x000000);
+         }
+     }
+ }
 
 void	scan_screen(t_data *all)
 {
