@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 11:43:28 by skirwan           #+#    #+#             */
-/*   Updated: 2025/11/25 17:46:24 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/12/15 11:54:58 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,10 @@ void	read_light(t_data *data, t_parser *parser, char *line);
 // read_sphere.c
 
 // read_cylinder.c
+
+// read_colours.c
+void	print_colours_test(int colours[3]);
+int		read_colours(char *line, int colours[3]);
 
 #endif
 

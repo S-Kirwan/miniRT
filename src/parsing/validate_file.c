@@ -6,19 +6,21 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 11:43:35 by skirwan           #+#    #+#             */
-/*   Updated: 2025/11/25 13:06:10 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/12/15 14:54:58 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "miniRT.h"
 #include "parsing.h"
 
 void	write_error(char *error_msg)
 {
-	write(STDERR_FILENO, "Error\n", 7);
-	write(STDERR_FILENO, error_msg, ft_strlen(error_msg));
-	write(STDERR_FILENO, "\n", 1);
+	int temp;
+
+	temp = write(STDERR_FILENO, "Error\n", 7);
+	temp = write(STDERR_FILENO, error_msg, ft_strlen(error_msg));
+	temp = write(STDERR_FILENO, "\n", 1);
+	temp++;
 }
 
 // Checks that the file provided ends with the .rt extension
@@ -56,5 +58,5 @@ int	validate_file(int argc, char **argv)
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
 		return (perror("Error\n"), -1);
-	return (0);
+	return (fd);
 }
