@@ -20,34 +20,35 @@
 
 typedef struct s_data
 {
+	struct s_shp_list	*shapes;
 	struct s_ambience	*ambience;
 	struct s_camera		*camera;
-	struct s_light		*lights;
-	struct s_sphere		*spheres;
-	struct s_cylinder	*cylinders;
-	struct s_plane		*planes;
+	struct s_light		*light;
 }	t_data;
 
-// Ratio for the ambience is input from 0 to 1 in the input file, but we
-// multiply this by 100 so that we can use an int and not a float
-// This may not be helpful at all, subject to change - I just thought ints
-// are easier to work with compared to floats where possible
+typedef struct s_shp_list
+{
+	struct	s_shp_list	*next;
+	struct	s_shape		*shape;
+}	t_shp_list;
+
+typedef enum e_shape
+{
+	CYLINDER,
+	PLANE,
+	SPHERE
+}	t_en_shape;
+
 typedef struct s_ambience
 {
-	int	ratio;
-	int	red;
-	int	green;
-	int	blue;
+	float	ratio;
+	int		colour[3];
 }	t_ambience;
 
 typedef struct s_camera
 {
-	float	x;
-	float	y;
-	float	z;
-	float	x_orientation;
-	float	y_orientation;
-	float	z_orientation;
+	float	position[3];
+	float	orientation[3];
 	int		fov;
 }	t_camera;
 
@@ -57,48 +58,17 @@ typedef struct s_light
 	float	y;
 	float	z;
 	int		brightness;
-	int		red;
-	int		green;
-	int		blue;
+	int		colour[3];
 }	t_light;
 
-typedef struct s_sphere
+typedef struct s_shape
 {
-	float	x;
-	float	y;
-	float	z;
-	float	diameter;
-	int		red;
-	int		green;
-	int		blue;
-}	t_sphere;
-
-typedef struct s_plane
-{
-	float	x;
-	float	y;
-	float	z;
-	float	x_vector;
-	float	y_vector;
-	float	z_vector;
-	int		red;
-	int		green;
-	int		blue;
-}	t_plane;
-
-typedef struct s_cylinder
-{
-	float	x;
-	float	y;
-	float	z;
-	float	x_vector;
-	float	y_vector;
-	float	z_vector;
+	t_en_shape	shape;
+	float	position[3];
+	float	vectors[3];
 	float	diameter;
 	float	height;
-	int		red;
-	int		green;
-	int		blue;
-}	t_cylinder;
+	int		colour[3];
+}	t_shape;
 
 #endif

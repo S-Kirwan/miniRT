@@ -14,6 +14,10 @@ LIBFT_LIB   = -L$(LIBFT_DIR) -lft
 
 SRC    = main.c \
 		 parsing/validate_file.c \
+		 parsing/receive_scene.c \
+		 parsing/read_ambience.c \
+		 parsing/read_colours.c \
+		 initialisation/initialise_data.c \
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
 
