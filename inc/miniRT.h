@@ -54,9 +54,7 @@ typedef struct s_camera
 
 typedef struct s_light
 {
-	float	x;
-	float	y;
-	float	z;
+	float	position[3];
 	int		brightness;
 	int		colour[3];
 }	t_light;
