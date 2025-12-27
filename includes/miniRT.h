@@ -25,7 +25,7 @@ typedef struct	s_vector//Struct to do math and store temp values
 	float	x;
 	float	y;
 	float	z;
-	int		p;//1 if its a point, 0 if its a vector(with direction)
+	// int		p;//1 if its a point, 0 if its a vector(with direction)
 }	t_vector;
 
 typedef struct s_data
@@ -61,6 +61,10 @@ typedef struct s_camera
 	float		y_orientation;
 	float		z_orientation;
 	int			fov;
+	float		fov_rad;
+	float		aspect;
+	float		viewport_h;
+	float		viewport_w;
 	t_vector	normal;
 }	t_camera;
 
