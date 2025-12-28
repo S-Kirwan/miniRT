@@ -17,6 +17,12 @@ SRC    = main.c \
 		 parsing/receive_scene.c \
 		 parsing/read_ambience.c \
 		 parsing/read_colours.c \
+		 parsing/read_coordinates.c \
+		 parsing/parsing_utils.c \
+		 parsing/read_camera.c \
+		 parsing/read_ratio.c \
+		 parsing/read_vectors.c \
+		 parsing/read_light.c \
 		 initialisation/initialise_data.c \
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC))

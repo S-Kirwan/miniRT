@@ -6,13 +6,14 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 13:07:39 by skirwan           #+#    #+#             */
-/*   Updated: 2025/12/15 14:07:53 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/12/27 15:51:12 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "parsing.h"
 #include "miniRT.h"
+#include <stdio.h>
 
 int	read_scene(t_data *data, t_parser *parser)
 {
@@ -25,12 +26,12 @@ int	read_scene(t_data *data, t_parser *parser)
 			buffer++;
 		if (*buffer == 'A')
 			read_ambience(data->ambience, parser, buffer + 1);
-		// else if (*buffer == 'C')
-		// 	read_camera(data, parser, buffer);
-		// else if (*buffer == 'L')
-		// 	read_light(data, parser, buffer);
-		// else if (*buffer == 's')
-		// 	read_light(data, parser, buffer);
+		else if (*buffer == 'C')
+			read_camera(data->camera, parser, buffer + 1);
+		else if (*buffer == 'L')
+			read_light(data->light, parser, buffer + 1);
+		else if (*buffer == 's')
+			read_sphere(data->shapes, parser, buffer + 1);
 		// else if (*buffer == 'C')
 		// 	read_camera(data, parser, buffer);
 		// else if (*buffer == 'C')
