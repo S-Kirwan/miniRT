@@ -17,14 +17,49 @@
 #define WIDTH 500
 #define HEIGHT 500
 
+void put_point(t_data *all, int x, int y, int color)
+{
+    int size = 3; // small 3x3 square
+    for (int i = -size; i <= size; i++)
+        for (int j = -size; j <= size; j++)
+            mlx_pixel_put(all->mlx, all->win, x + i, y + j, color);
+}
+
+t_vector project(t_data *all, t_vector p)
+{
+    float scale = 200.0f;
+    float dz = p.z - all->camera->z;
+    if (dz <= 0.01f) dz = 0.01f; // avoid division by 0
+    t_vector proj;
+    proj.x = (p.x - all->camera->x) * scale / dz + WIDTH / 2;
+    proj.y = (p.y - all->camera->y) * scale / dz + HEIGHT / 2;
+    return proj;
+}
+
+
+void draw_line(t_data *all, t_vector from, t_vector to, int color)
+{
+    int steps = 100;
+    float dx = (to.x - from.x) / steps;
+    float dy = (to.y - from.y) / steps;
+    for (int i = 0; i <= steps; i++)
+        mlx_pixel_put(all->mlx, all->win, from.x + dx*i, from.y + dy*i, color);
+}
+
 void	init(t_data *all)
 {
+	//TODO: Lights
+	all->lights = malloc(sizeof(t_light));
+	all->lights->x = 100;
+	all->lights->y = 100;
+	all->lights->z = 50;
+
 	//TODO: Sphere
 	all->spheres = malloc(sizeof(t_sphere));
 	all->spheres->x = -50;
 	all->spheres->y = 0;
 	all->spheres->z = 100;
-	all->spheres->diameter = 100;
+	all->spheres->diameter = 50;
 	all->spheres->red = 163;
 	all->spheres->green = 234;
 	all->spheres->blue = 42;
@@ -48,6 +83,7 @@ void	init(t_data *all)
 	normalize(&all->camera->normal);
 }
 
+//oc is the distance between the origin ray (camera vector) and the center of the sphere
 int	sphere_hit(t_sphere *sphere, t_vector ray_origin, t_vector ray_dir, float *t)
 {
 	t_vector	oc = {ray_origin.x - sphere->x, ray_origin.y - sphere->y, ray_origin.z - sphere->z};
@@ -55,14 +91,15 @@ int	sphere_hit(t_sphere *sphere, t_vector ray_origin, t_vector ray_dir, float *t
 	float		b = 2.0f * (oc.x * ray_dir.x + oc.y * ray_dir.y + oc.z * ray_dir.z);
 	float		c = oc.x * oc.x + oc.y * oc.y + oc.z * oc.z - (sphere->diameter / 2.0f) * (sphere->diameter / 2.0f); 
 	float		discriminant = b * b - 4 * a * c;
+	float		t0;
+	float		t1;
 
 	if (discriminant < 0)
 	{
 		return (0); 
 	}
-	float	t0 = (-b - sqrt(discriminant)) / (2.0f * a);
-	float	t1 = (-b + sqrt(discriminant)) / (2.0f * a);
-
+	t0 = (-b - sqrt(discriminant)) / (2.0f * a);
+	t1 = (-b + sqrt(discriminant)) / (2.0f * a);
 	if (t0 > 0)
 		*t = t0;
 	else if (t1 > 0)
@@ -96,16 +133,43 @@ void	raytracing(t_data *all)
 			t_vector	ray_dir = {all->camera->normal.x + u, all->camera->normal.y + v, all->camera->normal.z};
 			normalize(&ray_dir);
              if (sphere_hit(all->spheres, ray_origin, ray_dir, &t))
-                 mlx_pixel_put(all->mlx, all->win, x, y, 0xFFFFFF);
-                               // rgb_to_hex(all->spheres->red,
-                               //            all->spheres->green,
-                               //            all->spheres->blue));
+			{
+				t_vector	hit_point = {ray_origin.x + t * ray_dir.x, ray_origin.y + t * ray_dir.y, ray_origin.z + t * ray_dir.z};
+				t_vector	surface_normal = {hit_point.x - all->spheres->x, hit_point.y - all->spheres->y, hit_point.z - all->spheres->z};
+				normalize(&surface_normal);
+				t_vector	light_dir = {all->lights->x - hit_point.x, all->lights->y - hit_point.y, all->lights->z - hit_point.z};
+				normalize(&light_dir);
+				float	intensity = surface_normal.x * light_dir.x + surface_normal.y * light_dir.y + surface_normal.z * light_dir.z;
+				if (intensity < 0)
+					intensity = 0;
+				int	r = (int)(all->spheres->red * intensity);
+				int	g = (int)(all->spheres->green * intensity);
+				int	b = (int)(all->spheres->blue * intensity);
+				int	color = (r << 16) | (g << 8) | b;
+                mlx_pixel_put(all->mlx, all->win, x, y, color);
+				t_vector light_pos = {all->lights->x, all->lights->y, all->lights->z};
+
+				t_vector cam2D   = project(all, (t_vector){all->camera->x, all->camera->y, all->camera->z});
+				t_vector light2D = project(all, light_pos);
+				// t_vector hit2D   = project(all, hit_point);
+
+				// draw points
+				put_point(all, cam2D.x, cam2D.y, 0xFF0000);     // camera = red
+				put_point(all, light2D.x, light2D.y, 0xFFFF00); // light = yellow
+
+				// draw ray from camera to hit
+				// draw_line(all, cam2D, hit2D, 0x00FF00);         // ray = green
+				//
+				// // draw ray from hit to light
+				// draw_line(all, hit2D, light2D, 0x0000FF);       // light ray = blue
+            }
              else
                  mlx_pixel_put(all->mlx, all->win, x, y, 0x000000);
 			x++;
 		}
 		y++;
 	}
+
 }
 
 //Normalizes a vector which has to have x y and z values already. It modifies it 
