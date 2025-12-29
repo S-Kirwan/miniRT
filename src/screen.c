@@ -21,10 +21,10 @@ void	init(t_data *all)
 {
 	//TODO: Sphere
 	all->spheres = malloc(sizeof(t_sphere));
-	all->spheres->x = 20;
-	all->spheres->y = 50;
+	all->spheres->x = -50;
+	all->spheres->y = 0;
 	all->spheres->z = 100;
-	all->spheres->diameter = 7.5;
+	all->spheres->diameter = 100;
 	all->spheres->red = 163;
 	all->spheres->green = 234;
 	all->spheres->blue = 42;
@@ -34,9 +34,9 @@ void	init(t_data *all)
 	all->camera->x = -50;
 	all->camera->y = 0;
 	all->camera->z = 20;
-	all->camera->x_orientation = 5.0;
-	all->camera->y_orientation = 0.0;
-	all->camera->z_orientation = 0.999;
+	all->camera->x_orientation = 0;
+	all->camera->y_orientation = 0;
+	all->camera->z_orientation = 1;
 	all->camera->fov = 90;
 	all->camera->normal.x = all->camera->x_orientation;
 	all->camera->normal.y = all->camera->y_orientation;
