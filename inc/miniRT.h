@@ -16,21 +16,27 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <sys/stat.h>
-# include "libft.h"
+
+typedef struct s_list
+{
+	union
+	{
+		struct s_shape	*shape;
+		void			*content;
+		int				nbr;
+		char			*str;
+	};
+	struct s_list	*next;
+}					t_list;
 
 typedef struct s_data
 {
-	struct s_shp_list	*shapes;
 	struct s_ambience	*ambience;
 	struct s_camera		*camera;
 	struct s_light		*light;
+	t_list				*shape_list;
 }	t_data;
 
-typedef struct s_shp_list
-{
-	struct	s_shp_list	*next;
-	struct	s_shape		*shape;
-}	t_shp_list;
 
 typedef enum e_shape
 {

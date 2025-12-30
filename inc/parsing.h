@@ -13,11 +13,11 @@
 #ifndef PARSING_H
 # define PARSING_H
 
+# include "libft.h"
 # include "miniRT.h"
 
 typedef struct s_parser
 {
-	t_shp_list	*shapes;
 	int			scene_fd;
 	int			ambience;
 	int			camera;
@@ -44,7 +44,7 @@ void	read_light(t_light *light, t_parser *parser, char *line);
 // read_plane.c
 
 // read_sphere.c
-void	read_sphere(t_shp_list *list, t_parser *parser, char *line);
+void	read_sphere(t_list *list, t_parser *parser, char *line);
 
 // read_cylinder.c
 
@@ -61,6 +61,7 @@ char	*read_coordinates(char *line, float coordinates[3]);
 char	*read_vectors(char *line, float vectors[3]);
 
 // parsing_utils.c
+t_list	*ft_lst_new_shape(t_shape *shape);
 char	*read_diameter(char *line, float *diameter);
 void	parsing_error(int *errors);
 void	print_vectors_test(float vectors[3]);

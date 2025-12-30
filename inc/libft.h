@@ -13,6 +13,8 @@
 #ifndef LIBFT_H
 # define LIBFT_H
 
+#include "miniRT.h"
+
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1000
 # endif
@@ -26,17 +28,6 @@
 # include <unistd.h>
 # include <stdarg.h>
 # include <stdio.h>
-
-typedef struct s_list
-{
-	union
-	{
-		void	*content;
-		int		nbr;
-		char	*str;
-	};
-	struct s_list	*next;
-}					t_list;
 
 void				*ft_memset(void *dest, int c, size_t n);
 void				ft_bzero(void *b, size_t n);
@@ -108,4 +99,5 @@ t_list				*ft_lstnewint(int num);
 long				ft_atol(const char *nptr);
 
 double				ft_atof(char *str);
+
 #endif
