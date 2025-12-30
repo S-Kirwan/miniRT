@@ -11,12 +11,24 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "miniRT.h"
 #include "parsing.h"
-#include <stdlib.h>
 
 void	parsing_error(int *errors)
 {
 	errors++;
+}
+
+t_list	*ft_lst_new_shape(t_shape *shape)
+{
+	t_list	*new_node;
+
+	new_node = malloc(sizeof(*new_node));
+	if (new_node == NULL)
+		return (NULL);
+	new_node->shape = shape;
+	new_node->next = NULL;
+	return (new_node);
 }
 
 void	print_colours_test(int colours[3])
