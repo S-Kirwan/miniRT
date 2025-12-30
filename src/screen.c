@@ -50,9 +50,9 @@ void	init(t_data *all)
 {
 	//TODO: Lights
 	all->lights = malloc(sizeof(t_light));
-	all->lights->x = 100;
-	all->lights->y = 100;
-	all->lights->z = 50;
+	all->lights->x = 0;
+	all->lights->y = 0;
+	all->lights->z = 0;
 
 	//TODO: Sphere
 	all->spheres = malloc(sizeof(t_sphere));
@@ -77,9 +77,9 @@ void	init(t_data *all)
 	all->camera->normal.y = all->camera->y_orientation;
 	all->camera->normal.z = all->camera->z_orientation;
 	all->camera->fov_rad = all->camera->fov * M_PI / 180.0;
-	all->camera->aspect = (float)WIDTH / (float)HEIGHT;
+	all->camera->aspect_ratio = (float)WIDTH / (float)HEIGHT;
 	all->camera->viewport_h = 2.0 * tan(all->camera->fov_rad / 2.0);
-	all->camera->viewport_w = all->camera->viewport_h * all->camera->aspect;
+	all->camera->viewport_w = all->camera->viewport_h * all->camera->aspect_ratio;
 	normalize(&all->camera->normal);
 }
 

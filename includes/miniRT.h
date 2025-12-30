@@ -62,7 +62,7 @@ typedef struct s_camera
 	float		z_orientation;
 	int			fov;
 	float		fov_rad;
-	float		aspect;
+	float		aspect_ratio;
 	float		viewport_h;
 	float		viewport_w;
 	t_vector	normal;
