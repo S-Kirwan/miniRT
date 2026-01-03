@@ -84,6 +84,7 @@ void	init(t_data *all)
 }
 
 //oc is the distance between the origin ray (camera vector) and the center of the sphere
+//that means that oc is equal to (O - C)
 int	sphere_hit(t_sphere *sphere, t_vector ray_origin, t_vector ray_dir, float *t)
 {
 	t_vector	oc = {ray_origin.x - sphere->x, ray_origin.y - sphere->y, ray_origin.z - sphere->z};
@@ -113,6 +114,9 @@ int	sphere_hit(t_sphere *sphere, t_vector ray_origin, t_vector ray_dir, float *t
 //O is the camera position (x,y,z)
 //D is the orientation vector + pixel offset from camera orientation vector
 //t is the distance of the ray
+//ray_origin = O
+//ray_dir = D
+// t = t haha
 void	raytracing(t_data *all)
 {
 	t_vector	ray_origin = {all->camera->x, all->camera->y, all->camera->z};
