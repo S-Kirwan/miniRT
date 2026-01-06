@@ -62,7 +62,7 @@ char	*read_coordinates(char *line, float coordinates[3]);
 char	*read_vectors(char *line, float vectors[3]);
 
 // parsing_utils.c
-t_list	*ft_lst_new_shape(t_shape *shape);
+t_list	*ft_lst_new_shape(t_en_shape *shape);
 char	*read_diameter(char *line, float *diameter);
 void	parsing_error(int *errors);
 void	print_vectors_test(float vectors[3]);

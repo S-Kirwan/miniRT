@@ -98,7 +98,6 @@ typedef struct s_light
 	float	x;
 	float	y;
 	float	z;
-	int		brightness;
 	int		red;
 	int		green;
 	int		blue;
