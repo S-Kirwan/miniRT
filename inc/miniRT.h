@@ -18,6 +18,18 @@
 # include <fcntl.h>
 # include <float.h>
 # include <sys/stat.h>
+
+typedef struct s_list
+{
+	union
+	{
+		struct s_shape	*shape;
+		void			*content;
+		int				nbr;
+		char			*str;
+	};
+	struct s_list	*next;
+}					t_list;
 # include "libft.h"
 
 typedef struct	s_vector//Struct to do math and store temp values
@@ -34,11 +46,21 @@ typedef struct s_data
 	void				*win;//same as above
 	struct s_ambience	*ambience;
 	struct s_camera		*camera;
+	struct s_light		*light;
+	t_list				*shape_list;
 	struct s_light		*lights;
 	struct s_sphere		*spheres;
 	struct s_cylinder	*cylinders;
 	struct s_plane		*planes;
 }	t_data;
+
+
+typedef enum e_shape
+{
+	CYLINDER,
+	PLANE,
+	SPHERE
+}	t_en_shape;
 
 // Ratio for the ambience is input from 0 to 1 in the input file, but we
 // multiply this by 100 so that we can use an int and not a float
@@ -70,6 +92,9 @@ typedef struct s_camera
 
 typedef struct s_light
 {
+	float	position[3];
+	float	brightness;
+	int		colour[3];
 	float	x;
 	float	y;
 	float	z;

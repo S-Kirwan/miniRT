@@ -13,9 +13,26 @@
 #include "miniRT.h"
 #include "parsing.h"
 
-void	read_light(t_data *data, t_parser *parser, int scene_fd)
+void	read_light(t_light *light, t_parser *parser, char *line)
 {
 	if (parser->light != 0)
-		exit(EXIT_FAILURE); // Only one light element allowed
-	
+		return (parsing_error(&parser->errors));
+	while (ft_isspace(*line))
+		line++;
+	line = read_coordinates(line, light->position);
+	if (line == NULL)
+		return (parsing_error(&parser->errors));
+	while (ft_isspace(*line))
+		line++;
+	line = read_ratio(line, &light->brightness);
+	if (line == NULL)
+		return (parsing_error(&parser->errors));
+	while (ft_isspace(*line))
+		line++;
+	if (*line == '\0')
+		return ;
+	line = read_colours(line, light->colour);
+	if (line == NULL)
+		return (parsing_error(&parser->errors));
+	return ;
 }
