@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minirt.h"
-#include "../includes/miniRT.h"
-#include "../includes/parsing.h"
+#include "../inc/minirt.h"
+#include "../inc/miniRT.h"
+#include "../inc/parsing.h"
 
 #define WIDTH 500
 #define HEIGHT 500
