@@ -14,59 +14,108 @@
 # define MINIRT_H
 
 # include <unistd.h>
+# include <math.h>
 # include <fcntl.h>
+# include <float.h>
 # include <sys/stat.h>
 # include "libft.h"
 
+typedef struct	s_vector//Struct to do math and store temp values
+{
+	float	x;
+	float	y;
+	float	z;
+	// int		p;//1 if its a point, 0 if its a vector(with direction)
+}	t_vector;
+
 typedef struct s_data
 {
-	struct s_shp_list	*shapes;
+	void				*mlx;//to store the minilibx variables in the general one
+	void				*win;//same as above
 	struct s_ambience	*ambience;
 	struct s_camera		*camera;
-	struct s_light		*light;
+	struct s_light		*lights;
+	struct s_sphere		*spheres;
+	struct s_cylinder	*cylinders;
+	struct s_plane		*planes;
 }	t_data;
 
-typedef struct s_shp_list
-{
-	struct	s_shp_list	*next;
-	struct	s_shape		*shape;
-}	t_shp_list;
-
-typedef enum e_shape
-{
-	CYLINDER,
-	PLANE,
-	SPHERE
-}	t_en_shape;
-
+// Ratio for the ambience is input from 0 to 1 in the input file, but we
+// multiply this by 100 so that we can use an int and not a float
+// This may not be helpful at all, subject to change - I just thought ints
+// are easier to work with compared to floats where possible
 typedef struct s_ambience
 {
-	float	ratio;
-	int		colour[3];
+	int	ratio;
+	int	red;
+	int	green;
+	int	blue;
 }	t_ambience;
 
 typedef struct s_camera
 {
-	float	position[3];
-	float	orientation[3];
-	int		fov;
+	float		x;
+	float		y;
+	float		z;
+	float		x_orientation;
+	float		y_orientation;
+	float		z_orientation;
+	int			fov;
+	float		fov_rad;
+	float		aspect_ratio;
+	float		viewport_h;
+	float		viewport_w;
+	t_vector	normal;
 }	t_camera;
 
 typedef struct s_light
 {
-	float	position[3];
+	float	x;
+	float	y;
+	float	z;
 	int		brightness;
-	int		colour[3];
+	int		red;
+	int		green;
+	int		blue;
 }	t_light;
 
-typedef struct s_shape
+typedef struct s_sphere
 {
-	t_en_shape	shape;
-	float	position[3];
-	float	vectors[3];
+	float	x;
+	float	y;
+	float	z;
+	float	diameter;
+	int		red;
+	int		green;
+	int		blue;
+}	t_sphere;
+
+typedef struct s_plane
+{
+	float	x;
+	float	y;
+	float	z;
+	float	x_vector;
+	float	y_vector;
+	float	z_vector;
+	int		red;
+	int		green;
+	int		blue;
+}	t_plane;
+
+typedef struct s_cylinder
+{
+	float	x;
+	float	y;
+	float	z;
+	float	x_vector;
+	float	y_vector;
+	float	z_vector;
 	float	diameter;
 	float	height;
-	int		colour[3];
-}	t_shape;
+	int		red;
+	int		green;
+	int		blue;
+}	t_cylinder;
 
 #endif
