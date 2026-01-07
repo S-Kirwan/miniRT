@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skirwan <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 13:44:59 by skirwan           #+#    #+#             */
-/*   Updated: 2024/12/15 19:44:45 by skirwan          ###   ########.fr       */
+/*   Created: 2025/02/21 13:00:00 by aramos            #+#    #+#             */
+/*   Updated: 2025/02/21 13:00:01 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,36 +14,29 @@
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char	*str;
-	int		i;
+	char	*s3;
+	char	*ptr_3;
 
-	i = 0;
-	str = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
-	if (str == NULL)
-		return (0);
-	while (*s1)
-	{
-		*str++ = *s1++;
-		i++;
-	}
-	while (*s2)
-	{
-		*str++ = *s2++;
-		i++;
-	}
-	*str = '\0';
-	return (str - i);
-}
-/*
-void	test(char const *s1, char const *s2)
-{
-	printf("ft_strjoin of '%s' and '%s' --> ", s1, s2);
-	printf("'%s'\n", ft_strjoin(s1, s2));
+	if (s1 == NULL || s2 == NULL)
+		return (NULL);
+	s3 = (char *) malloc((ft_strlen(s1) + ft_strlen(s2)) + 1);
+	if (s3 == NULL)
+		return (NULL);
+	s3[0] = '\0';
+	ptr_3 = s3;
+	ft_strlcat(s3, s1, (ft_strlen(s1) + ft_strlen(s2)) + 1);
+	ft_strlcat(s3, s2, (ft_strlen(s1) + ft_strlen(s2)) + 1);
+	return (ptr_3);
 }
 
-int	main(void)
-{
-	test("Hello", "World");
-	return (0);
-}
-*/
+//int	main (void)
+//{
+//	char	*s1;
+//	char	*s2;
+//
+//	s1 = "";
+//	s2 = " como estas?";
+//	printf("Mine: %s", ft_strjoin(s1, s2));
+//	return (0);
+//}
+//

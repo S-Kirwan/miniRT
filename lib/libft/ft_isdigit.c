@@ -3,40 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skirwan <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/27 18:49:59 by skirwan           #+#    #+#             */
-/*   Updated: 2024/12/15 12:02:22 by skirwan          ###   ########.fr       */
+/*   Created: 2025/02/21 12:55:55 by aramos            #+#    #+#             */
+/*   Updated: 2025/02/21 12:55:56 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
 int	ft_isdigit(int c)
 {
-	if (c >= '0' && c <= '9')
+	char	a;
+
+	a = (char)c;
+	if (a >= '0' && a <= '9')
 		return (1);
 	return (0);
 }
-/*
-void	test(char c)
-{
-	printf("ft_isdigit for character %c = %d", c, ft_isdigit(c));
-	printf("\n");
-}
-
-int	main(void)
-{
-	test('1');
-	test('9');
-	test('A');
-	test('0');
-	test('m');
-	test('/');
-	test('\n');
-	test('R');
-	test('v');
-	test('5');
-	return (0);
-}
-*/
+//
+//int	main(void)
+//{
+//	printf("%d", ft_isdigit('6'));
+//	return (0);
+//}

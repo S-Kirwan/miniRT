@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skirwan <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/14 15:50:16 by skirwan           #+#    #+#             */
-/*   Updated: 2024/12/15 12:08:53 by skirwan          ###   ########.fr       */
+/*   Created: 2025/02/21 13:00:43 by aramos            #+#    #+#             */
+/*   Updated: 2025/02/21 13:00:44 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,55 @@
 
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	char	*str_out;
-	int		i;
+	size_t	len;
+	size_t	i;
+	char	*result;
+	char	*start_r;
 
-	i = 0;
-	str_out = malloc((ft_strlen(s) + 1) * sizeof(char));
-	if (!(str_out))
+	if (!s || !f)
 		return (NULL);
-	while (s[i])
+	i = 0;
+	len = ft_strlen(s);
+	result = (char *) malloc((len + 1) * sizeof(char));
+	if (!result)
+		return (NULL);
+	start_r = result;
+	while (s[i] != '\0')
 	{
-		str_out[i] = f(i, s[i]);
+		result[i] = (*f)(i, s[i]);
 		i++;
 	}
-	str_out[i] = '\0';
-	return (str_out);
+	result[len] = '\0';
+	return (start_r);
 }
-/*
-char	plus_index(unsigned int n, char c)
-{
-	c += n;
-	return (c);
-}
-int	main(void)
-{
-	printf("Applying function plus_index using ft_strmapi to '%s'\n", "0000000");
-	printf("= '%s'", ft_strmapi("0000000", plus_index));
-	return (0);
-}
-*/
+
+//char	my_function(unsigned int index, char c) 
+//{
+//	(void)index;
+//    // For demonstration, convert each character to uppercase
+//    if (c >= 'a' && c <= 'z') {
+//        return c - ('a' - 'A');
+//    }
+//    return c;
+//}
+//
+//
+//int main()
+//{
+//    // Input string
+//    const char *original_string = "hello world";
+//
+//    // Call ft_strmapi
+//    char *result = ft_strmapi(original_string, my_function);
+//
+//    // Check if the function call was successful
+//    if (result) {
+//        printf("Original string: %s\n", original_string);
+//        printf("Transformed string: %s\n", result);
+//        free(result); // Always free dynamically allocated memory
+//    } else {
+//        printf("Memory allocation failed.\n");
+//    }
+//
+//    return 0;
+//}

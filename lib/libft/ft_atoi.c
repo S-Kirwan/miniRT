@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skirwan <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/07 16:05:19 by skirwan           #+#    #+#             */
-/*   Updated: 2024/12/15 17:45:53 by skirwan          ###   ########.fr       */
+/*   Created: 2025/02/21 12:54:24 by aramos            #+#    #+#             */
+/*   Updated: 2025/02/21 12:54:29 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,36 @@
 
 int	ft_atoi(const char *nptr)
 {
-	int	num;
-	int	sign;
+	int			num;
+	int			sign;
 
 	sign = 1;
 	num = 0;
-	while ((*nptr == ' ') || (*nptr >= '\t' && *nptr <= '\r'))
+	while ((*nptr > 8 && *nptr < 14) || *nptr == ' ')
 		nptr++;
-	if ((*nptr > 'A' && *nptr < 'Z') || (*nptr > 'a' && *nptr < 'z'))
-		return (0);
-	if (*nptr == '-')
-		sign = -1;
-	if (*nptr == '+' || *nptr == '-')
-		nptr++;
-	while (*nptr >= '0' && *nptr <= '9')
+	while (*nptr == '-' || *nptr == '+')
 	{
-		num = (num * 10) + (*nptr - '0');
-		nptr++;
+		if (*nptr == '-')
+			sign *= -1;
+		if (*(nptr + 1) >= '0' && *(nptr + 1) <= '9')
+		{
+			nptr++;
+			break ;
+		}
+		return (0);
 	}
+	while (*nptr >= '0' && *nptr <= '9')
+		num = num * 10 + (*nptr++ - '0');
 	return (num * sign);
 }
+
+//#include <stdio.h>
+//
+//int	main(void)
+//{
+//	const char	my_numbers [] = "2147483647";
+//
+//	printf("Original:%d\n", atoi(my_numbers));
+//	printf("Mine:%d\n",ft_atoi(my_numbers));
+//	return (0);
+//}	

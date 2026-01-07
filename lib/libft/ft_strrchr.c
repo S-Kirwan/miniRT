@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skirwan <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/07 15:15:35 by skirwan           #+#    #+#             */
-/*   Updated: 2024/12/15 19:50:03 by skirwan          ###   ########.fr       */
+/*   Created: 2025/02/21 13:01:02 by aramos            #+#    #+#             */
+/*   Updated: 2025/02/21 13:01:04 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,26 @@
 
 char	*ft_strrchr(const char *s, int c)
 {
-	int	len;
+	const char	*ptr = s;
 
-	len = ft_strlen(s);
-	if (c == '\0')
-		return ((char *)(s + len));
-	while (len)
+	if (s == NULL || c < 0)
+		return (NULL);
+	if (c == 0 && s[ft_strlen(s)] == '\0')
+		return ((char *)(s + ft_strlen(s)));
+	s += ft_strlen(s);
+	while (s >= ptr)
 	{
-		if (s[len - 1] == (char)c)
-			return ((char *)(s + (len - 1)));
-		len--;
+		if (*s == (char)c)
+			return ((char *)s);
+		s--;
 	}
 	return (NULL);
 }
+
+//int	main(void)
+//{
+//	const char	s[] = "murcielago gris";
+//
+//	printf("%s", ft_strrchr(s, (int)'i'));
+//	return (0);
+//}

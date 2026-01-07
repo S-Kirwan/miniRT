@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skirwan <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 12:34:32 by skirwan           #+#    #+#             */
-/*   Updated: 2024/12/15 12:06:39 by skirwan          ###   ########.fr       */
+/*   Created: 2025/02/21 12:59:44 by aramos            #+#    #+#             */
+/*   Updated: 2025/02/21 12:59:47 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,22 @@
 
 char	*ft_strdup(const char *s)
 {
-	int		i;
-	char	*dest;
+	char	*ptr;
+	int		size_s;
 
-	i = 0;
-	dest = (char *)malloc(ft_strlen(s) + 1);
-	if (dest == NULL)
+	size_s = ft_strlen(s) + 1;
+	if (s == NULL)
 		return (NULL);
-	while (*s)
-	{
-		dest[i] = *s++;
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
+	ptr = (char *) ft_calloc(size_s, sizeof(char));
+	if (ptr == NULL)
+		return (NULL);
+	ft_strlcpy(ptr, s, size_s);
+	return (ptr);
 }
+
+//int	main(void)
+//{
+//	char	*s = ft_strdup((char *) "coucou");
+//	printf("%s", s);
+//	return (0);
+//}

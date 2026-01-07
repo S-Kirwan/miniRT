@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnewint.c                                     :+:      :+:    :+:   */
+/*   mlx_destroy_display.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
+/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/01 13:17:14 by skirwan           #+#    #+#             */
-/*   Updated: 2025/05/01 13:18:35 by skirwan          ###   ########.fr       */
+/*   Created: 2020/10/03 18:56:35 by mg                #+#    #+#             */
+/*   Updated: 2020/10/04 01:55:35 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "mlx_int.h"
 
-t_list	*ft_lstnewint(int num)
+int	mlx_destroy_display(t_xvar *xvar)
 {
-	t_list	*node;
-
-	node = malloc(sizeof(*node));
-	node->nbr = num;
-	node->next = NULL;
-	return (node);
+	XCloseDisplay(xvar->display);
 }

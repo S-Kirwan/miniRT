@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skirwan <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 10:31:52 by skirwan           #+#    #+#             */
-/*   Updated: 2024/12/15 19:47:42 by skirwan          ###   ########.fr       */
+/*   Created: 2025/02/21 13:00:56 by aramos            #+#    #+#             */
+/*   Updated: 2025/02/21 13:00:57 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,34 @@
 
 char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
-	size_t	i;
-	size_t	j;
+	const char	*ptr_l;
+	const char	*ptr_b;
+	size_t		remaining;
 
-	i = 0;
-	if (little[0] == '\0')
+	if (*little == '\0')
 		return ((char *)big);
-	while (len && big[i])
+	while (*big != '\0' && len > 0)
 	{
-		j = 0;
-		while ((big[i + j] == little[j]) && big[i + j] && (len >= (i + j)))
-			j++;
-		if (little[j] == '\0' && (len >= (i + j)))
-			return ((char *)big + i);
-		i++;
+		ptr_b = big;
+		ptr_l = little;
+		remaining = len;
+		while (*ptr_b == *ptr_l && *ptr_l != '\0' && remaining > 0)
+		{
+			ptr_b++;
+			ptr_l++;
+			remaining--;
+		}
+		if (*ptr_l == '\0')
+			return ((char *)big);
+		big++;
+		len--;
 	}
 	return (NULL);
 }
+
+//int	main(void)
+//{
+//	char	haystack[] = "aaabcabcd";
+//	printf("%s", ft_strnstr(haystack, "cd", 5));
+//	return (0);
+//}

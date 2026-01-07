@@ -3,70 +3,54 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skirwan <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 14:12:38 by skirwan           #+#    #+#             */
-/*   Updated: 2024/12/15 19:48:56 by skirwan          ###   ########.fr       */
+/*   Created: 2025/02/21 13:01:10 by aramos            #+#    #+#             */
+/*   Updated: 2025/02/21 13:01:11 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	end(char const *s1, char const *set)
+static int	c_in_str(char c, char const *set)
 {
-	size_t	i;
-
-	i = ft_strlen(s1);
-	while (ft_strchr(set, s1[i]) != NULL && (i > 0))
-		i--;
-	return (i);
-}
-
-size_t	beginning(char const *s1, char const *set)
-{
-	size_t	i;
-
-	i = 0;
-	while (ft_strchr(set, s1[i]) != NULL)
-		i++;
-	return (i);
+	while (*set != '\0')
+	{
+		if (*set == c)
+			return (1);
+		set++;
+	}
+	return (0);
 }
 
 char	*ft_strtrim(char const *s1, char const *set)
 {
-	char	*trimmed;
-	size_t	front;
-	size_t	back;
-	size_t	i;
+	char const	*start;
+	char const	*end;
+	char		*trimmed;
+	size_t		len;
 
-	i = 0;
-	front = beginning(s1, set);
-	back = end(s1, set);
-	if (front > back)
-		return (ft_strdup(""));
-	trimmed = malloc((back - front) + 2);
-	if (trimmed == NULL)
+	if (!s1 || !set)
 		return (NULL);
-	while (s1[front] && (front <= back))
-		trimmed[i++] = s1[front++];
-	trimmed[i] = '\0';
+	start = s1;
+	while (*start && c_in_str(*start, set))
+		start++;
+	end = s1 + ft_strlen(s1);
+	while (end > start && c_in_str(*(end -1), set))
+		end--;
+	len = end - start;
+	trimmed = ft_substr(start, 0, len);
+	if (!trimmed)
+		return (NULL);
+	trimmed[len] = '\0';
 	return (trimmed);
 }
-/*
-void	test(char const *s1, char const *set)
-{
-	printf("trimmed string '%s' of chars '%s' -->", s1, set);
-	printf("'%s'\n", ft_strtrim(s1, set));
-	printf("\n");
-}
 
-int	main(void)
-{
-	test("callous", "abcd");
-	test("callousabc", "abcd");
-	test("runningrun", "unr");
-	test("play", "12");
-	test("runabcrun", "abc");
-	return (0);
-}
-*/
+//int	main(void)
+//{
+//	char const	s1[] = "aaaeiouuohella@ouioa";
+//	char const	set[] = "aeiou";
+//
+//	printf("%s", ft_strtrim(s1, set));
+//	return (0);
+//}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skirwan <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/27 19:13:55 by skirwan           #+#    #+#             */
-/*   Updated: 2024/12/15 12:08:24 by skirwan          ###   ########.fr       */
+/*   Created: 2025/02/21 13:00:36 by aramos            #+#    #+#             */
+/*   Updated: 2025/02/21 13:00:37 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,13 @@ size_t	ft_strlen(const char *s)
 	size_t	i;
 
 	i = 0;
-	while (*s)
-	{
+	while (s[i] != '\0')
 		i++;
-		s++;
-	}
 	return (i);
 }
-/*
-void	test(char *s)
-{
-	printf("String %s has %d characters", s, ft_strlen(s));
-	printf("\n");
-}
 
-int	main(void)
-{
-	test("hello world");
-	return (0);
-}
-*/
+//int	main(void)
+//{
+//	printf("%lu", ft_strlen("H\\0"));
+//	return (0);
+//}

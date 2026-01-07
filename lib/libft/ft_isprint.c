@@ -3,36 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isprint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skirwan <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/29 17:01:40 by skirwan           #+#    #+#             */
-/*   Updated: 2024/12/15 14:47:50 by skirwan          ###   ########.fr       */
+/*   Created: 2025/02/21 12:56:01 by aramos            #+#    #+#             */
+/*   Updated: 2025/02/21 12:56:04 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
 int	ft_isprint(int c)
 {
-	if (c >= 32 && c < 127)
+	if (c >= 32 && c <= 126)
 		return (1);
-	return (0);
+	else
+		return (0);
 }
-/*
-void	test(int c)
-{
-	printf("ft_isprint for character %c = %d \n", c, ft_isprint(c));
-}
-
-int	main(void)
-{
-	test(' ');
-	test(10);
-	test(30);
-	test(5);
-	test(100);
-	test(-100);
-	test(-5);
-	return (0);
-}
-*/
+//
+//int	main(void)
+//{
+//	printf("%d", ft_isprint(21));
+//	return (0);
+//}
