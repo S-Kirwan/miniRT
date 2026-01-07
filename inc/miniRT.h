@@ -69,9 +69,7 @@ typedef enum e_shape
 typedef struct s_ambience
 {
 	int	ratio;
-	int	red;
-	int	green;
-	int	blue;
+	int	colour[3];
 }	t_ambience;
 
 typedef struct s_camera

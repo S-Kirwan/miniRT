@@ -125,6 +125,7 @@ int	sphere_hit(t_sphere *sphere, t_vector ray_origin, t_vector ray_dir, float *t
 //ray_origin = O
 //ray_dir = D
 // t = t haha
+// __attribute__((optimize("O3")))
 void	raytracing(t_data *all)
 {
 	t_vector	ray_origin = {all->camera->x, all->camera->y, all->camera->z};
@@ -135,6 +136,8 @@ void	raytracing(t_data *all)
 	float	t;
 	float	ambient;
 	float	intensity;
+	float	light_distance;
+	float	shadow;;
 
 	ambient = all->ambience->ratio;
 	y = 0;
@@ -153,9 +156,15 @@ void	raytracing(t_data *all)
 				t_vector	surface_normal = {hit_point.x - all->spheres->x, hit_point.y - all->spheres->y, hit_point.z - all->spheres->z};
 				normalize(&surface_normal);
 				t_vector	light_dir = {all->lights->x - hit_point.x, all->lights->y - hit_point.y, all->lights->z - hit_point.z};
+				t_vector	shadow_dir = {all->lights->x - hit_point.x, all->lights->y - hit_point.y, all->lights->z - hit_point.z};
+				light_distance = sqrt(shadow_dir.x * shadow_dir.x + shadow_dir.y * shadow_dir.y + shadow_dir.z * shadow_dir.z);
+				normalize(&shadow_dir);
 				normalize(&light_dir);
+				t_vector shadow_origin = {hit_point.x + surface_normal.x * 0.001f, hit_point.y + surface_normal.y * 0.001f, hit_point.z + surface_normal.z * 0.001f};
 				float	diffuse = surface_normal.x * light_dir.x + surface_normal.y * light_dir.y + surface_normal.z * light_dir.z;
 				if (diffuse < 0)
+					diffuse = 0;
+				if (sphere_hit(all->spheres, shadow_origin, light_dir, &shadow) && shadow < light_distance)
 					diffuse = 0;
 				intensity = ambient + diffuse;
 				if (intensity > 1.0f)
@@ -165,15 +174,15 @@ void	raytracing(t_data *all)
 				int	b = (int)(all->spheres->blue * intensity);
 				int	color = (r << 16) | (g << 8) | b;
                 mlx_pixel_put(all->mlx, all->win, x, y, color);
-				t_vector light_pos = {all->lights->x, all->lights->y, all->lights->z};
-
-				t_vector cam2D   = project(all, (t_vector){all->camera->x, all->camera->y, all->camera->z});
-				t_vector light2D = project(all, light_pos);
+				// t_vector light_pos = {all->lights->x, all->lights->y, all->lights->z};
+				//
+				// t_vector cam2D   = project(all, (t_vector){all->camera->x, all->camera->y, all->camera->z});
+				// t_vector light2D = project(all, light_pos);
 				// t_vector hit2D   = project(all, hit_point);
 
 				// draw points
-				put_point(all, cam2D.x, cam2D.y, 0xFF0000);     // camera = red
-				put_point(all, light2D.x, light2D.y, 0xFFFF00); // light = yellow
+				// put_point(all, cam2D.x, cam2D.y, 0xFF0000);     // camera = red
+				// put_point(all, light2D.x, light2D.y, 0xFFFF00); // light = yellow
 
 				// draw ray from camera to hit
 				// draw_line(all, cam2D, hit2D, 0x00FF00);         // ray = green
