@@ -48,6 +48,14 @@ void draw_line(t_data *all, t_vector from, t_vector to, int color)
 
 void	init(t_data *all)
 {
+
+	//TODO: Ambient light
+	all->ambience = malloc(sizeof(t_ambience));
+	all->ambience->ratio = 1;
+	all->ambience->colour[0] = 0;//r
+	all->ambience->colour[1] = 255;//g
+	all->ambience->colour[2] = 0;//b
+
 	//TODO: Lights
 	all->lights = malloc(sizeof(t_light));
 	all->lights->x = 0;
@@ -125,7 +133,10 @@ void	raytracing(t_data *all)
 	float	u;
 	float	v;
 	float	t;
+	float	ambient;
+	float	intensity;
 
+	ambient = all->ambience->ratio;
 	y = 0;
 	while (y < HEIGHT)
 	{
@@ -143,9 +154,12 @@ void	raytracing(t_data *all)
 				normalize(&surface_normal);
 				t_vector	light_dir = {all->lights->x - hit_point.x, all->lights->y - hit_point.y, all->lights->z - hit_point.z};
 				normalize(&light_dir);
-				float	intensity = surface_normal.x * light_dir.x + surface_normal.y * light_dir.y + surface_normal.z * light_dir.z;
-				if (intensity < 0)
-					intensity = 0;
+				float	diffuse = surface_normal.x * light_dir.x + surface_normal.y * light_dir.y + surface_normal.z * light_dir.z;
+				if (diffuse < 0)
+					diffuse = 0;
+				intensity = ambient + diffuse;
+				if (intensity > 1.0f)
+					intensity = 1.0f;
 				int	r = (int)(all->spheres->red * intensity);
 				int	g = (int)(all->spheres->green * intensity);
 				int	b = (int)(all->spheres->blue * intensity);
