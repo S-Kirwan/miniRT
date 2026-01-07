@@ -27,16 +27,16 @@
 # include <stdarg.h>
 # include <stdio.h>
 
-typedef struct s_list
-{
-	union
-	{
-		void	*content;
-		int		nbr;
-		char	*str;
-	};
-	struct s_list	*next;
-}					t_list;
+// typedef struct s_list
+// {
+// 	union
+// 	{
+// 		void	*content;
+// 		int		nbr;
+// 		char	*str;
+// 	};
+// 	struct s_list	*next;
+// }					t_list;
 
 void				*ft_memset(void *dest, int c, size_t n);
 void				ft_bzero(void *b, size_t n);
@@ -77,16 +77,16 @@ void				ft_putstr_fd(char *s, int fd);
 void				ft_putendl_fd(char *s, int fd);
 void				ft_putnbr_fd(int n, int fd);
 
-t_list				*ft_lstnew(void *content);
-void				ft_lstadd_front(t_list **lst, t_list *new_node);
-int					ft_lstsize(t_list *lst);
-t_list				*ft_lstlast(t_list *lst);
-void				ft_lstadd_back(t_list **lst, t_list *new_node);
-void				ft_lstdelone(t_list *lst, void (*del)(void *));
-void				ft_lstclear(t_list **lst, void (*del)(void *));
-void				ft_lstiter(t_list *lst, void (*f)(void *));
-t_list				*ft_lstmap(t_list *lst, void *(f)(void *),
-						void (*del)(void *));
+// t_list				*ft_lstnew(void *content);
+// void				ft_lstadd_front(t_list **lst, t_list *new_node);
+// int					ft_lstsize(t_list *lst);
+// t_list				*ft_lstlast(t_list *lst);
+// void				ft_lstadd_back(t_list **lst, t_list *new_node);
+// void				ft_lstdelone(t_list *lst, void (*del)(void *));
+// void				ft_lstclear(t_list **lst, void (*del)(void *));
+// void				ft_lstiter(t_list *lst, void (*f)(void *));
+// t_list				*ft_lstmap(t_list *lst, void *(f)(void *),
+						// void (*del)(void *));
 
 int					ft_printf(const char *format, ...);
 int					ft_putptr(void *ptr, char *hex);
@@ -104,7 +104,7 @@ char				*gnl_join(char *s1, char *s2);
 char				*strip_past_nl(char *line);
 char				*read_file(int fd, char *buffer);
 
-t_list				*ft_lstnewint(int num);
+// t_list				*ft_lstnewint(int num);
 long				ft_atol(const char *nptr);
 double				ft_atof(char *str);
 

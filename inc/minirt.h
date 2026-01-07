@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include "../libft/libft.h"
+#include "../lib/libft/libft.h"
 #include "../minilibx-linux/mlx.h"
 
 int	screen();

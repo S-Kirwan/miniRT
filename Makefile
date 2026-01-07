@@ -27,7 +27,7 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra -Iincludes -Ilibft -Iminilibx-linux -MMD -MP -g3
 
 #Libraries
-LIBFT_DIR = ./libft
+LIBFT_DIR = ./lib/libft
 LIBFT = $(LIBFT_DIR)/libft.a
 MLX_DIR = minilibx-linux
 MLX_LIB = $(MLX_DIR)/libmlx.a
