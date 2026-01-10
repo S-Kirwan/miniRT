@@ -24,12 +24,8 @@ char *read_colours(char *line, int colours[3])
 	while (i < 3)
 	{
 		j = 0;
-		while (j < 3)
-		{
-			if (!ft_isdigit(line[j]))
-				return (NULL);
+		while (j < 3 && ft_isdigit(line[j]))
 			j++;
-		}
 		if (!valid_char_post_element(i, line[j]))
 			return (NULL);
 		colour_substr = ft_substr(line, 0, j);
