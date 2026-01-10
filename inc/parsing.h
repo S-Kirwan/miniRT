@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 11:43:28 by skirwan           #+#    #+#             */
-/*   Updated: 2025/12/27 16:04:45 by skirwan          ###   ########.fr       */
+/*   Updated: 2026/01/06 09:22:19 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,13 @@ void	read_camera(t_camera *camera, t_parser *parser, char *line);
 void	read_light(t_light *light, t_parser *parser, char *line);
 
 // read_plane.c
+void	read_plane(t_list **list, t_parser *parser, char *line);
 
 // read_sphere.c
-void	read_sphere(t_list *list, t_parser *parser, char *line);
+void	read_sphere(t_list **list, t_parser *parser, char *line);
 
 // read_cylinder.c
+void	read_cylinder(t_list **list, t_parser *parser, char *line);
 
 // read_colours.c
 char	*read_colours(char *line, int colours[3]);
@@ -62,12 +64,16 @@ char	*read_vectors(char *line, float vectors[3]);
 
 // parsing_utils.c
 t_list	*ft_lst_new_shape(t_shape *shape);
-char	*read_diameter(char *line, float *diameter);
+char	*read_diam_height(char *line, float *ref);
+void	skip_whitespace(char **line);
 void	parsing_error(int *errors);
+int		valid_char_post_element(int i, char c);
+
+// parsing_tests.c
+void	print_shape_list(t_list *shape_list);
 void	print_vectors_test(float vectors[3]);
 void	print_colours_test(int colours[3]);
 void	print_coords_test(float coords[3]);
-int		valid_char_post_element(int i, char c);
 
 #endif
 
