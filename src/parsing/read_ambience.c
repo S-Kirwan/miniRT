@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "miniRT.h"
 #include "parsing.h"
 
@@ -18,13 +17,11 @@ void	read_ambience(t_ambience *ambience, t_parser *parser, char *line)
 {
 	if (parser->ambience != 0)
 		return (parsing_error(&parser->errors));
-	while (ft_isspace(*line))
-		line++;
+	skip_whitespace(&line);
 	line = read_ratio(line, &ambience->ratio);
 	if (line == NULL)
 		return (parsing_error(&parser->errors));
-	while (ft_isspace(*line))
-		line++;
+	skip_whitespace(&line);
 	if (read_colours(line, ambience->colour) == NULL)
 		return (parsing_error(&parser->errors));
 }

@@ -18,12 +18,15 @@ SRC    = main.c \
 		 parsing/read_ambience.c \
 		 parsing/read_colours.c \
 		 parsing/read_coordinates.c \
-		 parsing/parsing_utils.c \
 		 parsing/read_camera.c \
 		 parsing/read_ratio.c \
 		 parsing/read_vectors.c \
 		 parsing/read_light.c \
-		 initialisation/initialise_data.c \
+		 parsing/read_sphere.c \
+		 parsing/read_plane.c \
+		 parsing/read_cylinder.c \
+		 parsing/parsing_utils.c \
+		 parsing/parsing_tests.c \
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
 

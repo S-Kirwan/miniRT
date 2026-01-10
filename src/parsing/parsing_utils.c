@@ -6,17 +6,19 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 12:46:09 by skirwan           #+#    #+#             */
-/*   Updated: 2025/12/27 16:03:28 by skirwan          ###   ########.fr       */
+/*   Updated: 2026/01/06 14:00:03 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "miniRT.h"
 #include "parsing.h"
+#include <stdio.h>
 
 void	parsing_error(int *errors)
 {
-	errors++;
+	*errors += 1;
+	return ;
 }
 
 t_list	*ft_lst_new_shape(t_shape *shape)
@@ -31,51 +33,25 @@ t_list	*ft_lst_new_shape(t_shape *shape)
 	return (new_node);
 }
 
-void	print_colours_test(int colours[3])
+void	skip_whitespace(char **line)
 {
-	int	i;
+	char	*line_ptr;
 
-	i = 0;
-	while (i < 3)
-	{
-		printf("Colour %d = %d\n", i, colours[i]);
-		i++;
-	}
+	line_ptr = *line;
+	while (ft_isspace(*line_ptr))
+		line_ptr++;
+	*line = line_ptr;
 }
 
-void	print_coords_test(float coords[3])
+char	*read_diam_height(char *line, float *ref)
 {
-	int	i;
-
-	i = 0;
-	while (i < 3)
-	{
-		printf("Coord %d = %f\n", i, coords[i]);
-		i++;
-	}
-}
-
-void	print_vectors_test(float vectors[3])
-{
-	int	i;
-
-	i = 0;
-	while (i < 3)
-	{
-		printf("Vector %d = %f\n", i, vectors[i]);
-		i++;
-	}
-}
-
-char	*read_diameter(char *line, float *diameter)
-{
-	char	*diam_substr;
+	char	*measurement_substr;
 	int		decimal_places;
 	int		i;
 
 	i = 0;
 	decimal_places = 0;
-	while (ft_isdigit(line[i] || line[i] == '.'))
+	while (ft_isdigit(line[i]) || line[i] == '.')
 	{
 		if (line[i] == '.')
 			decimal_places++;
@@ -83,12 +59,12 @@ char	*read_diameter(char *line, float *diameter)
 	}
 	if (!ft_isspace(line[i]) || decimal_places > 1)
 		return (NULL);
-	diam_substr = ft_substr(line, 0, i);
-	if (diam_substr == NULL)
+	measurement_substr = ft_substr(line, 0, i);
+	if (measurement_substr == NULL)
 		return (NULL);
-	*diameter = ft_atof(diam_substr);
-	free(diam_substr);
-	if (*diameter <= 0.0)
+	*ref= ft_atof(measurement_substr);
+	free(measurement_substr);
+	if (*ref <= 0.0)
 		return (NULL);
 	return (line + i);
 }
