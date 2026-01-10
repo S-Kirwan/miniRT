@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 11:52:43 by skirwan           #+#    #+#             */
-/*   Updated: 2025/12/27 16:06:25 by skirwan          ###   ########.fr       */
+/*   Updated: 2026/01/06 14:00:19 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,14 @@
 #include "miniRT.h"
 #include "parsing.h"
 
-void	read_sphere(t_list *list, t_parser *parser, char *line)
+void	read_sphere(t_list **list, t_parser *parser, char *line)
 {
 	t_shape	*sphere;
 
 	if (*line != 'p')
 		return (parsing_error(&parser->errors));
 	line++;
-	while (ft_isspace(*line))
-		line++;
+	skip_whitespace(&line);
 	sphere = malloc(sizeof(*sphere));
 	if (sphere == NULL)
 		return (parsing_error(&parser->errors));
@@ -30,15 +29,13 @@ void	read_sphere(t_list *list, t_parser *parser, char *line)
 	line = read_coordinates(line, sphere->position);
 	if (line == NULL)
 		return (free(sphere), parsing_error(&parser->errors));
-	while (ft_isspace(*line))
-		line++;
-	line = read_diameter(line, &sphere->diameter);
+	skip_whitespace(&line);
+	line = read_diam_height(line, &sphere->diameter);
 	if (line == NULL)
 		return (free(sphere), parsing_error(&parser->errors));
-	while (ft_isspace(*line))
-		line++;
+	skip_whitespace(&line);
 	line = read_colours(line, sphere->colour);
 	if (line == NULL)
 		return (free(sphere), parsing_error(&parser->errors));
-	ft_lstadd_back(&list, ft_lst_new_shape(sphere));
+	ft_lstadd_back(list, ft_lst_new_shape(sphere));
 }
