@@ -48,7 +48,6 @@ int	read_scene(t_data *data, t_parser *parser)
 			exit(1); // cleanup required
 		}
 		free(buffer);
-		printf("parser->errors = %d\n", parser->errors);
 		if (parser->errors > 0)
 		{
 			printf("Error\n");

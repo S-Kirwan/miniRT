@@ -29,7 +29,7 @@ int	main(int argc, char **argv)
 		return (1);
 	if (receive_scene(&data, scene_fd) == -1)
 		return (1);
-	print_shape_list(data.shape_list);
+	// print_shape_list(data.shape_list);
 	return (0);
 	(void)argc;
 	(void)argv;
