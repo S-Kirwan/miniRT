@@ -36,6 +36,14 @@ typedef enum e_shape
 	SPHERE
 }	t_en_shape;
 
+typedef struct	s_vector//Struct to do math and store temp values
+{
+	float	x;
+	float	y;
+	float	z;
+	// int		p;//1 if its a point, 0 if its a vector(with direction)
+}	t_vector;
+
 typedef struct s_shape
 {
 	t_en_shape	shape;
