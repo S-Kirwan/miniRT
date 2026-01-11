@@ -1,57 +1,103 @@
-NAME    = miniRT
+# Text styles
+DEL_LINE =		\033[2K
+BOLD =			\033[1m
+DEF_COLOR =		\033[0;39m
 
-CC      = cc
-CFLAGS  = -Wall -Wextra -Werror -g3 -O3 -Iinc
+# Basic bright colors
+GRAY =			\033[0;90m
+RED =			\033[0;91m
+GREEN =			\033[0;92m
+YELLOW =		\033[0;93m
+BLUE =			\033[0;94m
+MAGENTA =		\033[0;95m
+CYAN =			\033[0;96m
 
-SRC_DIR     = src/
-OBJ_DIR     = obj/
-INC_DIR     = inc/
-LIB_DIR     = lib/
-LIBFT_DIR   = $(LIB_DIR)/libft
+# Other colors
+WHITE =			\033[0;97m
+BLACK =			\033[0;99m
+ORANGE =		\033[38;5;209m
+BROWN =			\033[38;2;184;143;29m
+DARK_GRAY =		\033[38;5;234m
+MID_GRAY =		\033[38;5;245m
+DARK_GREEN =	\033[38;2;75;179;82m
+DARK_YELLOW =	\033[38;5;143m
 
-LIBFT_A     = $(LIBFT_DIR)/libft.a
-LIBFT_LIB   = -L$(LIBFT_DIR) -lft
+#Compiler Info
+CC = cc
+CFLAGS = -Wall -Werror -Wextra -Iincludes -Ilibft -Iminilibx-linux -MMD -MP -g3
 
-SRC    = main.c \
-		 parsing/validate_file.c \
-		 parsing/receive_scene.c \
-		 parsing/read_ambience.c \
-		 parsing/read_colours.c \
-		 parsing/read_coordinates.c \
-		 parsing/read_camera.c \
-		 parsing/read_ratio.c \
-		 parsing/read_vectors.c \
-		 parsing/read_light.c \
-		 parsing/read_sphere.c \
-		 parsing/read_plane.c \
-		 parsing/read_cylinder.c \
-		 parsing/parsing_utils.c \
-		 parsing/parsing_tests.c \
+#Libraries
+LIBFT_DIR = ./lib/libft
+LIBFT = $(LIBFT_DIR)/libft.a
+MLX_DIR = minilibx-linux
+MLX_LIB = $(MLX_DIR)/libmlx.a
+MLX = -L$(MLX_DIR) -lmlx -L/usr/lib -lXext -lX11 -lm -lz
 
-SRCS = $(addprefix $(SRC_DIR), $(SRC))
+#Target names
+NAME = miniRT
 
-OBJS = $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)%.o, $(SRCS))
+#Paths
+OBJ_DIR = build
+SRC_DIR = src
 
-$(OBJ_DIR)%.o : $(SRC_DIR)%.c | $(OBJ_DIR)
-	mkdir -p $(OBJ_DIR)/$(dir $*)
-	$(CC) $(CFLAGS) -c $< -o $@
+#Source Files
+SRC =	$(SRC_DIR)/screen.c
 
-all: $(LIBFT_A) $(NAME)
+#Objects and Dependencies
+OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+# DEP = $($(OBJ_DIR)/%.o=$(OBJ_DIR)/%.d)
+# DEP = $(OBJ:.o=.d)
 
-$(LIBFT_A):
-	$(MAKE) -sC $(LIBFT_DIR)
+#Create Program
+$(NAME): $(OBJ) $(LIBFT) $(MLX_LIB)
+	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MLX) -o $@
+	@echo "\n${GREEN} Created $(NAME) ${DEF_COLOR}\n"
 
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -I$(INC_DIR) $(LIBFT_LIB) -lm -o $(NAME)
+#Create Libraries
+$(LIBFT):
+	@echo "\n${CYAN} ==libft= ${DEF_COLOR}"
+	@make --no-print-directory -C $(LIBFT_DIR)
 
+$(MLX_LIB):
+	@echo "\n${CYAN} ==minilibx== ${DEF_COLOR}"
+	@{ \
+		 bar=""; \
+		 max=50;\
+		 while :; do \
+		 	bar="$${bar}#"; \
+		 	printf "\r${GREEN}[%-${max}s] ${DEF_COLOR}" "$$bar"; \
+		 	sleep 0.08; \
+		 done \
+		 } & \
+		 PID=$$!; \
+		make --no-print-directory -C $(MLX_DIR) > /dev/null 2>&1; \
+		 kill $$PID >/dev/null 2>&1 || true; \
+		 printf "\n%0.s" $$(seq 1 $$max);
+
+#Compile .c into Object Files
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(dir $@)
+	@echo "\n${CYAN} ==$(NAME)== ${DEF_COLOR}"
+	@echo "${MAGENTA} ~ ${BROWN} Compiling... ${MAGENTA}-> ${CYAN}$< ${DEF_COLOR}\n"
+	@$(CC) $(CFLAGS) -I/usr/include -I$(MLX_DIR)mlx -c $< -o $@
+
+#Build All
+all: $(NAME)
+
+#Remove Object files
 clean:
-	rm -rf $(OBJ_DIR)
-	$(MAKE) -sC $(LIBFT_DIR) clean
+	@rm -rf $(OBJ_DIR)
+	@make --no-print-directory -C $(LIBFT_DIR) clean
+	@make --no-print-directory -C $(MLX_DIR) clean > /dev/null 2>&1
+	@echo "${YELLOW} Cleaned $(OBJ_DIR) miniRT ${DEF_COLOR}"
 
+#Remove Everything
 fclean: clean
-	rm -f $(NAME)
-	$(MAKE) -sC $(LIBFT_DIR) fclean
+	@rm -f $(NAME)
+	@make --no-print-directory -C $(LIBFT_DIR) fclean
+	@echo "${YELLOW} Cleaned $(NAME) ${DEF_COLOR}"
 
+#Rebuild Everything
 re: fclean all
 
 .PHONY: all clean fclean re

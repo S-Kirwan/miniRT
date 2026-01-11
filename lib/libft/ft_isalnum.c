@@ -3,46 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skirwan <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/27 18:58:55 by skirwan           #+#    #+#             */
-/*   Updated: 2024/12/15 12:01:39 by skirwan          ###   ########.fr       */
+/*   Created: 2025/02/21 12:55:12 by aramos            #+#    #+#             */
+/*   Updated: 2025/02/21 12:55:13 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
 int	ft_isalnum(int c)
 {
-	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
-		return (1);
-	if (c >= '0' && c <= '9')
-		return (1);
-	return (0);
-}
-/*
-void	test(char c)
-{
-	printf("ft_isalnum for character %c = %d", c, ft_isalnum(c));
-	printf("\n");
-}
+	unsigned char	a;
 
-int	main(void)
-{
-	test('A');
-	test('B');
-	test('1');
-	test('0');
-	test('9');
-	test('@');
-	test('*');
-	test('^');
-	test('<');
-	test('F');
-	test('Z');
-	test('a');
-	test('b');
-	test('z');
+	a = (unsigned char)c;
+	if ((a >= 65 && a <= 90) || (a >= 97 && a <= 122) || (a >= '0' && a <= '9'))
+		return (1);
 	return (0);
 }
-*/
+//
+//int main(void)
+//{
+//	printf("%d", ft_isalnum(91));
+//	return (0);
+//}

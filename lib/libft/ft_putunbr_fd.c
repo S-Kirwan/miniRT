@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isspace.c                                       :+:      :+:    :+:   */
+/*   ft_putunbr_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
+/*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/28 13:02:47 by skirwan           #+#    #+#             */
-/*   Updated: 2025/11/28 13:06:31 by skirwan          ###   ########.fr       */
+/*   Created: 2025/02/21 12:59:22 by aramos            #+#    #+#             */
+/*   Updated: 2025/02/21 12:59:23 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_isspace(int c)
+int	ft_putunbr_fd(unsigned int n, int fd)
 {
-	if (c == ' ')
-		return (1);
-	if (c == '\t')
-		return (1);
-	if (c == '\f')
-		return(1);
-	if (c == '\r')
-		return (1);
-	if (c == '\v')
-		return (1);
-	return (0);
+	int	count;
+
+	count = 0;
+	if (n > 9)
+		count += ft_putnbr_fd(n / 10, fd);
+	ft_putchar_fd(n % 10 + '0', fd);
+	count++;
+	return (count);
 }
+
+//int	main(void)
+//{
+//	ft_putnbr_fd(-2147483648LL, 1);
+//}

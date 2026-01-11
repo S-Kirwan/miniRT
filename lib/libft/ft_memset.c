@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skirwan <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/29 17:33:24 by skirwan           #+#    #+#             */
-/*   Updated: 2024/12/15 19:49:49 by skirwan          ###   ########.fr       */
+/*   Created: 2025/02/21 12:58:22 by aramos            #+#    #+#             */
+/*   Updated: 2025/02/21 12:58:24 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,29 @@
 
 void	*ft_memset(void *s, int c, size_t n)
 {
-	char	*str;
+	char	replace_by;
+	void	*ptr;	
 
-	str = (char *)s;
+	ptr = s;
+	replace_by = (unsigned char)c;
 	while (n > 0)
 	{
-		*str = c;
-		str++;
+		*(unsigned char *)s = replace_by;
 		n--;
+		s++;
 	}
-	return (s);
+	return (ptr);
 }
+
+//int	main(void)
+//{
+//	char str[50] = "Hello, I am understanding the memset function";
+//
+//	//printf("Before memset(): %s\n", str);
+//	printf("Before ft_memset(): %s\n", str);
+//	//memset(str, -133, 10*sizeof(char));
+//	//printf("After memset():   %s\n", str);
+//	ft_memset(str, '.', 10*sizeof(char));
+//	printf("After ft_memset():   %s", str);
+//	return (0);
+//}

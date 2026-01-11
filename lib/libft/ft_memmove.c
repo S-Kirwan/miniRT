@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skirwan <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/07 14:06:22 by skirwan           #+#    #+#             */
-/*   Updated: 2024/12/15 19:43:17 by skirwan          ###   ########.fr       */
+/*   Created: 2025/02/21 12:58:12 by aramos            #+#    #+#             */
+/*   Updated: 2025/02/21 12:58:13 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,25 @@
 
 void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-	char	*sdest;
-	char	*ssrc;
+	void	*ptr;
 
-	sdest = (char *)dest;
-	ssrc = (char *)src;
-	if (dest < src)
+	if (n == 0)
+		return (dest);
+	ptr = dest;
+	if (src < dest && dest <= src + (n -1))
 	{
-		while (n--)
-			*sdest++ = *ssrc++;
+		while (n-- > 0)
+			*((unsigned char *)dest + n) = *((unsigned const char *)src + n);
 	}
-	else if (dest > src)
-	{
-		sdest = sdest + (n - 1);
-		ssrc = ssrc + (n - 1);
-		while (n--)
-			*sdest-- = *ssrc--;
-	}
-	if (!dest && !src)
-		return (0);
-	return (dest);
+	else
+		ft_memcpy(dest, src, n);
+	return (ptr);
 }
+
+//int	main(void)
+//{
+//	char	src[100] = "abcd"
+//
+//	memmove(src, src + 2, 4);
+//	printf("%s", )
+//}

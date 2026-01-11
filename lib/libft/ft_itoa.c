@@ -3,77 +3,68 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skirwan <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 16:35:50 by skirwan           #+#    #+#             */
-/*   Updated: 2024/12/15 19:46:56 by skirwan          ###   ########.fr       */
+/*   Created: 2025/02/21 12:56:11 by aramos            #+#    #+#             */
+/*   Updated: 2025/02/21 12:56:12 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "libft.h"
-#include <stdio.h>
 
-int	count_digits(int n)
+static int	num_len(long n)
 {
-	int	digits;
+	int	len;
 
-	digits = 0;
-	if (n < 0)
-	{
-		digits++;
-	}
+	len = 0;
 	if (n == 0)
 		return (1);
-	while (n != 0)
+	if (n < 0)
+	{
+		len++;
+		n = -n;
+	}
+	while (n > 0)
 	{
 		n /= 10;
-		digits++;
+		len++;
 	}
-	return (digits);
+	return (len);
 }
 
 char	*ft_itoa(int n)
 {
-	int		digits;
-	char	*str;
-	long	nbr;
+	long	num;
+	char	*result;
+	int		len;
 
-	nbr = (long)n;
-	digits = count_digits(nbr);
-	str = ft_calloc((digits + 1), 1);
-	if (!(str))
+	num = (long)n;
+	len = num_len(num);
+	result = (char *) malloc((len + 1) * sizeof(char));
+	if (!result)
 		return (NULL);
-	str[digits] = '\0';
-	if (nbr < 0)
+	result[len] = '\0';
+	if (n < 0)
+		num = -num;
+	if (n == 0)
+		result[--len] = '0';
+	while (num > 0)
 	{
-		str[0] = '-';
-		nbr *= -1;
+		result[--len] = (num % 10) + '0';
+		num /= 10;
 	}
-	while (digits--)
-	{
-		if (str[digits] == '-')
-			break ;
-		str[digits] = (nbr % 10) + '0';
-		nbr /= 10;
-	}
-	return (str);
+	if (n < 0)
+		result[0] = '-';
+	return (result);
 }
-/*
-void	test(int n)
-{
-	printf("converting int '%d' to ascii using ft_itoa = ", n);
-	printf("'%s'\n", ft_itoa(n));
-}
-
-int	main(void)
-{
-	test(-901);
-	test(3429);
-	test(5);
-	test(-2147483647);
-	test(2147483647);
-	test(247);
-	test(-0);
-}
-*/
+//
+//#include <stdio.h>
+//
+//int	main(void)
+//{
+//	int	number;
+//
+//	number = -2147483648;
+//	printf("%s\n", ft_itoa(number));
+//	return (0);
+//}

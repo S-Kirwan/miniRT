@@ -75,5 +75,7 @@ void	print_vectors_test(float vectors[3]);
 void	print_colours_test(int colours[3]);
 void	print_coords_test(float coords[3]);
 
+//screen.c
+void	normalize(t_vector	*v);
 #endif
 

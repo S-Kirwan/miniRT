@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skirwan <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 12:54:25 by skirwan           #+#    #+#             */
-/*   Updated: 2024/12/15 18:41:50 by skirwan          ###   ########.fr       */
+/*   Created: 2025/02/21 13:01:17 by aramos            #+#    #+#             */
+/*   Updated: 2025/02/21 13:01:18 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,34 @@
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char	*sub;
-	size_t	i;
+	char		*ptr;
+	char		*start_ptr;
+	char const	*new_s;
 
-	if (start > ft_strlen(s))
+	if (s == NULL || start > ft_strlen(s))
 	{
-		sub = malloc(1);
-		if (!(sub))
-			return (NULL);
-		ft_bzero(sub, 1);
-		return (sub);
+		ptr = (char *) malloc(1);
+		*ptr = '\0';
+		return (ptr);
 	}
-	i = 0;
-	while (s[start + i])
-		i++;
-	if (len > i)
-		len = i;
-	sub = (char *)malloc((len + 1) * sizeof(char));
-	if (sub == NULL)
+	if (len > (ft_strlen(s) - start))
+		len = (ft_strlen(s) - start);
+	ptr = (char *) malloc(len + 1);
+	if (ptr == NULL)
 		return (NULL);
-	i = 0;
-	while (s[start] && len--)
-		sub[i++] = s[start++];
-	sub[i] = '\0';
-	return (sub);
+	new_s = s + start;
+	start_ptr = ptr;
+	while (len-- > 0 && *new_s != '\0')
+		*ptr++ = *new_s++;
+	*ptr = '\0';
+	return (start_ptr);
 }
+
+//int	main(void)
+//{
+//	char const	s[] = "hellohellohello";
+//
+//	printf("%s\n", ft_substr(s, 5, 10));
+//	printf("%s", ft_substr(s, 5, 11));
+//	return (0);
+//}

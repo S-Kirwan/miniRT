@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnewint.c                                     :+:      :+:    :+:   */
+/*   ambient_lighting.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
+/*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/01 13:17:14 by skirwan           #+#    #+#             */
-/*   Updated: 2025/05/01 13:18:35 by skirwan          ###   ########.fr       */
+/*   Created: 2025/12/19 19:25:08 by aramos            #+#    #+#             */
+/*   Updated: 2025/12/19 19:25:09 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/minirt.h"
 
-t_list	*ft_lstnewint(int num)
+ambient(t_data *all)
 {
-	t_list	*node;
-
-	node = malloc(sizeof(*node));
-	node->nbr = num;
-	node->next = NULL;
-	return (node);
+	
 }

@@ -3,40 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skirwan <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/27 19:27:27 by skirwan           #+#    #+#             */
-/*   Updated: 2024/12/15 12:11:45 by skirwan          ###   ########.fr       */
+/*   Created: 2025/02/21 13:01:37 by aramos            #+#    #+#             */
+/*   Updated: 2025/02/21 13:01:39 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
 int	ft_toupper(int c)
 {
-	if (c >= 'a' && c <= 'z')
+	if (c >= 97 && c <= 122)
 		return (c - 32);
 	return (c);
 }
-/*
-void	test(char c)
-{
-	printf("ft_toupper changes char %c to char %c", c, ft_toupper(c));
-	printf("\n");
-}
 
-int	main(void)
-{
-	test('a');
-	test('z');
-	test('b');
-	test('u');
-	test('v');
-	test('8');
-	test('M');
-	test('Z');
-	test('A');
-	test('/');
-	return (0);
-}
-*/
+//#include <stdio.h>
+//int	main(void)
+//{
+//	printf("%c", (char)ft_toupper(56));
+//	return (0);
+//}

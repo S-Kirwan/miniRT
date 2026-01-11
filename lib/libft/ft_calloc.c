@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skirwan <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 10:41:43 by skirwan           #+#    #+#             */
-/*   Updated: 2024/12/15 18:23:01 by skirwan          ###   ########.fr       */
+/*   Created: 2025/02/21 12:54:51 by aramos            #+#    #+#             */
+/*   Updated: 2025/02/21 12:54:54 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,21 @@ void	*ft_calloc(size_t nmemb, size_t size)
 {
 	void	*ptr;
 
-	ptr = NULL;
 	if (nmemb == 0 || size == 0)
 		return (malloc(1));
-	if ((nmemb * size) / size != nmemb)
+	if (nmemb > (SIZE_MAX / size))
 		return (NULL);
 	ptr = malloc(nmemb * size);
-	if (!(ptr))
+	if (ptr == NULL)
 		return (NULL);
-	else
-		ft_bzero(ptr, (nmemb * size));
+	ft_memset(ptr, 0, nmemb * size);
 	return (ptr);
 }
+//
+//int	main(void)
+//{
+//	int	*calu;
+//
+//	calu = (int *)calloc(5,123456789456123456789);
+//	return (0);
+//}

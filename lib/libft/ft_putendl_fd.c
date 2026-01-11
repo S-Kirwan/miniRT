@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skirwan <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/14 17:49:06 by skirwan           #+#    #+#             */
-/*   Updated: 2024/12/15 12:05:12 by skirwan          ###   ########.fr       */
+/*   Created: 2025/02/21 12:59:00 by aramos            #+#    #+#             */
+/*   Updated: 2025/02/21 12:59:02 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,7 @@
 
 void	ft_putendl_fd(char *s, int fd)
 {
-	write(fd, s, ft_strlen(s));
-	write(fd, "\n", 1);
+	while (*s != '\0')
+		write(fd, s++, 1);
+	ft_putchar_fd('\n', fd);
 }
-/*
-int	main(void)
-{
-	ft_putendl_fd("Hello World", 1);
-	return (0);
-}
-*/

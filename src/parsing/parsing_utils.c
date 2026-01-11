@@ -21,7 +21,7 @@ void	parsing_error(int *errors)
 	return ;
 }
 
-t_list	*ft_lst_new_shape(t_shape *shape)
+t_list	*ft_lst_new_shape(t_en_shape *shape)
 {
 	t_list	*new_node;
 

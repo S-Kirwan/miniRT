@@ -3,82 +3,69 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skirwan <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/18 18:34:56 by skirwan           #+#    #+#             */
-/*   Updated: 2024/12/19 11:35:46 by skirwan          ###   ########.fr       */
+/*   Created: 2025/02/21 12:59:28 by aramos            #+#    #+#             */
+/*   Updated: 2025/02/21 12:59:30 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
 
-char	*copy_string(int len, const char *s)
+static size_t	word_c(char const *s, char c)
 {
-	char	*str;
-	int		i;
+	size_t	words;
 
-	str = malloc((len + 1) * sizeof(char));
-	if (!str)
-		return (NULL);
-	i = 0;
-	while (i < len && *s)
+	words = 0;
+	while (*s != '\0')
 	{
-		str[i] = s[i];
-		i++;
-	}
-	str[len] = '\0';
-	return (str);
-}
-
-int	array_size(char const *s, char c)
-{
-	int	strings;
-	int	parse;
-
-	strings = 0;
-	while (*s)
-	{
-		parse = 0;
-		while ((*s == c) && *s)
+		while (*s == c && *s != '\0')
 			s++;
-		while (*s != c && *s)
+		if (*s != c && *s != '\0')
 		{
-			if (parse == 0)
-			{
-				strings++;
-				parse = 1;
-			}
-			s++;
+			words++;
+			while (*s != c && *s != '\0')
+				s++;
 		}
 	}
-	return (strings);
+	return (words);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	int		i;
-	int		ii;
-	char	**split_array;
+	char const	*start_w;
+	char const	*finish_w;
+	size_t		n_strings;
+	char		**array;
+	int			i;
 
-	ii = 0;
-	split_array = malloc((array_size(s, c) + 1) * sizeof(*split_array));
-	if (!split_array)
+	i = 0;
+	n_strings = word_c(s, c);
+	array = malloc((n_strings + 1) * sizeof(char *));
+	if (array == NULL)
 		return (NULL);
-	while (*s)
+	while (*s != '\0')
 	{
-		i = 0;
-		while (*s == c && *s)
+		while (*s == c && *s != '\0')
 			s++;
-		while (s[i] != c && s[i])
-			i++;
-		if (i > 0)
-		{
-			split_array[ii] = copy_string(i, s);
-			s += ft_strlen(split_array[ii]);
-			ii++;
-		}
+		start_w = s;
+		while (*s != c && *s != '\0')
+			s++;
+		finish_w = s;
+		if (start_w != finish_w)
+			array[i++] = ft_substr(start_w, 0, finish_w - start_w);
 	}
-	split_array[ii] = NULL;
-	return (split_array);
+	array [i] = NULL;
+	return (array);
 }
+
+//
+//int	main(void)
+//{
+//	const char	*s;
+//	char		**array;
+//
+//	s = "hello   h o w are you?";
+//	array = ft_split(s, ' ');
+//	printf("%s", array[1]);
+//}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skirwan <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 10:04:03 by skirwan           #+#    #+#             */
-/*   Updated: 2024/12/15 18:57:25 by skirwan          ###   ########.fr       */
+/*   Created: 2025/02/21 12:57:50 by aramos            #+#    #+#             */
+/*   Updated: 2025/02/21 12:57:57 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,25 @@
 
 int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	while ((*(unsigned char *)s1 == *(unsigned char *)s2) && n)
+	if (n == 0)
+		return (0);
+	while (n > 0)
 	{
+		if (*(const unsigned char *)s1 != *(const unsigned char *)s2)
+			return (*(const unsigned char *)s1 - *(const unsigned char *)s2);
 		s1++;
 		s2++;
 		n--;
 	}
-	if (n == 0)
-		return (0);
-	return (*(unsigned char *)s1 - *(unsigned char *)s2);
+	return (0);
 }
+
+//int	main(void)
+//{
+//	const char	s1[] = {-127, 1, 123, 2};
+//	const char	s2[] = {-127, 1, 123, 2};
+//
+//	printf("%d\n", ft_memcmp(s1, s2, 2));
+//	printf("%d", memcmp(s1, s2, 2));
+//	return (0);
+//}
