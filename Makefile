@@ -41,7 +41,22 @@ OBJ_DIR = build
 SRC_DIR = src
 
 #Source Files
-SRC =	$(SRC_DIR)/screen.c
+SRC =	$(SRC_DIR)/screen.c \
+		$(SRC_DIR)/main.c \
+		$(SRC_DIR)/parsing/validate_file.c \
+		$(SRC_DIR)/parsing/receive_scene.c \
+		$(SRC_DIR)/parsing/read_ambience.c \
+		$(SRC_DIR)/parsing/read_colours.c \
+		$(SRC_DIR)/parsing/read_coordinates.c \
+		$(SRC_DIR)/parsing/read_camera.c \
+		$(SRC_DIR)/parsing/read_ratio.c \
+		$(SRC_DIR)/parsing/read_vectors.c \
+		$(SRC_DIR)/parsing/read_light.c \
+		$(SRC_DIR)/parsing/read_sphere.c \
+		$(SRC_DIR)/parsing/read_plane.c \
+		$(SRC_DIR)/parsing/read_cylinder.c \
+		$(SRC_DIR)/parsing/parsing_utils.c \
+		$(SRC_DIR)/parsing/parsing_tests.c \
 
 #Objects and Dependencies
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
