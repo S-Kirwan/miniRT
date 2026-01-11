@@ -96,6 +96,7 @@ typedef struct s_mlx_data
 
 }	t_mlx_data;
 
+// structure has changed post merge therefore current code in src/screen.c will break
 typedef struct s_data
 {
 	t_ambience	*ambience;
