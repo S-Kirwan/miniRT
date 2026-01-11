@@ -66,9 +66,28 @@ typedef struct s_light
 	int		colour[3];
 }	t_light;
 
+typedef struct	s_mlx_img
+{
+	void	*image;
+	char	*addr;
+	int		bpp;
+	int		line_length;
+	int		endian;
+	int		offset;
+}	t_mlx_img;
+
+typedef struct s_mlx_data
+{
+	t_mlx_img	*mlx_img;
+	void		*mlx_instance;
+	void		*window;
+
+}	t_mlx_data;
+
 typedef struct s_data
 {
 	t_ambience	*ambience;
+	t_mlx_data	*mlx_info;
 	t_camera	*camera;
 	t_light		*light;
 	t_shape		*shapes;
