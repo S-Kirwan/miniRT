@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minirt.h"
+#include "../inc/miniRT.h"
 #include "../inc/miniRT.h"
 #include "../inc/parsing.h"
 
