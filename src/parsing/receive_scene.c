@@ -13,8 +13,6 @@
 #include "libft.h"
 #include "parsing.h"
 #include "miniRT.h"
-#include <locale.h>
-#include <stdio.h>
 
 int	read_scene(t_data *data, t_parser *parser)
 {

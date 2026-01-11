@@ -29,21 +29,22 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
-typedef struct s_data
-{
-	struct s_ambience	*ambience;
-	struct s_camera		*camera;
-	struct s_light		*light;
-	t_list				*shape_list;
-}	t_data;
-
-
 typedef enum e_shape
 {
 	CYLINDER,
 	PLANE,
 	SPHERE
 }	t_en_shape;
+
+typedef struct s_shape
+{
+	t_en_shape	shape;
+	float	position[3];
+	float	vectors[3];
+	float	diameter;
+	float	height;
+	int		colour[3];
+}	t_shape;
 
 typedef struct s_ambience
 {
@@ -65,14 +66,13 @@ typedef struct s_light
 	int		colour[3];
 }	t_light;
 
-typedef struct s_shape
+typedef struct s_data
 {
-	t_en_shape	shape;
-	float	position[3];
-	float	vectors[3];
-	float	diameter;
-	float	height;
-	int		colour[3];
-}	t_shape;
+	t_ambience	*ambience;
+	t_camera	*camera;
+	t_light		*light;
+	t_shape		*shapes;
+	t_list		*shape_list;
+}	t_data;
 
 #endif
