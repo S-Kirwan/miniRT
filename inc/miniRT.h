@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 11:44:15 by skirwan           #+#    #+#             */
-/*   Updated: 2025/11/25 13:06:08 by skirwan          ###   ########.fr       */
+/*   Updated: 2026/01/18 16:14:49 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <sys/stat.h>
-# include <mlx.h>
+# include "mlx.h"
 
 typedef struct s_list
 {
@@ -86,7 +86,6 @@ typedef struct	s_mlx_img
 	int		bpp;
 	int		line_length;
 	int		endian;
-	int		offset;
 }	t_mlx_img;
 
 typedef struct s_mlx_data
@@ -101,7 +100,7 @@ typedef struct s_mlx_data
 typedef struct s_data
 {
 	t_ambience	*ambience;
-	t_mlx_data	*mlx_info;
+	t_mlx_data	*mlx_data;
 	t_camera	*camera;
 	t_light		*light;
 	t_shape		*shapes;
