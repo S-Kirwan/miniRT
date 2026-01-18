@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 12:46:09 by skirwan           #+#    #+#             */
-/*   Updated: 2026/01/06 14:00:03 by skirwan          ###   ########.fr       */
+/*   Updated: 2026/01/18 17:53:53 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	parsing_error(int *errors)
 	return ;
 }
 
-t_list	*ft_lst_new_shape(t_en_shape *shape)
+t_list	*ft_lst_new_shape(t_shape *shape)
 {
 	t_list	*new_node;
 
