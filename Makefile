@@ -42,6 +42,7 @@ SRC_DIR = src
 #$(SRC_DIR)/screen.c \
 #Source Files
 SRC =	$(SRC_DIR)/main.c \
+		$(SRC_DIR)/screen.c \
 		$(SRC_DIR)/parsing/validate_file.c \
 		$(SRC_DIR)/parsing/receive_scene.c \
 		$(SRC_DIR)/parsing/read_ambience.c \

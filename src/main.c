@@ -12,6 +12,7 @@
 
 #include "miniRT.h"
 #include "parsing.h"
+#include "raytracing.h"
 #include "window_management.h"
 
 int	main(int argc, char **argv)
@@ -30,12 +31,13 @@ int	main(int argc, char **argv)
 	data.camera = &camera;
 	data.light = &light;
 	data.shape_list = NULL;
-	// if ((scene_fd = validate_file(argc, argv)) == -1)
-	// 	return (1);
-	// if (receive_scene(&data, scene_fd) == -1)
-	// 	return (1);
+	if ((scene_fd = validate_file(argc, argv)) == -1)
+		return (1);
+	if (receive_scene(&data, scene_fd) == -1)
+		return (1);
 	initialise_mlx(&mlx_data);
-	// print_shape_list(data.shape_list);
+	print_shape_list(data.shape_list);
+	raytracing(&data);
 	while (1)
 		sleep(5);
 	return (0);

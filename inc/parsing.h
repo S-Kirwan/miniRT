@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 11:43:28 by skirwan           #+#    #+#             */
-/*   Updated: 2026/01/06 09:22:19 by skirwan          ###   ########.fr       */
+/*   Updated: 2026/02/12 15:07:33 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,3 @@ void	print_coords_test(float coords[3]);
 //screen.c
 void	normalize(t_vector	*v);
 #endif
-
