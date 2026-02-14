@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 14:40:37 by skirwan           #+#    #+#             */
-/*   Updated: 2025/12/23 14:48:05 by skirwan          ###   ########.fr       */
+/*   Updated: 2026/02/08 15:35:11 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,5 @@ void	read_camera(t_camera *camera, t_parser *parser, char *line)
 	line = read_fov(line, &camera->fov);
 	if (line == NULL)
 		return (parsing_error(&parser->errors));
-	return ;
+	parser->camera++;
 }

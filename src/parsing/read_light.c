@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 14:54:52 by skirwan           #+#    #+#             */
-/*   Updated: 2025/11/25 15:16:13 by skirwan          ###   ########.fr       */
+/*   Updated: 2026/02/08 15:35:29 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,5 @@ void	read_light(t_light *light, t_parser *parser, char *line)
 	line = read_colours(line, light->colour);
 	if (line == NULL)
 		return (parsing_error(&parser->errors));
-	return ;
+	parser->light++;
 }

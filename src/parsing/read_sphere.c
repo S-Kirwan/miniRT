@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 11:52:43 by skirwan           #+#    #+#             */
-/*   Updated: 2026/01/06 14:00:19 by skirwan          ###   ########.fr       */
+/*   Updated: 2026/02/08 15:37:57 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,5 @@ void	read_sphere(t_list **list, t_parser *parser, char *line)
 	if (line == NULL)
 		return (free(sphere), parsing_error(&parser->errors));
 	ft_lstadd_back(list, ft_lst_new_shape(sphere));
+	parser->shapes++;
 }

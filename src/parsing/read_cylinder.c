@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 09:37:25 by skirwan           #+#    #+#             */
-/*   Updated: 2026/01/05 10:37:59 by skirwan          ###   ########.fr       */
+/*   Updated: 2026/02/08 15:38:44 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,5 @@ void	read_cylinder(t_list **list, t_parser *parser, char *line)
 	if (line == NULL)
 		return (free(cylinder), parsing_error(&parser->errors));
 	ft_lstadd_back(list, ft_lst_new_shape(cylinder));
+	parser->shapes++;
 }

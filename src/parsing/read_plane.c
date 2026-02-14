@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 12:41:53 by skirwan           #+#    #+#             */
-/*   Updated: 2026/01/02 12:54:34 by skirwan          ###   ########.fr       */
+/*   Updated: 2026/02/08 15:38:27 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,5 @@ void	read_plane(t_list **list, t_parser *parser, char *line)
 	if (line == NULL)
 		return (free(plane), parsing_error(&parser->errors));
 	ft_lstadd_back(list, ft_lst_new_shape(plane));
+	parser->shapes++;
 }
