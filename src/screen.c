@@ -81,21 +81,17 @@ all->camera->orientation[0] = 0;
 all->camera->orientation[1] = 0;
 all->camera->orientation[2] = 1;
 all->camera->fov = 90;
-// all->camera->normal.x = all->camera->x_orientation;
-// all->camera->normal.y = all->camera->y_orientation;
-// all->camera->normal.z = all->camera->z_orientation;
 all->camera->fov_rad = all->camera->fov * M_PI / 180.0;
 all->camera->aspect_ratio = (float)WIDTH / (float)HEIGHT;
 all->camera->viewport_h = 2.0 * tan(all->camera->fov_rad / 2.0);
 all->camera->viewport_w = all->camera->viewport_h * all->camera->aspect_ratio;
-// normalize(&all->camera->normal);
  }
 
 //oc is the distance between the origin ray (camera vector) and the center of the sphere
 //that means that oc is equal to (O - C)
 int	sphere_hit(t_data *all, t_vector ray_origin, t_vector ray_dir, float *t)
 {
-  dprintf(2, "sphere pos: [%f] [%f] [%f]\n", all->shape_list->shape->position[0], all->shape_list->shape->position[1], all->shape_list->shape->position[2]);
+  // dprintf(2, "sphere pos: [%f] [%f] [%f]\n", all->shape_list->shape->position[0], all->shape_list->shape->position[1], all->shape_list->shape->position[2]);
 	t_vector	oc = {ray_origin.x - all->shape_list->shape->position[0], ray_origin.y - all->shape_list->shape->position[1], ray_origin.z - all->shape_list->shape->position[2]};
 	float		a = ray_dir.x * ray_dir.x + ray_dir.y * ray_dir.y + ray_dir.z * ray_dir.z;
 	float		b = 2.0f * (oc.x * ray_dir.x + oc.y * ray_dir.y + oc.z * ray_dir.z);
@@ -130,7 +126,7 @@ int	sphere_hit(t_data *all, t_vector ray_origin, t_vector ray_dir, float *t)
 void	raytracing(t_data *all)
 {
 	t_vector	ray_origin = {all->camera->position[0], all->camera->position[1], all->camera->position[2]};
-  dprintf(2, "ray_origin: [%f] [%f] [%f]\n", ray_origin.x, ray_origin.y, ray_origin.z);
+  // dprintf(2, "ray_origin: [%f] [%f] [%f]\n", ray_origin.x, ray_origin.y, ray_origin.z);
 	int		x;
 	int		y;
 	float	u;
@@ -148,6 +144,10 @@ void	raytracing(t_data *all)
 		x = 0;
 		while (x < WIDTH)
 		{
+      if (y > 52 && x > 498)
+      {
+        dprintf(2, "Bug is here\n");
+      }
 			u = ((x + 0.5f) / WIDTH - 0.5f) * all->camera->viewport_w;
 			v = (0.5f - (y + 0.5f) / HEIGHT) * all->camera->viewport_h;
 			t_vector	ray_dir = {all->camera->orientation[0] + u, all->camera->orientation[1] + v, all->camera->orientation[2]};
@@ -192,11 +192,11 @@ void	raytracing(t_data *all)
 				// // draw ray from hit to light
 				// draw_line(all, hit2D, light2D, 0x0000FF);       // light ray = blue
             }
-             else
-            {
-                 mlx_pixel_put(all->mlx_data->mlx_instance, all->mlx_data->window, x, y, 0x000000);
-            }
-      dprintf(2, "\n[%d]\n", x);
+            else
+             {
+                mlx_pixel_put(all->mlx_data->mlx_instance, all->mlx_data->window, x, y, 0x000000);
+             }
+      // dprintf(2, "\n[%d]\n", y);
 			x++;
 		}
 		y++;
