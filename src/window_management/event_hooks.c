@@ -17,4 +17,5 @@
 void	close_window_hooks(t_mlx_data *mlx_data)
 {
 	mlx_hook(mlx_data->window, 2, (1L<<0), key_press_event, mlx_data);
+	mlx_hook(mlx_data->window, 17, 0L, full_exit, mlx_data);
 }
