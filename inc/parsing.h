@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 11:43:28 by skirwan           #+#    #+#             */
-/*   Updated: 2026/01/06 09:22:19 by skirwan          ###   ########.fr       */
+/*   Updated: 2026/02/08 15:37:34 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,12 @@
 
 typedef struct s_parser
 {
-	int			scene_fd;
-	int			ambience;
-	int			camera;
-	int			errors;
-	int			light;
+	int	scene_fd;
+	int	ambience;
+	int	shapes;
+	int	camera;
+	int	errors;
+	int	light;
 }	t_parser;
 
 // validate_file.c
@@ -77,5 +78,5 @@ void	print_coords_test(float coords[3]);
 
 //screen.c
 void	normalize(t_vector	*v);
-#endif
 
+#endif

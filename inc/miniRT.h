@@ -6,16 +6,17 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 11:44:15 by skirwan           #+#    #+#             */
-/*   Updated: 2026/01/18 16:14:49 by skirwan          ###   ########.fr       */
+/*   Updated: 2026/02/08 15:53:33 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
 
+# include <sys/stat.h>
+# include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
-# include <sys/stat.h>
 # include "mlx.h"
 
 typedef struct s_list
@@ -30,12 +31,26 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
-typedef enum e_shape
+typedef enum
 {
 	CYLINDER,
 	PLANE,
 	SPHERE
 }	t_en_shape;
+
+// When initialising data struct and allocating memory, if a malloc fails
+// the enum below defines what allocation failed. All previous allocaitons
+// will need to be freed. The allocation order will always be the same
+// therefore it will always be known what must be freed.
+// E.G
+typedef enum
+{
+	AMBIENCE,
+	CAMERA,
+	LIGHT,
+	MLX_DATA,
+	MLX_DATA_IMG
+}	t_en_bad_allocation;
 
 typedef struct	s_vector//Struct to do math and store temp values
 {
