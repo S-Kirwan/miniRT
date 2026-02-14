@@ -37,7 +37,7 @@ int	main(int argc, char **argv)
 		return (1);
 	initialise_mlx(&mlx_data);
 	print_shape_list(data.shape_list);
-	raytracing(&data);
+	start_raytracing(&data);
 	while (1)
 		sleep(5);
 	return (0);

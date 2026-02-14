@@ -17,7 +17,8 @@
 # include "libft.h"
 # include "miniRT.h"
 
+int	  start_raytracing(t_data *all);
 void	raytracing(t_data *all);
-int		sphere_hit(t_shape *sphere, t_vector ray_origin, t_vector ray_dir, float *t);
+int		sphere_hit(t_data *all, t_vector ray_origin, t_vector ray_dir, float *t);
 
 #endif

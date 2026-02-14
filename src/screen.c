@@ -46,9 +46,9 @@
 //         mlx_pixel_put(all->mlx, all->win, from.x + dx*i, from.y + dy*i, color);
 // }
 //
-// void	init(t_data *all)
-// {
-//
+void	init(t_data *all)
+{
+
 // 	//TODO: Ambient light
 // 	all->ambience = malloc(sizeof(t_ambience));
 // 	all->ambience->ratio = 1;
@@ -73,32 +73,33 @@
 // 	all->spheres->blue = 42;
 //
 // 	//TODO: Camera
-// 	all->camera = malloc(sizeof(t_camera));
-// 	all->camera->x = -50;
-// 	all->camera->y = 0;
-// 	all->camera->z = 20;
-// 	all->camera->x_orientation = 0;
-// 	all->camera->y_orientation = 0;
-// 	all->camera->z_orientation = 1;
-// 	all->camera->fov = 90;
-// 	all->camera->normal.x = all->camera->x_orientation;
-// 	all->camera->normal.y = all->camera->y_orientation;
-// 	all->camera->normal.z = all->camera->z_orientation;
-// 	all->camera->fov_rad = all->camera->fov * M_PI / 180.0;
-// 	all->camera->aspect_ratio = (float)WIDTH / (float)HEIGHT;
-// 	all->camera->viewport_h = 2.0 * tan(all->camera->fov_rad / 2.0);
-// 	all->camera->viewport_w = all->camera->viewport_h * all->camera->aspect_ratio;
-// 	normalize(&all->camera->normal);
-// }
+all->camera = malloc(sizeof(t_camera));
+all->camera->position[0] = -50;
+all->camera->position[1] = 0;
+all->camera->position[2] = 20;
+all->camera->orientation[0] = 0;
+all->camera->orientation[1] = 0;
+all->camera->orientation[2] = 1;
+all->camera->fov = 90;
+// all->camera->normal.x = all->camera->x_orientation;
+// all->camera->normal.y = all->camera->y_orientation;
+// all->camera->normal.z = all->camera->z_orientation;
+all->camera->fov_rad = all->camera->fov * M_PI / 180.0;
+all->camera->aspect_ratio = (float)WIDTH / (float)HEIGHT;
+all->camera->viewport_h = 2.0 * tan(all->camera->fov_rad / 2.0);
+all->camera->viewport_w = all->camera->viewport_h * all->camera->aspect_ratio;
+// normalize(&all->camera->normal);
+ }
 
 //oc is the distance between the origin ray (camera vector) and the center of the sphere
 //that means that oc is equal to (O - C)
-int	sphere_hit(t_shape *sphere, t_vector ray_origin, t_vector ray_dir, float *t)
+int	sphere_hit(t_data *all, t_vector ray_origin, t_vector ray_dir, float *t)
 {
-	t_vector	oc = {ray_origin.x - sphere->position[0], ray_origin.y - sphere->position[1], ray_origin.z - sphere->position[2]};
+  dprintf(2, "sphere pos: [%f] [%f] [%f]\n", all->shape_list->shape->position[0], all->shape_list->shape->position[1], all->shape_list->shape->position[2]);
+	t_vector	oc = {ray_origin.x - all->shape_list->shape->position[0], ray_origin.y - all->shape_list->shape->position[1], ray_origin.z - all->shape_list->shape->position[2]};
 	float		a = ray_dir.x * ray_dir.x + ray_dir.y * ray_dir.y + ray_dir.z * ray_dir.z;
 	float		b = 2.0f * (oc.x * ray_dir.x + oc.y * ray_dir.y + oc.z * ray_dir.z);
-	float		c = oc.x * oc.x + oc.y * oc.y + oc.z * oc.z - (sphere->diameter / 2.0f) * (sphere->diameter / 2.0f); 
+	float		c = oc.x * oc.x + oc.y * oc.y + oc.z * oc.z - (all->shape_list->shape->diameter / 2.0f) * (all->shape_list->shape->diameter / 2.0f); 
 	float		discriminant = b * b - 4 * a * c;
 	float		t0;
 	float		t1;
@@ -129,6 +130,7 @@ int	sphere_hit(t_shape *sphere, t_vector ray_origin, t_vector ray_dir, float *t)
 void	raytracing(t_data *all)
 {
 	t_vector	ray_origin = {all->camera->position[0], all->camera->position[1], all->camera->position[2]};
+  dprintf(2, "ray_origin: [%f] [%f] [%f]\n", ray_origin.x, ray_origin.y, ray_origin.z);
 	int		x;
 	int		y;
 	float	u;
@@ -150,7 +152,7 @@ void	raytracing(t_data *all)
 			v = (0.5f - (y + 0.5f) / HEIGHT) * all->camera->viewport_h;
 			t_vector	ray_dir = {all->camera->orientation[0] + u, all->camera->orientation[1] + v, all->camera->orientation[2]};
 			normalize(&ray_dir);
-             if (sphere_hit(all->shapes, ray_origin, ray_dir, &t))
+             if (sphere_hit(all, ray_origin, ray_dir, &t))
 			{
 				t_vector	hit_point = {ray_origin.x + t * ray_dir.x, ray_origin.y + t * ray_dir.y, ray_origin.z + t * ray_dir.z};
 				t_vector	surface_normal = {hit_point.x - all->shapes->position[0], hit_point.y - all->shapes->position[1], hit_point.z - all->shapes->position[2]};
@@ -164,7 +166,7 @@ void	raytracing(t_data *all)
 				float	diffuse = surface_normal.x * light_dir.x + surface_normal.y * light_dir.y + surface_normal.z * light_dir.z;
 				if (diffuse < 0)
 					diffuse = 0;
-				if (sphere_hit(all->shapes, shadow_origin, light_dir, &shadow) && shadow < light_distance)
+				if (sphere_hit(all, shadow_origin, light_dir, &shadow) && shadow < light_distance)
 					diffuse = 0;
 				intensity = ambient + diffuse;
 				if (intensity > 1.0f)
@@ -191,7 +193,10 @@ void	raytracing(t_data *all)
 				// draw_line(all, hit2D, light2D, 0x0000FF);       // light ray = blue
             }
              else
+            {
                  mlx_pixel_put(all->mlx_data->mlx_instance, all->mlx_data->window, x, y, 0x000000);
+            }
+      dprintf(2, "\n[%d]\n", x);
 			x++;
 		}
 		y++;
@@ -214,15 +219,15 @@ void	normalize(t_vector	*v)
 	v->z /= len;
 }
 
-// int	main(void)
-// {
-// 	t_data	all;
-//
-// 	init(&all);
-// 	all.mlx = mlx_init();
-// 	all.win = mlx_new_window(all.mlx, WIDTH, HEIGHT, "Testing purposes");
-// 	raytracing(&all);
-// 	mlx_loop(all.mlx);
-// 	return (0);
-//
-// }
+int	start_raytracing(t_data *all)
+{
+	// t_data	all;
+
+	init(all);
+	// all.mlx = mlx_init();
+	// all.win = mlx_new_window(all.mlx, WIDTH, HEIGHT, "Testing purposes");
+	raytracing(all);
+	// mlx_loop(all.mlx);
+	return (0);
+
+}

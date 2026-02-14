@@ -14,7 +14,10 @@
 #include "mlx.h"
 #include "window_management.h"
 
+//Changed from mlx_hook(mlx_data->window, 2, (1L<<0), key_press_event, mlx_data);
+//to:
+//mlx_hook(mlx_data->window, 2, (1L<<0), (int (*)())key_press_event, mlx_data);
 void	close_window_hooks(t_mlx_data *mlx_data)
 {
-	mlx_hook(mlx_data->window, 2, (1L<<0), key_press_event, mlx_data);
+  mlx_hook(mlx_data->window, 2, (1L<<0), (int (*)())key_press_event, mlx_data);
 }
