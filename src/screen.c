@@ -17,84 +17,14 @@
 #define WIDTH 500
 #define HEIGHT 500
 
-// void put_point(t_data *all, int x, int y, int color)
-// {
-//     int size = 3; // small 3x3 square
-//     for (int i = -size; i <= size; i++)
-//         for (int j = -size; j <= size; j++)
-//             mlx_pixel_put(all->mlx, all->win, x + i, y + j, color);
-// }
-//
-// t_vector project(t_data *all, t_vector p)
-// {
-//     float scale = 200.0f;
-//     float dz = p.z - all->camera->z;
-//     if (dz <= 0.01f) dz = 0.01f; // avoid division by 0
-//     t_vector proj;
-//     proj.x = (p.x - all->camera->x) * scale / dz + WIDTH / 2;
-//     proj.y = (p.y - all->camera->y) * scale / dz + HEIGHT / 2;
-//     return proj;
-// }
-//
-//
-// void draw_line(t_data *all, t_vector from, t_vector to, int color)
-// {
-//     int steps = 100;
-//     float dx = (to.x - from.x) / steps;
-//     float dy = (to.y - from.y) / steps;
-//     for (int i = 0; i <= steps; i++)
-//         mlx_pixel_put(all->mlx, all->win, from.x + dx*i, from.y + dy*i, color);
-// }
-//
-void	init(t_data *all)
-{
-
-// 	//TODO: Ambient light
-// 	all->ambience = malloc(sizeof(t_ambience));
-// 	all->ambience->ratio = 1;
-// 	all->ambience->colour[0] = 0;//r
-// 	all->ambience->colour[1] = 255;//g
-// 	all->ambience->colour[2] = 0;//b
-//
-// 	//TODO: Lights
-// 	all->lights = malloc(sizeof(t_light));
-// 	all->lights->x = 0;
-// 	all->lights->y = 0;
-// 	all->lights->z = 0;
-//
-// 	//TODO: Sphere
-// 	all->spheres = malloc(sizeof(t_sphere));
-// 	all->spheres->x = -50;
-// 	all->spheres->y = 0;
-// 	all->spheres->z = 100;
-// 	all->spheres->diameter = 50;
-// 	all->spheres->red = 163;
-// 	all->spheres->green = 234;
-// 	all->spheres->blue = 42;
-//
-// 	//TODO: Camera
-// all->camera = malloc(sizeof(t_camera));
-// all->camera->position[0] = -50;
-// all->camera->position[1] = 0;
-// all->camera->position[2] = 20;
-// all->camera->orientation[0] = 0;
-// all->camera->orientation[1] = 0;
-// all->camera->orientation[2] = 1;
-// all->camera->fov = 90;
-all->camera->fov_rad = all->camera->fov * M_PI / 180.0;
-all->camera->aspect_ratio = (float)WIDTH / (float)HEIGHT;
-all->camera->viewport_h = 2.0 * tan(all->camera->fov_rad / 2.0);
-all->camera->viewport_w = all->camera->viewport_h * all->camera->aspect_ratio;
- }
-
 //oc is the distance between the origin ray (camera vector) and the center of the sphere
 //that means that oc is equal to (O - C)
-int	sphere_hit(t_data *all, t_vector ray_origin, t_vector ray_dir, float *t)
+int	sphere_hit(t_shape *sphere, t_vector ray_origin, t_vector ray_dir, float *t)
 {
-	t_vector	oc = {ray_origin.x - all->shape_list->shape->position[0], ray_origin.y - all->shape_list->shape->position[1], ray_origin.z - all->shape_list->shape->position[2]};
+	t_vector	oc = {ray_origin.x - sphere->position[0], ray_origin.y - sphere->position[1], ray_origin.z - sphere->position[2]};
 	float		a = ray_dir.x * ray_dir.x + ray_dir.y * ray_dir.y + ray_dir.z * ray_dir.z;
 	float		b = 2.0f * (oc.x * ray_dir.x + oc.y * ray_dir.y + oc.z * ray_dir.z);
-	float		c = oc.x * oc.x + oc.y * oc.y + oc.z * oc.z - (all->shape_list->shape->diameter / 2.0f) * (all->shape_list->shape->diameter / 2.0f); 
+	float		c = oc.x * oc.x + oc.y * oc.y + oc.z * oc.z - (sphere->diameter / 2.0f) * (sphere->diameter / 2.0f); 
 	float		discriminant = b * b - 4 * a * c;
 	float		t0;
 	float		t1;
@@ -114,6 +44,24 @@ int	sphere_hit(t_data *all, t_vector ray_origin, t_vector ray_dir, float *t)
 	return (1);
 }
 
+//N * (P-P0) = 0
+//formula for the plane.
+//N is the normalized vector used to check if anything is perpendicular to it
+int plane_hit(t_shape *plane, t_vector ray_origin, t_vector ray_dir, float *t)
+{
+    float denom = plane->vectors[0]*ray_dir.x +\
+                  plane->vectors[1]*ray_dir.y +\
+                  plane->vectors[2]*ray_dir.z;
+    if (fabs(denom) < 1e-6)
+        return 0;
+    t_vector P0_O = {plane->position[0] - ray_origin.x,\
+                     plane->position[1] - ray_origin.y,\
+                     plane->position[2] - ray_origin.z};
+    *t = P0_O.x*plane->vectors[0] + P0_O.y*plane->vectors[1] + P0_O.z*plane->vectors[2];
+    *t /= denom;
+    return (*t > 0);
+}
+
 //Formula for raytracing is P(t) = O + tD
 //O is the camera position (x,y,z)
 //D is the orientation vector + pixel offset from camera orientation vector
@@ -122,18 +70,73 @@ int	sphere_hit(t_data *all, t_vector ray_origin, t_vector ray_dir, float *t)
 //ray_dir = D
 // t = t haha
 // __attribute__((optimize("O3")))
+// void	raytracing(t_data *all)
+// {
+// 	t_vector	ray_origin = {all->camera->position[0], all->camera->position[1], all->camera->position[2]};
+// 	int		x;
+// 	int		y;
+// 	float	u;
+// 	float	v;
+// 	float	t;
+// 	float	ambient;
+// 	float	intensity;
+// 	float	light_distance;
+// 	float	shadow;;
+//
+// 	ambient = all->ambience->ratio;
+// 	y = 0;
+// 	while (y < HEIGHT)
+// 	{
+// 		x = 0;
+// 		while (x < WIDTH)
+// 		{
+// 			u = ((x + 0.5f) / WIDTH - 0.5f) * all->camera->viewport_w;
+// 			v = (0.5f - (y + 0.5f) / HEIGHT) * all->camera->viewport_h;
+// 			t_vector	ray_dir = {all->camera->orientation[0] + u, all->camera->orientation[1] + v, all->camera->orientation[2]};
+// 			normalize(&ray_dir);
+//              if (sphere_hit(all, ray_origin, ray_dir, &t))
+// 			{
+// 				t_vector	hit_point = {ray_origin.x + t * ray_dir.x, ray_origin.y + t * ray_dir.y, ray_origin.z + t * ray_dir.z};
+// 				t_vector	surface_normal = {hit_point.x - all->shape_list->shape->position[0], hit_point.y - all->shape_list->shape->position[1], hit_point.z - all->shape_list->shape->position[2]};
+// 				normalize(&surface_normal);
+// 				t_vector	light_dir = {all->light->position[0] - hit_point.x, all->light->position[1] - hit_point.y, all->light->position[2] - hit_point.z};
+// 				t_vector	shadow_dir = {all->light->position[0] - hit_point.x, all->light->position[1] - hit_point.y, all->light->position[2] - hit_point.z};
+// 				light_distance = sqrt(shadow_dir.x * shadow_dir.x + shadow_dir.y * shadow_dir.y + shadow_dir.z * shadow_dir.z);
+// 				normalize(&shadow_dir);
+// 				normalize(&light_dir);
+// 				t_vector shadow_origin = {hit_point.x + surface_normal.x * 0.001f, hit_point.y + surface_normal.y * 0.001f, hit_point.z + surface_normal.z * 0.001f};
+// 				float	diffuse = surface_normal.x * light_dir.x + surface_normal.y * light_dir.y + surface_normal.z * light_dir.z;
+// 				if (diffuse < 0)
+// 					diffuse = 0;
+// 				if (sphere_hit(all, shadow_origin, light_dir, &shadow) && shadow < light_distance)
+// 					diffuse = 0;
+// 				intensity = ambient + diffuse;
+// 				if (intensity > 1.0f)
+// 					intensity = 1.0f;
+// 				int	r = (int)(all->shape_list->shape->colour[0] * intensity);
+// 				int	g = (int)(all->shape_list->shape->colour[1] * intensity);
+// 				int	b = (int)(all->shape_list->shape->colour[2] * intensity);
+// 				int	color = (r << 16) | (g << 8) | b;
+//                 mlx_pixel_put(all->mlx_data->mlx_instance, all->mlx_data->window, x, y, color);
+//             }
+//             else
+//              {
+//                 mlx_pixel_put(all->mlx_data->mlx_instance, all->mlx_data->window, x, y, 0x000000);
+//              }
+// 			x++;
+// 		}
+// 		y++;
+// 	}
+//
+// }
+
 void	raytracing(t_data *all)
 {
-	t_vector	ray_origin = {all->camera->position[0], all->camera->position[1], all->camera->position[2]};
 	int		x;
 	int		y;
 	float	u;
 	float	v;
-	float	t;
 	float	ambient;
-	float	intensity;
-	float	light_distance;
-	float	shadow;;
 
 	ambient = all->ambience->ratio;
 	y = 0;
@@ -144,52 +147,97 @@ void	raytracing(t_data *all)
 		{
 			u = ((x + 0.5f) / WIDTH - 0.5f) * all->camera->viewport_w;
 			v = (0.5f - (y + 0.5f) / HEIGHT) * all->camera->viewport_h;
-			t_vector	ray_dir = {all->camera->orientation[0] + u, all->camera->orientation[1] + v, all->camera->orientation[2]};
+
+			t_vector ray_origin = {all->camera->position[0], all->camera->position[1], all->camera->position[2]};
+			t_vector ray_dir = {all->camera->orientation[0] + u,
+								all->camera->orientation[1] + v,
+								all->camera->orientation[2]};
 			normalize(&ray_dir);
-             if (sphere_hit(all, ray_origin, ray_dir, &t))
+			float closest_t = 1e30;
+			t_shape *hit_shape = NULL;
+			t_vector hit_normal;
+			float t_tmp;
+			t_list *node = all->shape_list;
+			while (node)
 			{
-				t_vector	hit_point = {ray_origin.x + t * ray_dir.x, ray_origin.y + t * ray_dir.y, ray_origin.z + t * ray_dir.z};
-				t_vector	surface_normal = {hit_point.x - all->shape_list->shape->position[0], hit_point.y - all->shape_list->shape->position[1], hit_point.z - all->shape_list->shape->position[2]};
-				normalize(&surface_normal);
-				t_vector	light_dir = {all->light->position[0] - hit_point.x, all->light->position[1] - hit_point.y, all->light->position[2] - hit_point.z};
-				t_vector	shadow_dir = {all->light->position[0] - hit_point.x, all->light->position[1] - hit_point.y, all->light->position[2] - hit_point.z};
-				light_distance = sqrt(shadow_dir.x * shadow_dir.x + shadow_dir.y * shadow_dir.y + shadow_dir.z * shadow_dir.z);
-				normalize(&shadow_dir);
+				if (node->shape->shape == SPHERE)
+				{
+					if (sphere_hit(node->shape, ray_origin, ray_dir, &t_tmp) && t_tmp < closest_t)
+					{
+						closest_t = t_tmp;
+						hit_shape = node->shape;
+
+						hit_normal.x = ray_origin.x + t_tmp*ray_dir.x - node->shape->position[0];
+						hit_normal.y = ray_origin.y + t_tmp*ray_dir.y - node->shape->position[1];
+						hit_normal.z = ray_origin.z + t_tmp*ray_dir.z - node->shape->position[2];
+						normalize(&hit_normal);
+					}
+				}
+				else if (node->shape->shape == PLANE)
+				{
+					if (plane_hit(node->shape, ray_origin, ray_dir, &t_tmp) && t_tmp < closest_t)
+					{
+						closest_t = t_tmp;
+						hit_shape = node->shape;
+
+						hit_normal.x = node->shape->vectors[0];
+						hit_normal.y = node->shape->vectors[1];
+						hit_normal.z = node->shape->vectors[2];
+					}
+				}
+				node = node->next;
+			}
+
+			if (hit_shape)
+			{
+				t_vector hit_point = {
+					ray_origin.x + closest_t*ray_dir.x,
+					ray_origin.y + closest_t*ray_dir.y,
+					ray_origin.z + closest_t*ray_dir.z
+				};
+				t_vector light_dir = {
+					all->light->position[0] - hit_point.x,
+					all->light->position[1] - hit_point.y,
+					all->light->position[2] - hit_point.z
+				};
+				float light_distance = sqrt(light_dir.x*light_dir.x + light_dir.y*light_dir.y + light_dir.z*light_dir.z);
 				normalize(&light_dir);
-				t_vector shadow_origin = {hit_point.x + surface_normal.x * 0.001f, hit_point.y + surface_normal.y * 0.001f, hit_point.z + surface_normal.z * 0.001f};
-				float	diffuse = surface_normal.x * light_dir.x + surface_normal.y * light_dir.y + surface_normal.z * light_dir.z;
+				t_vector shadow_origin = {
+					hit_point.x + hit_normal.x * 0.001f,
+					hit_point.y + hit_normal.y * 0.001f,
+					hit_point.z + hit_normal.z * 0.001f
+				};
+				float shadow_t;
+				int in_shadow = 0;
+				node = all->shape_list;
+				while (node)
+				{
+					if ((node->shape->shape == SPHERE && sphere_hit(node->shape, shadow_origin, light_dir, &shadow_t) && shadow_t < light_distance) ||
+						(node->shape->shape == PLANE  && plane_hit(node->shape, shadow_origin, light_dir, &shadow_t) && shadow_t < light_distance))
+					{
+						in_shadow = 1;
+						break;
+					}
+					node = node->next;
+				}
+				float diffuse = hit_normal.x*light_dir.x + hit_normal.y*light_dir.y + hit_normal.z*light_dir.z;
 				if (diffuse < 0)
 					diffuse = 0;
-				if (sphere_hit(all, shadow_origin, light_dir, &shadow) && shadow < light_distance)
-					diffuse = 1;
-				intensity = ambient + diffuse;
+				if (in_shadow)
+					diffuse = 0;
+				float intensity = all->ambience->ratio + diffuse;
 				if (intensity > 1.0f)
 					intensity = 1.0f;
-				int	r = (int)(all->shape_list->shape->colour[0] * intensity);
-				int	g = (int)(all->shape_list->shape->colour[1] * intensity);
-				int	b = (int)(all->shape_list->shape->colour[2] * intensity);
-				int	color = (r << 16) | (g << 8) | b;
-                mlx_pixel_put(all->mlx_data->mlx_instance, all->mlx_data->window, x, y, color);
-				// t_vector light_pos = {all->lights->x, all->lights->y, all->lights->z};
-				//
-				// t_vector cam2D   = project(all, (t_vector){all->camera->x, all->camera->y, all->camera->z});
-				// t_vector light2D = project(all, light_pos);
-				// t_vector hit2D   = project(all, hit_point);
-
-				// draw points
-				// put_point(all, cam2D.x, cam2D.y, 0xFF0000);     // camera = red
-				// put_point(all, light2D.x, light2D.y, 0xFFFF00); // light = yellow
-
-				// draw ray from camera to hit
-				// draw_line(all, cam2D, hit2D, 0x00FF00);         // ray = green
-				//
-				// // draw ray from hit to light
-				// draw_line(all, hit2D, light2D, 0x0000FF);       // light ray = blue
-            }
-            else
-             {
-                mlx_pixel_put(all->mlx_data->mlx_instance, all->mlx_data->window, x, y, 0x000000);
-             }
+				int r = (int)(hit_shape->colour[0] * intensity);
+				int g = (int)(hit_shape->colour[1] * intensity);
+				int b = (int)(hit_shape->colour[2] * intensity);
+				int color = (r << 16) | (g << 8) | b;
+				mlx_pixel_put(all->mlx_data->mlx_instance, all->mlx_data->window, x, y, color);
+			}
+			else
+			{
+				mlx_pixel_put(all->mlx_data->mlx_instance, all->mlx_data->window, x, y, 0x000000);
+			}
 			x++;
 		}
 		y++;
@@ -216,11 +264,12 @@ int	start_raytracing(t_data *all)
 {
 	// t_data	all;
 
-	init(all);
-	// all.mlx = mlx_init();
-	// all.win = mlx_new_window(all.mlx, WIDTH, HEIGHT, "Testing purposes");
+	// init(all);
+	all->camera->fov_rad = all->camera->fov * M_PI / 180.0;
+	all->camera->aspect_ratio = (float)WIDTH / (float)HEIGHT;
+	all->camera->viewport_h = 2.0 * tan(all->camera->fov_rad / 2.0);
+	all->camera->viewport_w = all->camera->viewport_h * all->camera->aspect_ratio;
 	raytracing(all);
-	// mlx_loop(all.mlx);
 	return (0);
 
 }
