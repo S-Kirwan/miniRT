@@ -136,9 +136,7 @@ void	raytracing(t_data *all)
 	int		y;
 	float	u;
 	float	v;
-	float	ambient;
 
-	ambient = all->ambience->ratio;
 	y = 0;
 	while (y < HEIGHT)
 	{
@@ -146,13 +144,40 @@ void	raytracing(t_data *all)
 		while (x < WIDTH)
 		{
 			u = ((x + 0.5f) / WIDTH - 0.5f) * all->camera->viewport_w;
-			v = (0.5f - (y + 0.5f) / HEIGHT) * all->camera->viewport_h;
+			v = ((y + 0.5f) / HEIGHT - 0.5f) * all->camera->viewport_h;
+      t_vector ray_origin = {
+            all->camera->position[0],
+            all->camera->position[1],
+            all->camera->position[2]};
+        t_vector forward = {
+            all->camera->orientation[0],
+            all->camera->orientation[1],
+            all->camera->orientation[2]};
+        t_vector world_up;
+        if (fabs(forward.y) > 0.999)
+          world_up = (t_vector){1,0,0};
+        else
+          world_up = (t_vector){0,1,0};
+        t_vector right = {
+            world_up.y * forward.z - world_up.z * forward.y,
+            world_up.z * forward.x - world_up.x * forward.z,
+            world_up.x * forward.y - world_up.y * forward.x
+        };
+        normalize(&right);
+        t_vector up = {
+            right.y * forward.z - right.z * forward.y,
+            right.z * forward.x - right.x * forward.z,
+            right.x * forward.y - right.y * forward.x
+        };
+        normalize(&up);
 
-			t_vector ray_origin = {all->camera->position[0], all->camera->position[1], all->camera->position[2]};
-			t_vector ray_dir = {all->camera->orientation[0] + u,
-								all->camera->orientation[1] + v,
-								all->camera->orientation[2]};
-			normalize(&ray_dir);
+
+        t_vector ray_dir = {
+            forward.x + u * right.x + v * up.x,
+            forward.y + u * right.y + v * up.y,
+            forward.z + u * right.z + v * up.z
+        };
+        normalize(&ray_dir);
 			float closest_t = 1e30;
 			t_shape *hit_shape = NULL;
 			t_vector hit_normal;
@@ -183,6 +208,7 @@ void	raytracing(t_data *all)
 						hit_normal.x = node->shape->vectors[0];
 						hit_normal.y = node->shape->vectors[1];
 						hit_normal.z = node->shape->vectors[2];
+            normalize(&hit_normal);
 					}
 				}
 				node = node->next;
@@ -220,14 +246,20 @@ void	raytracing(t_data *all)
 					}
 					node = node->next;
 				}
-				float diffuse = hit_normal.x*light_dir.x + hit_normal.y*light_dir.y + hit_normal.z*light_dir.z;
-				if (diffuse < 0)
-					diffuse = 0;
-				if (in_shadow)
-					diffuse = 0;
-				float intensity = all->ambience->ratio + diffuse;
-				if (intensity > 1.0f)
-					intensity = 1.0f;
+        float diffuse = hit_normal.x*light_dir.x +
+                hit_normal.y*light_dir.y +
+                hit_normal.z*light_dir.z;
+        if (diffuse < 0)
+            diffuse = 0;
+        float shadow_factor = 1.0f;
+        if (in_shadow)
+            shadow_factor = 0.3f;
+
+        diffuse *= all->light->brightness * shadow_factor;
+
+        float intensity = all->ambience->ratio + diffuse;
+        if (intensity > 1.0f)
+            intensity = 1.0f;
 				int r = (int)(hit_shape->colour[0] * intensity);
 				int g = (int)(hit_shape->colour[1] * intensity);
 				int b = (int)(hit_shape->colour[2] * intensity);
