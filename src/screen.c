@@ -102,8 +102,6 @@ void	raytracing(t_data *all)
             right.x * forward.y - right.y * forward.x
         };
         normalize(&up);
-
-
         t_vector ray_dir = {
             forward.x + u * right.x + v * up.x,
             forward.y + u * right.y + v * up.y,
