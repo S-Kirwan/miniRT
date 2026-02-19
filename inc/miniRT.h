@@ -99,6 +99,9 @@ typedef struct s_mlx_data
 typedef struct  s_raytracing
 {
   t_vector  *ray_origin;
+  t_vector  *forward;
+  t_vector  *right;
+  t_vector  *up;
 } t_raytracing;
 
 // structure has changed post merge therefore current code in src/screen.c will break

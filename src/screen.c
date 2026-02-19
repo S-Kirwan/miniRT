@@ -69,6 +69,19 @@ void  array_to_vector(float source[3], t_vector *dest)
   dest->z = source[2];
 }
 
+void  cross_product(t_vector *a, t_vector *b, t_vector *result, int up)
+{
+  result->x = a->y * b->z - a->z * b->y;
+  if (!up)
+    result->y = a->x * b->z - a->x * b->z;
+  else if (up == 1) 
+    result->y = a->z * b->x - a->x * b->z;
+  if (!up)
+    result->z = a->x * b->y - a->x * b->y;
+  else if (up == 1)
+    result->z = a->x * b->y - a->y * b->x;
+}
+
 void	raytracing(t_data *all)
 {
 	int		x;
@@ -86,36 +99,33 @@ void	raytracing(t_data *all)
 			v = ((y + 0.5f) / HEIGHT - 0.5f) * all->camera->viewport_h;
       all->rt = malloc(sizeof(t_raytracing));
       all->rt->ray_origin = malloc(sizeof(t_vector));
+      all->rt->forward = malloc(sizeof(t_vector));
+      all->rt->right = malloc(sizeof(t_vector));
+      all->rt->up = malloc(sizeof(t_vector));
       array_to_vector(all->camera->position, all->rt->ray_origin);
-      t_vector ray_origin = {
-            all->camera->position[0],
-            all->camera->position[1],
-            all->camera->position[2]};
-        t_vector forward = {
-            all->camera->orientation[0],
-            all->camera->orientation[1],
-            all->camera->orientation[2]};
-        t_vector world_up;
-        if (fabs(forward.y) > 0.999)
-          world_up = (t_vector){1,0,0};
-        else
-          world_up = (t_vector){0,1,0};
-        t_vector right = {
-            world_up.y * forward.z - world_up.z * forward.y,
-            world_up.z * forward.x - world_up.x * forward.z,
-            world_up.x * forward.y - world_up.y * forward.x
-        };
-        normalize(&right);
-        t_vector up = {
-            right.y * forward.z - right.z * forward.y,
-            right.z * forward.x - right.x * forward.z,
-            right.x * forward.y - right.y * forward.x
-        };
-        normalize(&up);
+      array_to_vector(all->camera->orientation, all->rt->forward);
+      t_vector *world_up;
+      world_up = malloc(sizeof(t_vector));
+      if (fabs(all->rt->forward->y) > 0.999)
+      {
+        world_up->x = 1;
+        world_up->y = 0;
+        world_up->z = 0;
+      }
+      else
+      {
+        world_up->x = 0;
+        world_up->y = 1;
+        world_up->z = 0;
+      }
+      cross_product(world_up, all->rt->forward, all->rt->right, 0);
+      cross_product(all->rt->right, all->rt->forward, all->rt->up, 1);
+      normalize(all->rt->right);
+        normalize(all->rt->up);
         t_vector ray_dir = {
-            forward.x + u * right.x + v * up.x,
-            forward.y + u * right.y + v * up.y,
-            forward.z + u * right.z + v * up.z
+            all->rt->forward->x + u * all->rt->right->x + v * all->rt->up->x,
+            all->rt->forward->y + u * all->rt->right->y + v * all->rt->up->y,
+            all->rt->forward->z + u * all->rt->right->z + v * all->rt->up->z
         };
         normalize(&ray_dir);
 			float closest_t = 1e30;
@@ -140,7 +150,7 @@ void	raytracing(t_data *all)
 				}
 				else if (node->shape->shape == PLANE)
 				{
-					if (plane_hit(node->shape, ray_origin, ray_dir, &t_tmp) && t_tmp < closest_t)
+					if (plane_hit(node->shape, *(all->rt->ray_origin), ray_dir, &t_tmp) && t_tmp < closest_t)
 					{
 						closest_t = t_tmp;
 						hit_shape = node->shape;
