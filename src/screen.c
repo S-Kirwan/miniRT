@@ -62,6 +62,13 @@ int plane_hit(t_shape *plane, t_vector ray_origin, t_vector ray_dir, float *t)
     return (*t > 0);
 }
 
+void  array_to_vector(float source[3], t_vector *dest)
+{
+  dest->x = source[0];
+  dest->y = source[1];
+  dest->z = source[2];
+}
+
 void	raytracing(t_data *all)
 {
 	int		x;
@@ -77,6 +84,9 @@ void	raytracing(t_data *all)
 		{
 			u = ((x + 0.5f) / WIDTH - 0.5f) * all->camera->viewport_w;
 			v = ((y + 0.5f) / HEIGHT - 0.5f) * all->camera->viewport_h;
+      all->rt = malloc(sizeof(t_raytracing));
+      all->rt->ray_origin = malloc(sizeof(t_vector));
+      array_to_vector(all->camera->position, all->rt->ray_origin);
       t_vector ray_origin = {
             all->camera->position[0],
             all->camera->position[1],
@@ -117,14 +127,14 @@ void	raytracing(t_data *all)
 			{
 				if (node->shape->shape == SPHERE)
 				{
-					if (sphere_hit(node->shape, ray_origin, ray_dir, &t_tmp) && t_tmp < closest_t)
+					if (sphere_hit(node->shape, *(all->rt->ray_origin), ray_dir, &t_tmp) && t_tmp < closest_t)
 					{
 						closest_t = t_tmp;
 						hit_shape = node->shape;
 
-						hit_normal.x = ray_origin.x + t_tmp*ray_dir.x - node->shape->position[0];
-						hit_normal.y = ray_origin.y + t_tmp*ray_dir.y - node->shape->position[1];
-						hit_normal.z = ray_origin.z + t_tmp*ray_dir.z - node->shape->position[2];
+						hit_normal.x = all->rt->ray_origin->x + t_tmp*ray_dir.x - node->shape->position[0];
+						hit_normal.y = all->rt->ray_origin->y + t_tmp*ray_dir.y - node->shape->position[1];
+						hit_normal.z = all->rt->ray_origin->z + t_tmp*ray_dir.z - node->shape->position[2];
 						normalize(&hit_normal);
 					}
 				}
@@ -147,9 +157,9 @@ void	raytracing(t_data *all)
 			if (hit_shape)
 			{
 				t_vector hit_point = {
-					ray_origin.x + closest_t*ray_dir.x,
-					ray_origin.y + closest_t*ray_dir.y,
-					ray_origin.z + closest_t*ray_dir.z
+					all->rt->ray_origin->x + closest_t*ray_dir.x,
+					all->rt->ray_origin->y + closest_t*ray_dir.y,
+					all->rt->ray_origin->z + closest_t*ray_dir.z
 				};
 				t_vector light_dir = {
 					all->light->position[0] - hit_point.x,
