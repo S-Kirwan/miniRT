@@ -73,13 +73,31 @@ void  cross_product(t_vector *a, t_vector *b, t_vector *result, int up)
 {
   result->x = a->y * b->z - a->z * b->y;
   if (!up)
+  {
     result->y = a->x * b->z - a->x * b->z;
-  else if (up == 1) 
-    result->y = a->z * b->x - a->x * b->z;
-  if (!up)
     result->z = a->x * b->y - a->x * b->y;
-  else if (up == 1)
+  }
+  else if (up == 1) 
+  {
+    result->y = a->z * b->x - a->x * b->z;
     result->z = a->x * b->y - a->y * b->x;
+  }
+}
+
+void  get_world_up(t_data *all)
+{
+  if (fabs(all->rt->forward->y) > 0.999)
+  {
+    all->rt->world_up->x = 1;
+    all->rt->world_up->y = 0;
+    all->rt->world_up->z = 0;
+  }
+  else
+  {
+    all->rt->world_up->x = 0;
+    all->rt->world_up->y = 1;
+    all->rt->world_up->z = 0;
+  }
 }
 
 void	raytracing(t_data *all)
@@ -97,37 +115,20 @@ void	raytracing(t_data *all)
 		{
 			u = ((x + 0.5f) / WIDTH - 0.5f) * all->camera->viewport_w;
 			v = ((y + 0.5f) / HEIGHT - 0.5f) * all->camera->viewport_h;
-      all->rt = malloc(sizeof(t_raytracing));
-      all->rt->ray_origin = malloc(sizeof(t_vector));
-      all->rt->forward = malloc(sizeof(t_vector));
-      all->rt->right = malloc(sizeof(t_vector));
-      all->rt->up = malloc(sizeof(t_vector));
       array_to_vector(all->camera->position, all->rt->ray_origin);
       array_to_vector(all->camera->orientation, all->rt->forward);
-      t_vector *world_up;
-      world_up = malloc(sizeof(t_vector));
-      if (fabs(all->rt->forward->y) > 0.999)
-      {
-        world_up->x = 1;
-        world_up->y = 0;
-        world_up->z = 0;
-      }
-      else
-      {
-        world_up->x = 0;
-        world_up->y = 1;
-        world_up->z = 0;
-      }
-      cross_product(world_up, all->rt->forward, all->rt->right, 0);
+      get_world_up(all);
+      cross_product(all->rt->world_up, all->rt->forward, all->rt->right, 0);
       cross_product(all->rt->right, all->rt->forward, all->rt->up, 1);
       normalize(all->rt->right);
-        normalize(all->rt->up);
-        t_vector ray_dir = {
-            all->rt->forward->x + u * all->rt->right->x + v * all->rt->up->x,
-            all->rt->forward->y + u * all->rt->right->y + v * all->rt->up->y,
-            all->rt->forward->z + u * all->rt->right->z + v * all->rt->up->z
-        };
-        normalize(&ray_dir);
+      normalize(all->rt->up);
+      t_vector ray_dir = {
+          all->rt->forward->x + u * all->rt->right->x + v * all->rt->up->x,
+          all->rt->forward->y + u * all->rt->right->y + v * all->rt->up->y,
+          all->rt->forward->z + u * all->rt->right->z + v * all->rt->up->z
+      };
+      normalize(&ray_dir);
+      //TODO: Clean from here
 			float closest_t = 1e30;
 			t_shape *hit_shape = NULL;
 			t_vector hit_normal;
@@ -251,6 +252,12 @@ int	start_raytracing(t_data *all)
 	all->camera->aspect_ratio = (float)WIDTH / (float)HEIGHT;
 	all->camera->viewport_h = 2.0 * tan(all->camera->fov_rad / 2.0);
 	all->camera->viewport_w = all->camera->viewport_h * all->camera->aspect_ratio;
+  all->rt = malloc(sizeof(t_raytracing));
+  all->rt->ray_origin = malloc(sizeof(t_vector));
+  all->rt->forward = malloc(sizeof(t_vector));
+  all->rt->right = malloc(sizeof(t_vector));
+  all->rt->up = malloc(sizeof(t_vector));
+  all->rt->world_up = malloc(sizeof(t_vector));
 	raytracing(all);
 	return (0);
 

@@ -98,6 +98,7 @@ typedef struct s_mlx_data
 
 typedef struct  s_raytracing
 {
+  t_vector  *world_up;
   t_vector  *ray_origin;
   t_vector  *forward;
   t_vector  *right;
