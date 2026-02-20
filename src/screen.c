@@ -100,6 +100,49 @@ void  get_world_up(t_data *all)
   }
 }
 
+void  sphere_was_hit()
+{
+
+}
+void  shape_list_traversal(t_data *all, t_vector ray_dir)
+{
+  if (all->rt->node->shape->shape == SPHERE)
+  {
+    if (sphere_hit(all->rt->node->shape, *(all->rt->ray_origin), ray_dir, &all->rt->t_tmp) && all->rt->t_tmp < all->rt->closest_t)
+    {
+      all->rt->closest_t = all->rt->t_tmp;
+      all->rt->hit_shape = all->rt->node->shape;
+
+      all->rt->hit_normal->x = all->rt->ray_origin->x + all->rt->t_tmp*ray_dir.x - all->rt->node->shape->position[0];
+      all->rt->hit_normal->y = all->rt->ray_origin->y + all->rt->t_tmp*ray_dir.y - all->rt->node->shape->position[1];
+      all->rt->hit_normal->z = all->rt->ray_origin->z + all->rt->t_tmp*ray_dir.z - all->rt->node->shape->position[2];
+      normalize(all->rt->hit_normal);
+    }
+  }
+  else if (all->rt->node->shape->shape == PLANE)
+  {
+    if (plane_hit(all->rt->node->shape, *(all->rt->ray_origin), ray_dir, &all->rt->t_tmp) && all->rt->t_tmp < all->rt->closest_t)
+    {
+      all->rt->closest_t = all->rt->t_tmp;
+      all->rt->hit_shape = all->rt->node->shape;
+
+      all->rt->hit_normal->x = all->rt->node->shape->vectors[0];
+      all->rt->hit_normal->y = all->rt->node->shape->vectors[1];
+      all->rt->hit_normal->z = all->rt->node->shape->vectors[2];
+      normalize(all->rt->hit_normal);
+    }
+  }
+  all->rt->node = all->rt->node->next;
+}
+
+void  calculate_offset(t_data *all, float u, float v)
+{
+  all->rt->ray_dir->x = all->rt->forward->x + u * all->rt->right->x + v * all->rt->up->x;
+  all->rt->ray_dir->y = all->rt->forward->y + u * all->rt->right->y + v * all->rt->up->y;
+  all->rt->ray_dir->z = all->rt->forward->z + u * all->rt->right->z + v * all->rt->up->z;
+  normalize(all->rt->ray_dir);
+}
+
 void	raytracing(t_data *all)
 {
 	int		x;
@@ -115,62 +158,23 @@ void	raytracing(t_data *all)
 		{
 			u = ((x + 0.5f) / WIDTH - 0.5f) * all->camera->viewport_w;
 			v = ((y + 0.5f) / HEIGHT - 0.5f) * all->camera->viewport_h;
-      array_to_vector(all->camera->position, all->rt->ray_origin);
-      array_to_vector(all->camera->orientation, all->rt->forward);
-      get_world_up(all);
-      cross_product(all->rt->world_up, all->rt->forward, all->rt->right, 0);
-      cross_product(all->rt->right, all->rt->forward, all->rt->up, 1);
-      normalize(all->rt->right);
-      normalize(all->rt->up);
-      t_vector ray_dir = {
-          all->rt->forward->x + u * all->rt->right->x + v * all->rt->up->x,
-          all->rt->forward->y + u * all->rt->right->y + v * all->rt->up->y,
-          all->rt->forward->z + u * all->rt->right->z + v * all->rt->up->z
-      };
-      normalize(&ray_dir);
-      //TODO: Clean from here
-			float closest_t = 1e30;
-			t_shape *hit_shape = NULL;
-			t_vector hit_normal;
-			float t_tmp;
-			t_list *node = all->shape_list;
-			while (node)
-			{
-				if (node->shape->shape == SPHERE)
-				{
-					if (sphere_hit(node->shape, *(all->rt->ray_origin), ray_dir, &t_tmp) && t_tmp < closest_t)
-					{
-						closest_t = t_tmp;
-						hit_shape = node->shape;
-
-						hit_normal.x = all->rt->ray_origin->x + t_tmp*ray_dir.x - node->shape->position[0];
-						hit_normal.y = all->rt->ray_origin->y + t_tmp*ray_dir.y - node->shape->position[1];
-						hit_normal.z = all->rt->ray_origin->z + t_tmp*ray_dir.z - node->shape->position[2];
-						normalize(&hit_normal);
-					}
-				}
-				else if (node->shape->shape == PLANE)
-				{
-					if (plane_hit(node->shape, *(all->rt->ray_origin), ray_dir, &t_tmp) && t_tmp < closest_t)
-					{
-						closest_t = t_tmp;
-						hit_shape = node->shape;
-
-						hit_normal.x = node->shape->vectors[0];
-						hit_normal.y = node->shape->vectors[1];
-						hit_normal.z = node->shape->vectors[2];
-            normalize(&hit_normal);
-					}
-				}
-				node = node->next;
-			}
-
-			if (hit_shape)
+      // t_vector ray_dir = {
+      //     all->rt->forward->x + u * all->rt->right->x + v * all->rt->up->x,
+      //     all->rt->forward->y + u * all->rt->right->y + v * all->rt->up->y,
+      //     all->rt->forward->z + u * all->rt->right->z + v * all->rt->up->z
+      // };
+      calculate_offset(all, u,v);
+			all->rt->closest_t = 1e30;
+			all->rt->hit_shape = NULL;
+			all->rt->node = all->shape_list;
+			while (all->rt->node)
+        shape_list_traversal(all, *(all->rt->ray_dir));
+			if (all->rt->hit_shape)
 			{
 				t_vector hit_point = {
-					all->rt->ray_origin->x + closest_t*ray_dir.x,
-					all->rt->ray_origin->y + closest_t*ray_dir.y,
-					all->rt->ray_origin->z + closest_t*ray_dir.z
+					all->rt->ray_origin->x + all->rt->closest_t*all->rt->ray_dir->x,
+					all->rt->ray_origin->y + all->rt->closest_t*all->rt->ray_dir->y,
+					all->rt->ray_origin->z + all->rt->closest_t*all->rt->ray_dir->z
 				};
 				t_vector light_dir = {
 					all->light->position[0] - hit_point.x,
@@ -180,26 +184,26 @@ void	raytracing(t_data *all)
 				float light_distance = sqrt(light_dir.x*light_dir.x + light_dir.y*light_dir.y + light_dir.z*light_dir.z);
 				normalize(&light_dir);
 				t_vector shadow_origin = {
-					hit_point.x + hit_normal.x * 0.001f,
-					hit_point.y + hit_normal.y * 0.001f,
-					hit_point.z + hit_normal.z * 0.001f
+					hit_point.x + all->rt->hit_normal->x * 0.001f,
+					hit_point.y + all->rt->hit_normal->y * 0.001f,
+					hit_point.z + all->rt->hit_normal->z * 0.001f
 				};
 				float shadow_t;
 				int in_shadow = 0;
-				node = all->shape_list;
-				while (node)
+				all->rt->node = all->shape_list;
+				while (all->rt->node)
 				{
-					if ((node->shape->shape == SPHERE && sphere_hit(node->shape, shadow_origin, light_dir, &shadow_t) && shadow_t < light_distance) ||
-						(node->shape->shape == PLANE  && plane_hit(node->shape, shadow_origin, light_dir, &shadow_t) && shadow_t < light_distance))
+					if ((all->rt->node->shape->shape == SPHERE && sphere_hit(all->rt->node->shape, shadow_origin, light_dir, &shadow_t) && shadow_t < light_distance) ||
+						(all->rt->node->shape->shape == PLANE  && plane_hit(all->rt->node->shape, shadow_origin, light_dir, &shadow_t) && shadow_t < light_distance))
 					{
 						in_shadow = 1;
 						break;
 					}
-					node = node->next;
+					all->rt->node = all->rt->node->next;
 				}
-        float diffuse = hit_normal.x*light_dir.x +
-                hit_normal.y*light_dir.y +
-                hit_normal.z*light_dir.z;
+        float diffuse = all->rt->hit_normal->x*light_dir.x +
+                all->rt->hit_normal->y*light_dir.y +
+                all->rt->hit_normal->z*light_dir.z;
         if (diffuse < 0)
             diffuse = 0;
         float shadow_factor = 1.0f;
@@ -211,16 +215,14 @@ void	raytracing(t_data *all)
         float intensity = all->ambience->ratio + diffuse;
         if (intensity > 1.0f)
             intensity = 1.0f;
-				int r = (int)(hit_shape->colour[0] * intensity);
-				int g = (int)(hit_shape->colour[1] * intensity);
-				int b = (int)(hit_shape->colour[2] * intensity);
+				int r = (int)(all->rt->hit_shape->colour[0] * intensity);
+				int g = (int)(all->rt->hit_shape->colour[1] * intensity);
+				int b = (int)(all->rt->hit_shape->colour[2] * intensity);
 				int color = (r << 16) | (g << 8) | b;
 				mlx_pixel_put(all->mlx_data->mlx_instance, all->mlx_data->window, x, y, color);
 			}
 			else
-			{
 				mlx_pixel_put(all->mlx_data->mlx_instance, all->mlx_data->window, x, y, 0x000000);
-			}
 			x++;
 		}
 		y++;
@@ -258,6 +260,15 @@ int	start_raytracing(t_data *all)
   all->rt->right = malloc(sizeof(t_vector));
   all->rt->up = malloc(sizeof(t_vector));
   all->rt->world_up = malloc(sizeof(t_vector));
+  all->rt->hit_normal = malloc(sizeof(t_vector));
+  all->rt->ray_dir = malloc(sizeof(t_vector));
+  array_to_vector(all->camera->position, all->rt->ray_origin);
+  array_to_vector(all->camera->orientation, all->rt->forward);
+  get_world_up(all);
+  cross_product(all->rt->world_up, all->rt->forward, all->rt->right, 0);
+  cross_product(all->rt->right, all->rt->forward, all->rt->up, 1);
+  normalize(all->rt->right);
+  normalize(all->rt->up);
 	raytracing(all);
 	return (0);
 
