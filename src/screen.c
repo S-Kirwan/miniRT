@@ -131,12 +131,20 @@ void  shape_list_traversal(t_data *all, t_vector ray_dir)
   all->rt->node = all->rt->node->next;
 }
 
-void  calculate_offset(t_data *all, float u, float v)
+void  calculate_offset(t_data *all, int x, int y)
 {
+	float	u;
+	float	v;
+
+  u = ((x + 0.5f) / WIDTH - 0.5f) * all->camera->viewport_w;
+  v = ((y + 0.5f) / HEIGHT - 0.5f) * all->camera->viewport_h;
   all->rt->ray_dir->x = all->rt->forward->x + u * all->rt->right->x + v * all->rt->up->x;
   all->rt->ray_dir->y = all->rt->forward->y + u * all->rt->right->y + v * all->rt->up->y;
   all->rt->ray_dir->z = all->rt->forward->z + u * all->rt->right->z + v * all->rt->up->z;
   normalize(all->rt->ray_dir);
+  all->rt->closest_t = 1e30;
+  all->rt->hit_shape = NULL;
+  all->rt->node = all->shape_list;
 }
 
 void  calculate_hit_point(t_data *all)
@@ -155,12 +163,27 @@ void  calculate_light_dir(t_data *all)
   normalize(all->rt->light_dir);
 }
 
+void  calculate_shadow_origin(t_data *all)
+{
+  all->rt->shadow_origin->x =all->rt->hit_point->x + all->rt->hit_normal->x * 0.001f;
+  all->rt->shadow_origin->y =all->rt->hit_point->y + all->rt->hit_normal->y * 0.001f;
+  all->rt->shadow_origin->z =all->rt->hit_point->z + all->rt->hit_normal->z * 0.001f;
+}
+
+void  calculte_diffuse(t_data *all)
+{
+  all->rt->diffuse = all->rt->hit_normal->x*all->rt->light_dir->x +
+          all->rt->hit_normal->y*all->rt->light_dir->y +
+          all->rt->hit_normal->z*all->rt->light_dir->z;
+  all->rt->shadow_factor = 1.0f;
+}
+
 void	raytracing(t_data *all)
 {
-	int		x;
-	int		y;
-	float	u;
-	float	v;
+  int   x;
+  int   y;
+  float shadow_t;
+  int   in_shadow;
 
 	y = 0;
 	while (y < HEIGHT)
@@ -168,48 +191,33 @@ void	raytracing(t_data *all)
 		x = 0;
 		while (x < WIDTH)
 		{
-			u = ((x + 0.5f) / WIDTH - 0.5f) * all->camera->viewport_w;
-			v = ((y + 0.5f) / HEIGHT - 0.5f) * all->camera->viewport_h;
-      calculate_offset(all, u,v);
-			all->rt->closest_t = 1e30;
-			all->rt->hit_shape = NULL;
-			all->rt->node = all->shape_list;
+      calculate_offset(all, x,y);
 			while (all->rt->node)
         shape_list_traversal(all, *(all->rt->ray_dir));
 			if (all->rt->hit_shape)
 			{
         calculate_hit_point(all);
         calculate_light_dir(all);
-				t_vector shadow_origin = {
-					all->rt->hit_point->x + all->rt->hit_normal->x * 0.001f,
-					all->rt->hit_point->y + all->rt->hit_normal->y * 0.001f,
-					all->rt->hit_point->z + all->rt->hit_normal->z * 0.001f
-				};
-				float shadow_t;
-				int in_shadow = 0;
-				all->rt->node = all->shape_list;
+        calculate_shadow_origin(all);
+				in_shadow = 0;
+        all->rt->node = all->shape_list;
 				while (all->rt->node)
 				{
-					if ((all->rt->node->shape->shape == SPHERE && sphere_hit(all->rt->node->shape, shadow_origin, *(all->rt->light_dir), &shadow_t) && shadow_t < all->rt->light_distance) ||
-						(all->rt->node->shape->shape == PLANE  && plane_hit(all->rt->node->shape, shadow_origin, *(all->rt->light_dir), &shadow_t) && shadow_t < all->rt->light_distance))
+					if ((all->rt->node->shape->shape == SPHERE && sphere_hit(all->rt->node->shape, *(all->rt->shadow_origin), *(all->rt->light_dir), &shadow_t) && shadow_t < all->rt->light_distance) ||
+						(all->rt->node->shape->shape == PLANE  && plane_hit(all->rt->node->shape, *(all->rt->shadow_origin), *(all->rt->light_dir), &shadow_t) && shadow_t < all->rt->light_distance))
 					{
 						in_shadow = 1;
 						break;
 					}
 					all->rt->node = all->rt->node->next;
 				}
-        float diffuse = all->rt->hit_normal->x*all->rt->light_dir->x +
-                all->rt->hit_normal->y*all->rt->light_dir->y +
-                all->rt->hit_normal->z*all->rt->light_dir->z;
-        if (diffuse < 0)
-            diffuse = 0;
-        float shadow_factor = 1.0f;
+        calculte_diffuse(all);
+        if (all->rt->diffuse < 0)
+            all->rt->diffuse = 0;
         if (in_shadow)
-            shadow_factor = 0.3f;
-
-        diffuse *= all->light->brightness * shadow_factor;
-
-        float intensity = all->ambience->ratio + diffuse;
+            all->rt->shadow_factor = 0.3f;
+        all->rt->diffuse *= all->light->brightness * all->rt->shadow_factor;
+        float intensity = all->ambience->ratio + all->rt->diffuse;
         if (intensity > 1.0f)
             intensity = 1.0f;
 				int r = (int)(all->rt->hit_shape->colour[0] * intensity);
@@ -261,6 +269,7 @@ int	start_raytracing(t_data *all)
   all->rt->ray_dir = malloc(sizeof(t_vector));
   all->rt->hit_point = malloc(sizeof(t_vector));
   all->rt->light_dir = malloc(sizeof(t_vector));
+  all->rt->shadow_origin = malloc(sizeof(t_vector));
   array_to_vector(all->camera->position, all->rt->ray_origin);
   array_to_vector(all->camera->orientation, all->rt->forward);
   get_world_up(all);
