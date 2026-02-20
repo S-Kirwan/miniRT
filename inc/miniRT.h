@@ -109,6 +109,9 @@ typedef struct  s_raytracing
   t_shape   *hit_shape;
   float      t_tmp;
   t_vector  *ray_dir;
+  t_vector  *hit_point;
+  t_vector  *light_dir;
+  float     light_distance;
 } t_raytracing;
 
 // structure has changed post merge therefore current code in src/screen.c will break
