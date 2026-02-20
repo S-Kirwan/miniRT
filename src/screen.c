@@ -214,8 +214,12 @@ void	throw_shade(t_data *all)
 
 	while (all->rt->node)
 	{
-		if ((all->rt->node->shape->shape == SPHERE && sphere_hit(all->rt->node->shape, *(all->rt->shadow_origin), *(all->rt->light_dir), &shadow_t) && shadow_t < all->rt->light_distance) ||
-		(all->rt->node->shape->shape == PLANE && plane_hit(all->rt->node->shape, *(all->rt->shadow_origin), *(all->rt->light_dir), &shadow_t) && shadow_t < all->rt->light_distance))
+		if ((all->rt->node->shape->shape == SPHERE \
+&& sphere_hit(all->rt->node->shape, *(all->rt->shadow_origin), \
+*(all->rt->light_dir), &shadow_t) && shadow_t < all->rt->light_distance) || \
+(all->rt->node->shape->shape == PLANE \
+&& plane_hit(all->rt->node->shape, *(all->rt->shadow_origin), \
+*(all->rt->light_dir), &shadow_t) && shadow_t < all->rt->light_distance))
 		{
 			all->rt->in_shadow = 1;
 			break ;
