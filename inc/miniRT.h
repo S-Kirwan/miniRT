@@ -115,6 +115,7 @@ typedef struct  s_raytracing
   t_vector  *shadow_origin;
   float     diffuse;
   float     shadow_factor;
+  int       in_shadow;
 } t_raytracing;
 
 // structure has changed post merge therefore current code in src/screen.c will break
