@@ -99,11 +99,11 @@ typedef struct s_mlx_data
 typedef struct  s_raytracing
 {
   t_vector  *world_up;
-  t_vector  *ray_origin;
+  t_vector  *ray_o;//ray_o
   t_vector  *forward;
   t_vector  *right;
   t_vector  *up;
-  t_vector  *hit_normal;
+  t_vector  *hit_n;//hit_n
   t_list    *node;
   float     closest_t;
   t_shape   *hit_shape;
