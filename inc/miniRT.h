@@ -111,19 +111,37 @@ typedef struct s_mlx_data
 
 }	t_mlx_data;
 
+typedef struct  s_sphere_hit
+{
+  float a;
+  float b;
+  float c;
+  float discriminant;
+} t_sp;
+
 typedef struct  s_raytracing
 {
-  t_vector  *world_up;
-  t_vector  *ray_origin;
-  t_vector  *forward;
-  t_vector  *right;
   t_vector  *up;
-  t_vector  *hit_normal;
+  t_vector  *oc;
+  t_sp  *sp;
+  struct s_data    *all;
   t_list    *node;
-  float     closest_t;
-  t_shape   *hit_shape;
+  t_vector  *ray_o;//ray_o
   float      t_tmp;
+  t_vector  *hit_n;//hit_n
+  t_vector  *right;
+  float     diffuse;
   t_vector  *ray_dir;
+  t_vector  *forward;
+  float     closest_t;
+  int       in_shadow;
+  t_vector  *world_up;
+  t_shape   *hit_shape;
+  t_vector  *hit_point;
+  t_vector  *light_dir;
+  float     shadow_factor;
+  t_vector  *shadow_origin;
+  float     light_distance;
 } t_raytracing;
 
 // structure has changed post merge therefore current code in src/screen.c will break
