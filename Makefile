@@ -24,7 +24,7 @@ DARK_YELLOW =	\033[38;5;143m
 
 #Compiler Info
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -Iinc -Ilibft -Iminilibx-linux -MMD -MP -g3
+CFLAGS = -Wall -Wextra -Iinc -Ilibft -Iminilibx-linux -MMD -MP -g3
 
 #Libraries
 LIBFT_DIR = ./lib/libft
@@ -42,6 +42,7 @@ SRC_DIR = src
 #$(SRC_DIR)/screen.c \
 #Source Files
 SRC =	$(SRC_DIR)/main.c \
+		$(SRC_DIR)/screen.c \
 		$(SRC_DIR)/parsing/validate_file.c \
 		$(SRC_DIR)/parsing/receive_scene.c \
 		$(SRC_DIR)/parsing/read_ambience.c \

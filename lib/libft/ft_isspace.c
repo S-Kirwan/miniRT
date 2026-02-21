@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   event_hooks.c                                      :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/18 17:19:09 by skirwan           #+#    #+#             */
-/*   Updated: 2026/02/21 16:11:23 by skirwan          ###   ########.fr       */
+/*   Created: 2025/11/28 13:02:47 by skirwan           #+#    #+#             */
+/*   Updated: 2025/11/28 13:06:31 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
-#include "mlx.h"
-#include "window_management.h"
+#include "libft.h"
 
-//Changed from mlx_hook(mlx_data->window, 2, (1L<<0), key_press_event, mlx_data);
-//to:
-//mlx_hook(mlx_data->window, 2, (1L<<0), (int (*)())key_press_event, mlx_data);
-void	close_window_hooks(t_mlx_data *mlx_data)
+int	ft_isspace(int c)
 {
-	mlx_hook(mlx_data->window, 2, (1L<<0), key_press_event, mlx_data);
-	mlx_hook(mlx_data->window, 17, 0L, full_exit, mlx_data);
+	if (c == ' ')
+		return (1);
+	if (c == '\t')
+		return (1);
+	if (c == '\f')
+		return(1);
+	if (c == '\r')
+		return (1);
+	if (c == '\v')
+		return (1);
+	return (0);
 }

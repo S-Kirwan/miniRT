@@ -21,11 +21,11 @@
 # include <unistd.h>
 # include "./ft_printf/ft_printf.h"
 
-// typedef struct s_list
-// {
-// 	void			*content;
-// 	struct s_list	*next;
-// }	t_list;
+typedef struct s_list
+{
+	void			*content;
+	struct s_list	*next;
+}	t_list;
 
 // Filter
 int		ft_isalpha(int c);

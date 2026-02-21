@@ -111,6 +111,21 @@ typedef struct s_mlx_data
 
 }	t_mlx_data;
 
+typedef struct  s_raytracing
+{
+  t_vector  *world_up;
+  t_vector  *ray_origin;
+  t_vector  *forward;
+  t_vector  *right;
+  t_vector  *up;
+  t_vector  *hit_normal;
+  t_list    *node;
+  float     closest_t;
+  t_shape   *hit_shape;
+  float      t_tmp;
+  t_vector  *ray_dir;
+} t_raytracing;
+
 // structure has changed post merge therefore current code in src/screen.c will break
 typedef struct s_data
 {
@@ -120,6 +135,7 @@ typedef struct s_data
 	t_light		*light;
 	t_shape		*shapes;
 	t_list		*shape_list;
+  t_raytracing  *rt;
 }	t_data;
 
 #endif

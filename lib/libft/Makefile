@@ -28,6 +28,7 @@ SRC = \
 	ft_isalnum.c\
 	ft_isascii.c\
 	ft_isprint.c\
+	ft_isspace.c\
 	ft_strlen.c\
 	ft_memset.c\
 	ft_bzero.c\
@@ -44,6 +45,7 @@ SRC = \
 	ft_memcmp.c\
 	ft_strnstr.c\
 	ft_atoi.c\
+	ft_atof.c\
 	ft_calloc.c\
 	ft_strdup.c\
 	ft_substr.c\
@@ -52,6 +54,7 @@ SRC = \
 	ft_printf_itoa.c\
 	ft_printf_utoa.c\
 	ft_strjoin.c\
+	ft_lstadd_back.c\
 	ft_strtrim.c\
 	ft_split.c\
 	ft_strmapi.c\
