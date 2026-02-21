@@ -31,6 +31,7 @@ void	initialise_mlx(t_mlx_data *mlx_data);
 
 // image_initialisation.c
 int		calculate_img_offset(int line_length, int bpp, int x, int y);
+void	place_pixel_to_img(t_mlx_img *mlx_img, int x, int y, int colour);
 void	create_mlx_img(t_mlx_img *mlx_img, void *mlx_instance);
 
 // window_destruction.c

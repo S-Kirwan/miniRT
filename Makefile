@@ -61,6 +61,7 @@ SRC =	$(SRC_DIR)/main.c \
 		$(SRC_DIR)/window_management/image_initialisation.c \
 		$(SRC_DIR)/window_management/event_hooks.c \
 		$(SRC_DIR)/data_management/initialise_data.c \
+		$(SRC_DIR)/raytracing/raytrace.c \
 
 #Objects and Dependencies
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)

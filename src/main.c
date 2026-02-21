@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 11:23:16 by skirwan           #+#    #+#             */
-/*   Updated: 2026/02/08 15:42:14 by skirwan          ###   ########.fr       */
+/*   Updated: 2026/02/21 12:49:09 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "mlx.h"
 #include "parsing.h"
 #include "data_management.h"
+#include "raytracing.h"
 #include "window_management.h"
 
 int	main(int argc, char **argv)
@@ -23,19 +24,14 @@ int	main(int argc, char **argv)
 
 	scene_fd = validate_file(argc, argv);
 	if (scene_fd == -1)
-	{
 		return (1);
-	}
 	if (initialise_data(&data) == -1)
 		return (1);
 	if (receive_scene(data, scene_fd) == -1)
 		return (1);
-	// print_shape_list(data->shape_list);
 	initialise_mlx(data->mlx_data);
+	trace_ray(data->mlx_data->mlx_img);
+	mlx_put_image_to_window(data->mlx_data->mlx_instance, data->mlx_data->window, data->mlx_data->mlx_img->image, 0, 0);
 	mlx_loop(data->mlx_data->mlx_instance);
 	return (0);
-	(void)argc;
-	(void)argv;
-	(void)data;
-	(void)scene_fd;
 }
