@@ -33,6 +33,8 @@ void	print_shape_list(t_list *shape_list)
 		printf("\n");
 		shape_list = shape_list->next;
 	}
+	if (shape_list == NULL)
+		printf("null terminated");
 }
 
 void	print_vectors_test(float vectors[3])

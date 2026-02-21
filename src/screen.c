@@ -6,16 +6,18 @@
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 19:53:41 by aramos            #+#    #+#             */
-/*   Updated: 2025/12/11 19:53:57 by aramos           ###   ########.fr       */
+/*   Updated: 2026/02/21 16:29:53 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/miniRT.h"
 #include "../inc/parsing.h"
 #include "../inc/raytracing.h"
+#include "window_management.h"
+#include <stdio.h>
 
-#define WIDTH 500
-#define HEIGHT 500
+// #define WIDTH 500
+// #define HEIGHT 500
 
 //oc is the distance between the origin ray 
 //(camera vector) and the center of the sphere
@@ -36,9 +38,7 @@ int	sphere_hit(t_data *all, t_vector ray_o, t_vector ray_dir, float *t)
 	float		t1;
 
 	if (discriminant < 0)
-	{
 		return (0);
-	}
 	t0 = (-b - sqrt(discriminant)) / (2.0f * a);
 	t1 = (-b + sqrt(discriminant)) / (2.0f * a);
 	if (t0 > 0)
@@ -209,8 +209,7 @@ void	color_pixel(t_data *all, int x, int y)
 	g = (int)(all->rt->hit_shape->colour[1] * intensity);
 	b = (int)(all->rt->hit_shape->colour[2] * intensity);
 	color = (r << 16) | (g << 8) | b;
-	mlx_pixel_put(all->mlx_data->mlx_instance\
-, all->mlx_data->window, x, y, color);
+	place_pixel_to_img(all->mlx_data->mlx_img, x, y, color);
 }
 
 void	throw_shade(t_data *all)
@@ -257,13 +256,14 @@ void	raytracing(t_data *all)
 		{
 			calculate_offset(all, all->rt, x, y);
 			while (all->rt->node)
+			{
 				shape_list_traversal(all->rt, \
 *(all->rt->ray_dir), all->rt->node->shape->position);
+			}
 			if (all->rt->hit_shape)
 				hit_helper(all, x, y);
 			else
-				mlx_pixel_put(all->mlx_data->mlx_instance, \
-all->mlx_data->window, x, y, 0x000000);
+				place_pixel_to_img(all->mlx_data->mlx_img, x, y, 0x000000);
 			x++;
 		}
 		y++;
@@ -306,6 +306,7 @@ int	start_raytracing(t_data *all)
 	all->rt->hit_point = malloc(sizeof(t_vector));
 	all->rt->light_dir = malloc(sizeof(t_vector));
 	all->rt->shadow_origin = malloc(sizeof(t_vector));
+	all->rt->node = all->shape_list;
 	array_to_vector(all->camera->position, all->rt->ray_o);
 	array_to_vector(all->camera->orientation, all->rt->forward);
 	get_world_up(all);

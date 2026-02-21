@@ -66,8 +66,6 @@ int	validate_scene(t_parser parser)
 		return (-1);
 	if (parser.ambience != 1)
 		return (-1);
-	if (parser.shapes < 1)
-		return (-1);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 11:23:16 by skirwan           #+#    #+#             */
-/*   Updated: 2026/02/21 16:12:29 by skirwan          ###   ########.fr       */
+/*   Updated: 2026/02/21 16:19:34 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,8 @@ int	main(int argc, char **argv)
 	if (receive_scene(data, scene_fd) == -1)
 		return (1);
 	initialise_mlx(data->mlx_data);
-	mlx_put_image_to_window(data->mlx_data->mlx_instance, data->mlx_data->window, data->mlx_data->mlx_img->image, 0, 0);
-	mlx_loop(data->mlx_data->mlx_instance);
 	start_raytracing(data);
+	mlx_put_image_to_window(data->mlx_data->mlx_instance, data->mlx_data->window, data->mlx_data->mlx_img->image, 0, 0);
 	mlx_loop(data->mlx_data->mlx_instance);
 	return (0);
 }
