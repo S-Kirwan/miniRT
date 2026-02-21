@@ -20,12 +20,17 @@
 //oc is the distance between the origin ray 
 //(camera vector) and the center of the sphere
 //that means that oc is equal to (O - C)
-int	sphere_hit(t_shape *sphere, t_vector ray_o, t_vector ray_dir, float *t)
+int	sphere_hit(t_data *all, t_vector ray_o, t_vector ray_dir, float *t)
 {
-	t_vector	oc = {ray_o.x - sphere->position[0], ray_o.y - sphere->position[1], ray_o.z - sphere->position[2]};
+	t_vector  oc;
+
+	all->rt->oc->x = ray_o.x - all->rt->node->shape->position[0];
+  all->rt->oc->y = ray_o.y - all->rt->node->shape->position[1];
+  all->rt->oc->z = ray_o.z - all->rt->node->shape->position[2];
+  oc = *(all->rt->oc);
 	float		a = ray_dir.x * ray_dir.x + ray_dir.y * ray_dir.y + ray_dir.z * ray_dir.z;
 	float		b = 2.0f * (oc.x * ray_dir.x + oc.y * ray_dir.y + oc.z * ray_dir.z);
-	float		c = oc.x * oc.x + oc.y * oc.y + oc.z * oc.z - (sphere->diameter / 2.0f) * (sphere->diameter / 2.0f); 
+	float		c = oc.x * oc.x + oc.y * oc.y + oc.z * oc.z - (all->rt->node->shape->diameter / 2.0f) * (all->rt->node->shape->diameter / 2.0f); 
 	float		discriminant = b * b - 4 * a * c;
 	float		t0;
 	float		t1;
@@ -109,7 +114,7 @@ void	shape_list_traversal(t_raytracing *rt, t_vector ray_dir, float pos[3])
 {
 	if (rt->node->shape->shape == SPHERE)
 	{
-		if (sphere_hit(rt->node->shape, *(rt->ray_o), ray_dir, &rt->t_tmp) && rt->t_tmp < rt->closest_t)
+		if (sphere_hit(rt->all, *(rt->ray_o), ray_dir, &rt->t_tmp) && rt->t_tmp < rt->closest_t)
 		{
 			rt->closest_t = rt->t_tmp;
 			rt->hit_shape = rt->node->shape;
@@ -215,7 +220,7 @@ void	throw_shade(t_data *all)
 	while (all->rt->node)
 	{
 		if ((all->rt->node->shape->shape == SPHERE \
-&& sphere_hit(all->rt->node->shape, *(all->rt->shadow_origin), \
+&& sphere_hit(all, *(all->rt->shadow_origin), \
 *(all->rt->light_dir), &shadow_t) && shadow_t < all->rt->light_distance) || \
 (all->rt->node->shape->shape == PLANE \
 && plane_hit(all->rt->node->shape, *(all->rt->shadow_origin), \
@@ -289,6 +294,8 @@ int	start_raytracing(t_data *all)
 	all->camera->viewport_w = all->camera->viewport_h \
 * all->camera->aspect_ratio;
 	all->rt = malloc(sizeof(t_raytracing));
+	all->rt->oc = malloc(sizeof(t_vector));
+	all->rt->all = all;
 	all->rt->ray_o = malloc(sizeof(t_vector));
 	all->rt->forward = malloc(sizeof(t_vector));
 	all->rt->right = malloc(sizeof(t_vector));
