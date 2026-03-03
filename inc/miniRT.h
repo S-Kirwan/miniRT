@@ -119,41 +119,49 @@ typedef struct  s_sphere_hit
   float discriminant;
 } t_sp;
 
+typedef struct quadratic_function
+{
+	float	a;
+	float	b;
+	float	c;
+}	t_quad_function;
+
 typedef struct  s_raytracing
 {
-  t_vector  *up;
-  t_vector  *oc;
-  t_sp  *sp;
-  struct s_data    *all;
-  t_list    *node;
-  t_vector  *ray_o;//ray_o
-  float      t_tmp;
-  t_vector  *hit_n;//hit_n
-  t_vector  *right;
-  float     diffuse;
-  t_vector  *ray_dir;
-  t_vector  *forward;
-  float     closest_t;
-  int       in_shadow;
-  t_vector  *world_up;
-  t_shape   *hit_shape;
-  t_vector  *hit_point;
-  t_vector  *light_dir;
-  float     shadow_factor;
-  t_vector  *shadow_origin;
-  float     light_distance;
+	t_quad_function	*qf;
+	t_vector		*up;
+	t_vector		*oc;
+	t_sp			*sp;
+	struct s_data	*all;
+	t_list			*node;
+	t_vector		*ray_o;//ray_o
+	float			t_tmp;
+	t_vector		*hit_n;//hit_n
+	t_vector		*right;
+	float			diffuse;
+	t_vector		*ray_dir;
+	t_vector		*forward;
+	float			closest_t;
+	int				in_shadow;
+	t_vector		*world_up;
+	t_shape			*hit_shape;
+	t_vector		*hit_point;
+	t_vector		*light_dir;
+	float			shadow_factor;
+	t_vector		*shadow_origin;
+	float			light_distance;
 } t_raytracing;
 
 // structure has changed post merge therefore current code in src/screen.c will break
 typedef struct s_data
 {
-	t_ambience	*ambience;
-	t_mlx_data	*mlx_data;
-	t_camera	*camera;
-	t_light		*light;
-	t_shape		*shapes;
-	t_list		*shape_list;
-  t_raytracing  *rt;
+	t_ambience		*ambience;
+	t_mlx_data		*mlx_data;
+	t_camera		*camera;
+	t_light			*light;
+	t_shape			*shapes;
+	t_list			*shape_list;
+	t_raytracing	*rt;
 }	t_data;
 
 #endif

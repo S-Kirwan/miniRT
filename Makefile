@@ -24,7 +24,7 @@ DARK_YELLOW =	\033[38;5;143m
 
 #Compiler Info
 CC = cc
-CFLAGS = -Wall -Wextra -Iinc -Ilibft -Iminilibx-linux -MMD -MP -g3
+CFLAGS = -Wall -Wextra -Werror -Iinc -Ilibft -Iminilibx-linux -MMD -MP -g3
 
 #Libraries
 LIBFT_DIR = ./lib/libft
@@ -39,10 +39,16 @@ NAME = miniRT
 #Paths
 OBJ_DIR = build
 SRC_DIR = src
-#$(SRC_DIR)/screen.c \
+
 #Source Files
 SRC =	$(SRC_DIR)/main.c \
-		$(SRC_DIR)/screen.c \
+		$(SRC_DIR)/rendering/raytracing.c \
+		$(SRC_DIR)/rendering/rt_utils.c \
+		$(SRC_DIR)/rendering/calculations.c \
+		$(SRC_DIR)/rendering/shadows.c \
+		$(SRC_DIR)/rendering/color.c \
+		$(SRC_DIR)/rendering/sphere.c \
+		$(SRC_DIR)/rendering/plane.c \
 		$(SRC_DIR)/parsing/validate_file.c \
 		$(SRC_DIR)/parsing/receive_scene.c \
 		$(SRC_DIR)/parsing/read_ambience.c \
@@ -62,7 +68,6 @@ SRC =	$(SRC_DIR)/main.c \
 		$(SRC_DIR)/window_management/image_initialisation.c \
 		$(SRC_DIR)/window_management/event_hooks.c \
 		$(SRC_DIR)/data_management/initialise_data.c \
-		$(SRC_DIR)/raytracing/raytrace.c \
 
 #Objects and Dependencies
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
@@ -98,8 +103,7 @@ $(MLX_LIB):
 #Compile .c into Object Files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
-	@echo "\n${CYAN} ==$(NAME)== ${DEF_COLOR}"
-	@echo "${MAGENTA} ~ ${BROWN} Compiling... ${MAGENTA}-> ${CYAN}$< ${DEF_COLOR}\n"
+	@echo "${MAGENTA} ~ ${BROWN} Compiling... ${MAGENTA}-> ${CYAN}$< ${DEF_COLOR}"
 	@$(CC) $(CFLAGS) -I/usr/include -I$(MLX_DIR)mlx -c $< -o $@
 
 #Build All
