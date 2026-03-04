@@ -23,9 +23,20 @@ void	origin_to_center(t_data *all, t_vector ray_o, float *position)
 	all->rt->oc->z = ray_o.z - position[2];
 }
 
-float	quadratic_function(float a, float b, float c)
+static float	quadratic_function(float a, float b, float c)
 {
 	return (b * b - 4 * a * c);
+}
+
+static void	quad_helper(t_data *all, t_vector ray_dir, t_vector oc)
+{
+	all->rt->qf->a = \
+ray_dir.x * ray_dir.x + ray_dir.y * ray_dir.y + ray_dir.z * ray_dir.z;
+	all->rt->qf->b = \
+2.0f * (oc.x * ray_dir.x + oc.y * ray_dir.y + oc.z * ray_dir.z);
+	all->rt->qf->c = \
+oc.x * oc.x + oc.y * oc.y + oc.z * oc.z - (all->rt->node->shape->diameter / \
+2.0f) * (all->rt->node->shape->diameter / 2.0f);
 }
 
 //oc is the distance between the origin ray 
@@ -36,20 +47,16 @@ int	sphere_hit(t_data *all, t_vector ray_o, t_vector ray_dir, float *t)
 	float		t0;
 	float		t1;
 	t_vector	oc;
-	float		discriminant;
+	float		discr;
 
 	origin_to_center(all, ray_o, all->rt->node->shape->position);
 	oc = *(all->rt->oc);
-	all->rt->qf->a = ray_dir.x * ray_dir.x + ray_dir.y * ray_dir.y + ray_dir.z * ray_dir.z;
-	all->rt->qf->b = 2.0f * (oc.x * ray_dir.x + oc.y * ray_dir.y + oc.z * ray_dir.z);
-	all->rt->qf->c = oc.x * oc.x + oc.y * oc.y + oc.z * oc.z - (all->rt->node->shape->diameter / 2.0f) * (all->rt->node->shape->diameter / 2.0f); 
-	// b * b - 4 * a * c;
-	discriminant = quadratic_function(all->rt->qf->a, all->rt->qf->b, all->rt->qf->c);
-
-	if (discriminant < 0)
+	quad_helper(all, ray_dir, oc);
+	discr = quadratic_function(all->rt->qf->a, all->rt->qf->b, all->rt->qf->c);
+	if (discr < 0)
 		return (0);
-	t0 = (-all->rt->qf->b - sqrt(discriminant)) / (2.0f * all->rt->qf->a);
-	t1 = (-all->rt->qf->b + sqrt(discriminant)) / (2.0f * all->rt->qf->a);
+	t0 = (-all->rt->qf->b - sqrt(discr)) / (2.0f * all->rt->qf->a);
+	t1 = (-all->rt->qf->b + sqrt(discr)) / (2.0f * all->rt->qf->a);
 	if (t0 > 0)
 		*t = t0;
 	else if (t1 > 0)
