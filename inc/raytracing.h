@@ -6,7 +6,7 @@
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 15:07:13 by aramos            #+#    #+#             */
-/*   Updated: 2026/03/03 20:13:01 by aramos           ###   ########.fr       */
+/*   Updated: 2026/03/04 18:35:45 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,8 @@ int		sphere_hit(t_data *all, t_vector ray_origin, t_vector ray_dir, float *t);
 
 //plane.c
 int		plane_hit(t_shape *plane, t_vector ray_o, t_vector ray_dir, float *t);
+
+//free.c
+void	free_all(t_data *all);
 
 #endif

@@ -6,13 +6,14 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 17:20:54 by skirwan           #+#    #+#             */
-/*   Updated: 2026/01/18 17:46:52 by skirwan          ###   ########.fr       */
+/*   Updated: 2026/03/04 18:59:37 by aramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 #include "mlx.h"
 #include "window_management.h"
+#include "raytracing.h"
 
 int	full_exit(t_mlx_data *mlx_data)
 {
@@ -25,9 +26,12 @@ int	full_exit(t_mlx_data *mlx_data)
 	exit (0);
 }
 
-int	key_press_event(int keycode, t_mlx_data *mlx_data)
+int	key_press_event(int keycode, t_data *all)//, t_mlx_data *mlx_data)
 {
 	if (keycode == ESC)
-		full_exit(mlx_data);
+	{
+		free_all(all);
+		full_exit(all->mlx_data);
+	}
 	return (0);
 }
