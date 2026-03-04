@@ -16,32 +16,37 @@
 #include "window_management.h"
 #include <stdio.h>
 
+static void	free_helper(t_data *all)
+{
+	if (all->rt->hit_point)
+		free(all->rt->hit_point);
+	if (all->rt->light_dir)
+		free(all->rt->light_dir);
+	if (all->rt->shadow_origin)
+		free(all->rt->shadow_origin);
+	if (all->rt)
+		free(all->rt);
+}
+
 void	free_all(t_data *all)
 {
 	if (all->rt->oc)
 		free(all->rt->oc);
 	if (all->rt->qf)
-		free(all->rt->qf);// = malloc(sizeof(t_quad_function));
+		free(all->rt->qf);
 	if (all->rt->ray_o)
-		free(all->rt->ray_o);// = malloc(sizeof(t_vector));
+		free(all->rt->ray_o);
 	if (all->rt->forward)
-		free(all->rt->forward);// = malloc(sizeof(t_vector));
+		free(all->rt->forward);
 	if (all->rt->right)
-		free(all->rt->right);// = malloc(sizeof(t_vector));
+		free(all->rt->right);
 	if (all->rt->up)
-		free(all->rt->up);// = malloc(sizeof(t_vector));
+		free(all->rt->up);
 	if (all->rt->world_up)
-		free(all->rt->world_up);// = malloc(sizeof(t_vector));
+		free(all->rt->world_up);
 	if (all->rt->hit_n)
-		free(all->rt->hit_n);// = malloc(sizeof(t_vector));
+		free(all->rt->hit_n);
 	if (all->rt->ray_dir)
-		free(all->rt->ray_dir);// = malloc(sizeof(t_vector));
-	if (all->rt->hit_point)
-		free(all->rt->hit_point);// = malloc(sizeof(t_vector));
-	if (all->rt->light_dir)
-		free(all->rt->light_dir);// = malloc(sizeof(t_vector));
-	if (all->rt->shadow_origin)
-		free(all->rt->shadow_origin);// = malloc(sizeof(t_vector));
-	if (all->rt)
-		free(all->rt);// = malloc(sizeof(t_raytracing));
+		free(all->rt->ray_dir);
+	free_helper(all);
 }

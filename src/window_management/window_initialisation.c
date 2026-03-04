@@ -23,5 +23,5 @@ void	initialise_mlx(t_data *all)//, t_mlx_data *mlx_data)
 	mlx_data->window = mlx_new_window(mlx_data->mlx_instance, WIDTH, HEIGHT, "miniRT");
 	create_mlx_img(mlx_data->mlx_img, mlx_data->mlx_instance);
 	// mlx_put_image_to_window(mlx_data->mlx_instance, mlx_data->window, mlx_data->mlx_img, 0, 0);
-	close_window_hooks(all);//, mlx_data);
+	close_window_hooks(all);
 }

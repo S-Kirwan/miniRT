@@ -26,7 +26,7 @@ int	full_exit(t_mlx_data *mlx_data)
 	exit (0);
 }
 
-int	key_press_event(int keycode, t_data *all)//, t_mlx_data *mlx_data)
+int	key_press_event(int keycode, t_data *all)
 {
 	if (keycode == ESC)
 	{
