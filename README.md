@@ -1,16 +1,8 @@
 *This project has been created as part of the 42 curriculum by skirwan, aramos.*
 
-# MiniRT
-
-## Table of Contents
-- Description
-- Features
-- Instructions
-- Usage
-- Resources
-- AI Usage
-- Contributors
-- License
+<p align="center">
+  <img src="media/minirtn.png" alt="miniRT badge" width="150"/>
+</p>
 
 ---
 
