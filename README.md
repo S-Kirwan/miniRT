@@ -1,20 +1,134 @@
-This project has been created as part of the 42 curriculum by skirwan, aramos.
+*This project has been created as part of the 42 curriculum by skirwan, aramos.*
 
-Description: The goal of the project is to prove we don't need to be mathematicians to do some crazy math. By being able to implement a simple RT (RayTracing) algorithm, which uses vector mathematics, applied physics and all of this to render nice images that are created from nothing but a specific combination of letters and numbers in a map-like format. The idea is simple: usually light (made up of all mixed colors) travels and hits an object. Depending on the type of object (glass, wall, water, etc) the light reacts in different ways, and bounces, refracts, changes direction and so on. During this actions, the object that was hit by the light, absorbs some of it (which gives its color) and by the time the light hits our eyes, we see an object of a specific color and a specific texture. 
+# MiniRT
 
-For this program, the camera will be the representation of our eyes, and the light will come from a source that we can position in different places (coordinates) in the space. Depending on the configurations of this, an object can create or be affected by shadows. For the purpose of saving resources, when a RT algorithm is used, the light is not the origin of the rays, but the camera is. This is because a big quantity of rays do not reach our eyes and it would be a waste of resources to calculate the rays that we do not get to see on screen. To solve this, the rays origin is in the camera, then it goes pixel by pixel until it hits an object according to the information on the map-like file passed as argument. Then, information is extracted from that "hit" such as color of the object and if desired, the texture. 
+## Table of Contents
+- Description
+- Features
+- Instructions
+- Usage
+- Resources
+- AI Usage
+- Contributors
+- License
 
-With this information (per pixel) we can start to create an image. With advanced calculations, we can then determine if the object has texture of glass and then reflect accordingly.
+---
 
-Instructions: To use the program, we have used the minilibx library, which would need to be installed if it is not already. This can be found online at: https://github.com/42paris/minilibx-linux.
+## Description
+The goal of this project is to demonstrate that complex mathematical concepts can be applied effectively in programming without requiring advanced mathematical expertise. By implementing a simple Ray Tracing (RT) algorithm, this project explores how vector mathematics and physics can be used to render images from a structured scene description.
 
-For some linux distributions, the minilibx will not compile and the following flag must be added in both the Makefile.md and Makefile.gen of the root directory and the test directory: -std=gnu11. This allows the library to compile with older and not so strict rules, at some of the prototypes of the functions do not match the actual code of the libraries functions.
+Ray tracing simulates the behavior of light in a virtual scene. In the real world, light (composed of mixed colors) travels through space and interacts with objects such as walls, glass, or water. Depending on the material properties of these objects, light can reflect, refract, change direction, or be partially absorbed. The absorbed portion of light determines the color we perceive when light reaches our eyes.
 
-After, you can go to the root repository of this project and simply type "make", this will go to all the necessary library directories and recursively compile them to get the program created. After this, the usage of the program is simply ./miniRT [valid .rt file]. If the .rt file is not valid, you will get an error and you will get the prompt back. If the .rt is valid, a window will open and the rendering process will begin. Enjoy viewing the images, or create your own .rt file!
+In this program:
+- The camera represents the viewer's eye.
+- The light source is placed at configurable coordinates in the scene.
+- Objects interact with light to produce visual effects such as shading and shadows.
 
-Resources: 
-https://42-cursus.gitbook.io/guide/4-rank-04/minirt
-https://raytracing.github.io/books/RayTracingInOneWeekend.html
-https://computergraphics.stackexchange.com/questions/9157/color-shading-and-light-calculation-for-ray-tracing
-https://www.youtube.com/@TheCherno/search
-https://www.davepagurek.com/blog/how-raytracing-works/
+To optimize performance, the ray tracing algorithm used here casts rays from the camera rather than the light source. Since many rays emitted from light sources would never reach the camera, this approach avoids unnecessary calculations, managing resources properly.
+
+Each ray is cast from the camera through each pixel on the screen. When a ray intersects with an object defined in the scene file (.rt format), the program computes information such as:
+- The object's color
+- Surface properties
+- Lighting interaction
+
+Using this information, the renderer calculates the final pixel color, gradually building the image displayed in the window. With more advanced calculations, materials like reflective surfaces (such as glass) can simulate realistic light behavior like reflection.
+
+---
+
+## Features
+- Implementation of a basic ray tracing engine
+- Scene rendering from `.rt` description files
+- Camera-based ray generation
+- Light interaction with objects
+- Basic shading and shadow effects
+- Rendering using the MiniLibX graphics library
+- Error handling for invalid scene files
+
+---
+
+## Instructions
+
+### Requirements
+This project uses the MiniLibX graphical library. If it is not already installed on your system, it can be obtained from:
+
+https://github.com/42paris/minilibx-linux
+
+### Compilation
+
+Some Linux distributions may fail to compile MiniLibX due to stricter compilation rules. If this occurs, add the following flag to both `Makefile.md` and `Makefile.gen` in the root directory and the test directory:
+
+```
+-std=gnu11
+```
+
+This flag relaxes some compilation constraints, allowing MiniLibX to compile correctly even when certain function prototypes differ slightly from their implementations.
+
+### Build the Project
+
+From the root directory of the repository, run:
+
+```
+make
+```
+
+This command will recursively compile all required libraries and source files to generate the executable.
+
+---
+
+## Usage
+
+Run the program using:
+
+```
+./miniRT [scene_file.rt]
+```
+
+Example:
+
+```
+./miniRT scene.rt
+```
+
+- If the `.rt` file is invalid, an error message will be displayed and the program will terminate.
+- If the `.rt` file is valid, a window will open and the rendering process will begin.
+
+You can view the generated scene or experiment by creating your own `.rt` files.
+
+---
+
+## Resources
+
+The following resources were used to understand ray tracing concepts and implement this project:
+
+- https://42-cursus.gitbook.io/guide/4-rank-04/minirt  
+- https://raytracing.github.io/books/RayTracingInOneWeekend.html  
+- https://computergraphics.stackexchange.com/questions/9157/color-shading-and-light-calculation-for-ray-tracing  
+- https://www.youtube.com/@TheCherno/search  
+- https://www.davepagurek.com/blog/how-raytracing-works/  
+
+---
+
+## AI Usage
+
+AI tools were used to assist with the following tasks:
+
+- Structuring and improving the clarity of the README documentation
+- Refining explanations of ray tracing concepts, math and physics concepts
+- Grammar correction and formatting improvements
+
+---
+
+## Contributors
+
+- skirwan  
+- aramos  
+
+---
+
+## License
+
+This project was developed as part of the 42 School curriculum and is intended for educational purposes.
+
+Unless otherwise specified, the code in this repository is free to use, study, and modify for learning purposes.
+
+MiniLibX is distributed under its own license and belongs to the 42 Network.
