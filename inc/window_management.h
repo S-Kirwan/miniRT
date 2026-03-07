@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef WINDOW_MANGEMENT_H
-# define WINDOW_MANGEMENT_H
+#ifndef WINDOW_MANAGEMENT_H
+# define WINDOW_MANAGEMENT_H
 
 # include "miniRT.h"
 # include "mlx.h"

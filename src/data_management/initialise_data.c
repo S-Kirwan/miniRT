@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int	malloc_error()
+int	malloc_error(void)
 {
 	perror("Memory error\n");
 	return (-1);
@@ -52,7 +52,6 @@ int	initialise_data(t_data **data_ref)
 
 	*data_ref = malloc(sizeof(**data_ref));
 	data = *data_ref;
-
 	if (data == NULL)
 		return (malloc_error());
 	data->ambience = malloc(sizeof(*data->ambience));

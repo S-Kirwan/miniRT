@@ -43,7 +43,8 @@ void	calculte_diffuse(t_data *all, int in_shadow);
 void	color_pixel(t_data *all, int x, int y);
 
 //sphere.c
-int		sphere_hit(t_data *all, t_vector ray_origin, t_vector ray_dir, float *t);
+int		sphere_hit(t_data *all, t_vector ray_origin, \
+t_vector ray_dir, float *t);
 void	origin_to_center(t_data *all, t_vector ray_o, float *position);
 
 //plane.c

@@ -27,11 +27,11 @@ typedef struct s_parser
 }	t_parser;
 
 // validate_file.c
-int	validate_file(int argc, char **argv);
+int		validate_file(int argc, char **argv);
 
 // receive_scene.c
-int	read_over_spaces(int scene_fd);
-int	receive_scene(t_data *data, int scene_fd);
+int		read_over_spaces(int scene_fd);
+int		receive_scene(t_data *data, int scene_fd);
 
 // read_ambience.c
 void	read_ambience(t_ambience *ambience, t_parser *parser, char *line);
