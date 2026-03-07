@@ -45,7 +45,7 @@ int	read_scene(t_data *data, t_parser *parser)
 		else
 		{
 			perror("Error\n");
-			exit(1); // cleanup required
+			exit(1); //cleanup required
 		}
 		free(buffer);
 		if (parser->errors > 0)
