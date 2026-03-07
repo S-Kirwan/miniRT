@@ -134,6 +134,7 @@ typedef struct s_raytracing
 	t_sp			*sp;
 	struct s_data	*all;
 	t_list			*node;
+	float			denom;
 	t_vector		*ray_o;//ray_o
 	float			t_tmp;
 	t_vector		*hit_n;//hit_n
