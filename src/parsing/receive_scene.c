@@ -14,7 +14,19 @@
 #include "parsing.h"
 #include "miniRT.h"
 
-int	read_scene(t_data *data, t_parser *parser)
+void	parsing_error_cleanup(t_data *data, char *line)
+{
+	perror("Error\n");
+	free(line);
+	free(data->ambience);
+	free(data->camera);
+	free(data->light);
+	free(data->mlx_data->mlx_img);
+	free(data->mlx_data);
+	free(data);
+}
+
+void	read_scene(t_data *data, t_parser *parser)
 {
 	char	*buffer;
 	char	*line;
@@ -36,26 +48,11 @@ int	read_scene(t_data *data, t_parser *parser)
 			read_plane(&data->shape_list, parser, line + 1);
 		else if (*line == 'c')
 			read_cylinder(&data->shape_list, parser, line + 1);
-		else if (*line == '\n')
-		{
-			free(buffer);
-			buffer = get_next_line(parser->scene_fd);
-			continue ;
-		}
-		else
-		{
-			perror("Error\n");
-			exit(1); // cleanup required
-		}
+		else if (*line != '\n' || parser->errors > 0)
+			(parsing_error_cleanup(data, line), exit(0));
 		free(buffer);
-		if (parser->errors > 0)
-		{
-			perror("Error\n");
-			exit(1); // cleanup required
-		}
 		buffer = get_next_line(parser->scene_fd);
 	}
-	return (0);
 }
 
 int	validate_scene(t_parser parser)
