@@ -18,7 +18,6 @@ char	*read_ratio(char *line, float *ratio_ref)
 	char	*ratio_substr;
 	int		decimal_points;
 	int		i;
-	
 	decimal_points = 0;
 	i = 0;
 	while (ft_isdigit(line[i]) || line[i] == '.')
