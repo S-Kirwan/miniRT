@@ -62,7 +62,7 @@ char	*read_diam_height(char *line, float *ref)
 	measurement_substr = ft_substr(line, 0, i);
 	if (measurement_substr == NULL)
 		return (NULL);
-	*ref= ft_atof(measurement_substr);
+	*ref = ft_atof(measurement_substr);
 	free(measurement_substr);
 	if (*ref <= 0.0)
 		return (NULL);

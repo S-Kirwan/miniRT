@@ -29,7 +29,7 @@ void	print_shape_list(t_list *shape_list)
 			i++;
 		}
 		printf("\n");
-    print_coords_test(shape_list->shape->position);
+		print_coords_test(shape_list->shape->position);
 		printf("\n");
 		shape_list = shape_list->next;
 	}
