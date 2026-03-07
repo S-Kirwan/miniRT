@@ -35,7 +35,7 @@ void	place_pixel_to_img(t_mlx_img *mlx_img, int x, int y, int colour);
 void	create_mlx_img(t_mlx_img *mlx_img, void *mlx_instance);
 
 // window_destruction.c
-int		full_exit(t_mlx_data *mlx_data);
+int		full_exit(t_data *all);
 int		key_press_event(int keycode, t_data *all);
 
 // event_hooks.c
