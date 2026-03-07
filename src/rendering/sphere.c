@@ -6,7 +6,7 @@
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 19:56:58 by aramos            #+#    #+#             */
-/*   Updated: 2026/03/03 20:11:40 by aramos           ###   ########.fr       */
+/*   Updated: 2026/03/07 21:14:25 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	sphere_hit(t_data *all, t_vector ray_o, t_vector ray_dir, float *t)
 	t_vector	oc;
 	float		discr;
 
-	origin_to_center(all, ray_o, all->rt->node->shape->position);
+	origin_to_center(all, ray_o, all->rt->node->shape->pos);
 	oc = *(all->rt->oc);
 	quad_helper(all, ray_dir, oc);
 	discr = quadratic_function(all->rt->qf->a, all->rt->qf->b, all->rt->qf->c);

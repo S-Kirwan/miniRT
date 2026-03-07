@@ -44,6 +44,7 @@ SRC_DIR = src
 SRC =	$(SRC_DIR)/main.c \
 		$(SRC_DIR)/rendering/raytracing.c \
 		$(SRC_DIR)/rendering/rt_utils.c \
+		$(SRC_DIR)/rendering/cylinder_rt_utils.c \
 		$(SRC_DIR)/rendering/calculations.c \
 		$(SRC_DIR)/rendering/shadows.c \
 		$(SRC_DIR)/rendering/color.c \

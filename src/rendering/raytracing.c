@@ -6,7 +6,7 @@
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 19:43:14 by aramos            #+#    #+#             */
-/*   Updated: 2026/03/03 19:47:14 by aramos           ###   ########.fr       */
+/*   Updated: 2026/03/07 21:14:11 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	raytracing(t_data *all)
 			while (all->rt->node)
 			{
 				shape_list_traversal(all->rt, \
-*(all->rt->ray_dir), all->rt->node->shape->position);
+*(all->rt->ray_dir), all->rt->node->shape->pos);
 			}
 			if (all->rt->hit_shape)
 				hit_helper(all, x, y);

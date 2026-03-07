@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 09:13:49 by skirwan           #+#    #+#             */
-/*   Updated: 2026/01/06 09:22:03 by skirwan          ###   ########.fr       */
+/*   Updated: 2026/03/07 21:16:13 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	print_shape_list(t_list *shape_list)
 			i++;
 		}
 		printf("\n");
-		print_coords_test(shape_list->shape->position);
+		print_coords_test(shape_list->shape->pos);
 		printf("\n");
 		shape_list = shape_list->next;
 	}

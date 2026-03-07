@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 09:37:25 by skirwan           #+#    #+#             */
-/*   Updated: 2026/02/08 15:38:44 by skirwan          ###   ########.fr       */
+/*   Updated: 2026/03/07 21:16:01 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	normalise_vector_array(float *vector_array)
 
 int	read_cylinder_data(t_shape *cylinder, char *line)
 {
-	line = read_coordinates(line, cylinder->position);
+	line = read_coordinates(line, cylinder->pos);
 	if (line == NULL)
 		return (free(cylinder), -1);
 	skip_whitespace(&line);

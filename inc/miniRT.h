@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 11:44:15 by skirwan           #+#    #+#             */
-/*   Updated: 2026/02/08 15:53:33 by skirwan          ###   ########.fr       */
+/*   Updated: 2026/03/07 21:13:38 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ typedef struct s_vector//Struct to do math and store temp values
 typedef struct s_shape
 {
 	t_en_shape	shape;
-	float		position[3];
+	float		pos[3];
 	float		vectors[3];
 	float		diameter;
 	float		height;

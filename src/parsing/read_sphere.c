@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 11:52:43 by skirwan           #+#    #+#             */
-/*   Updated: 2026/02/08 15:37:57 by skirwan          ###   ########.fr       */
+/*   Updated: 2026/03/07 21:15:34 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	read_sphere(t_list **list, t_parser *parser, char *line)
 	if (sphere == NULL)
 		return (parsing_error(&parser->errors));
 	sphere->shape = SPHERE;
-	line = read_coordinates(line, sphere->position);
+	line = read_coordinates(line, sphere->pos);
 	if (line == NULL)
 		return (free(sphere), parsing_error(&parser->errors));
 	skip_whitespace(&line);

@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 12:41:53 by skirwan           #+#    #+#             */
-/*   Updated: 2026/02/08 15:38:27 by skirwan          ###   ########.fr       */
+/*   Updated: 2026/03/07 21:15:47 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	read_plane(t_list **list, t_parser *parser, char *line)
 	if (plane == NULL)
 		return (parsing_error(&parser->errors));
 	plane->shape = PLANE;
-	line = read_coordinates(line, plane->position);
+	line = read_coordinates(line, plane->pos);
 	if (line == NULL)
 		return (free(plane), parsing_error(&parser->errors));
 	skip_whitespace(&line);
