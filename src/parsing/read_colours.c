@@ -13,7 +13,7 @@
 #include "libft.h"
 #include "parsing.h"
 
-char *read_colours(char *line, int colours[3])
+char	*read_colours(char *line, int colours[3])
 {
 	char	*colour_substr;
 	int		colour;

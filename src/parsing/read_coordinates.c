@@ -11,13 +11,33 @@
 /* ************************************************************************** */
 
 #include "parsing.h"
-#include <stdio.h>
+
+int		read_single_coordinate(char *line, int *sign)
+{
+	int		decimal_places;
+	int		j;
+
+	decimal_places = 0;
+	*sign = 1;
+	j = 0;
+	if (line[j] == '-')
+	{
+		*sign = -1;
+		line++;
+	}
+	while (ft_isdigit(line[j]) || (line[j] == '.' && decimal_places < 1))
+	{
+		if (line[j] == '.')
+			decimal_places++;
+		j++;
+	}
+	return (j);
+}
 
 char	*read_coordinates(char *line, float coordinates[3])
 {
 	float	coordinate;
 	char	*coord_substr;
-	int		decimal_places;
 	int		sign;
 	int		i;
 	int		j;
@@ -25,20 +45,7 @@ char	*read_coordinates(char *line, float coordinates[3])
 	i = 0;
 	while (i < 3)
 	{
-		sign = 1;
-		j = 0;
-		decimal_places = 0;
-		if (line[j] == '-')
-		{
-			sign = -1;
-			line++;
-		}
-		while (ft_isdigit(line[j]) || (line[j] == '.' && decimal_places < 1))
-		{
-			if (line[j] == '.')
-				decimal_places++;
-			j++;
-		}
+		j = read_single_coordinate(line, &sign);
 		if (!valid_char_post_element(i, line[j]))
 			return (NULL);
 		coord_substr = ft_substr(line, 0, j);
