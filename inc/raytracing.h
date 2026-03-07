@@ -6,7 +6,7 @@
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 15:07:13 by aramos            #+#    #+#             */
-/*   Updated: 2026/03/07 21:19:06 by skirwan          ###   ########.fr       */
+/*   Updated: 2026/03/07 22:36:48 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,11 @@ void	origin_to_center(t_data *all, t_vector ray_o, float *position);
 int		plane_hit(t_shape *plane, t_vector ray_o, t_vector ray_dir, float *t);
 
 //cylinder.c
+float	dot(t_vector a, t_vector b);
 int		cylinder_hit(t_data *all, t_vector ray_o, t_vector ray_dir, float *t);
 
+//check_cylinder_body.c
+int	check_body(t_data *all, t_vector ray_o, t_vector ray_dir, float *t);
 //free.c
 void	free_all(t_data *all);
 

@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 13:07:39 by skirwan           #+#    #+#             */
-/*   Updated: 2026/02/08 15:41:35 by skirwan          ###   ########.fr       */
+/*   Updated: 2026/03/07 22:39:21 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 void	parsing_error_cleanup(t_data *data, char *line)
 {
-	perror("Error\n");
+	write(2, "Error\n", 6);
 	free(line);
 	free(data->ambience);
 	free(data->camera);
