@@ -19,6 +19,7 @@ int	read_vector(char *line, float *vector_ref)
 	int		decimal_points;
 	int		sign;
 	int		i;
+
 	decimal_points = 0;
 	i = 0;
 	sign = 1;

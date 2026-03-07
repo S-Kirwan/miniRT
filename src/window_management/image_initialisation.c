@@ -14,7 +14,7 @@
 #include "mlx.h"
 #include "window_management.h"
 
-int		calculate_img_offset(int line_length, int bpp, int x, int y)
+int	calculate_img_offset(int line_length, int bpp, int x, int y)
 {
 	int	offset;
 
@@ -26,13 +26,14 @@ void	place_pixel_to_img(t_mlx_img *mlx_img, int x, int y, int colour)
 {
 	char	*pixel;
 
-	pixel = mlx_img->addr + calculate_img_offset(mlx_img->line_length, mlx_img->bpp, x, y);
+	pixel = mlx_img->addr + calculate_img_offset\
+(mlx_img->line_length, mlx_img->bpp, x, y);
 	*(unsigned int *)pixel = colour;
 }
 
 void	create_mlx_img(t_mlx_img *mlx_img, void *mlx_instance)
 {
 	mlx_img->image = mlx_new_image(mlx_instance, WIDTH, HEIGHT);
-	mlx_img->addr = mlx_get_data_addr(mlx_img->image, &mlx_img->bpp,
-		&mlx_img->line_length, &mlx_img->endian);
+	mlx_img->addr = mlx_get_data_addr(mlx_img->image, &mlx_img->bpp, \
+&mlx_img->line_length, &mlx_img->endian);
 }

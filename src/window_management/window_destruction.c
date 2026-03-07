@@ -40,7 +40,7 @@ void	free_shape_list(t_data *all)
 
 int	full_exit(t_data *all)
 {
-	t_mlx_data *mlx_data;
+	t_mlx_data	*mlx_data;
 
 	mlx_data = all->mlx_data;
 	mlx_destroy_image(mlx_data->mlx_instance, mlx_data->mlx_img->image);

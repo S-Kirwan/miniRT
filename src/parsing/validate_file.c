@@ -15,7 +15,7 @@
 
 void	write_error(char *error_msg)
 {
-	int temp;
+	int	temp;
 
 	temp = write(STDERR_FILENO, "Error\n", 7);
 	temp = write(STDERR_FILENO, error_msg, ft_strlen(error_msg));
