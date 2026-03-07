@@ -13,8 +13,9 @@
 #include "libft.h"
 #include "parsing.h"
 #include "miniRT.h"
+#include "window_management.h"
 
-void	parsing_error_cleanup(t_data *data, char *line)
+void	p_clean(t_data *data, char *line)
 {
 	write(2, "Error\n", 6);
 	free(line);
@@ -49,20 +50,29 @@ void	read_scene(t_data *data, t_parser *parser)
 		else if (*line == 'c')
 			read_cylinder(&data->shape_list, parser, line + 1);
 		else if (*line != '\n' || parser->errors > 0)
-			(parsing_error_cleanup(data, line), exit(0));
+			(p_clean(data, line), close(parser->scene_fd), exit(0));
 		free(buffer);
 		buffer = get_next_line(parser->scene_fd);
 	}
 }
 
-int	validate_scene(t_parser parser)
+int	validate_scene(t_data *data, t_parser parser)
 {
 	if (parser.light != 1)
-		return (-1);
+	{
+		free_shape_list(data);
+		(p_clean(data, NULL), exit(0));
+	}
 	if (parser.camera != 1)
-		return (-1);
+	{
+		free_shape_list(data);
+		(p_clean(data, NULL), exit(0));
+	}
 	if (parser.ambience != 1)
-		return (-1);
+	{
+		free_shape_list(data);
+		(p_clean(data, NULL), exit(0));
+	}
 	return (0);
 }
 
@@ -73,5 +83,6 @@ int	receive_scene(t_data *data, int scene_fd)
 	ft_bzero(&parser, sizeof(parser));
 	parser.scene_fd = scene_fd;
 	read_scene(data, &parser);
-	return (validate_scene(parser));
+	close(scene_fd);
+	return (validate_scene(data, parser));
 }

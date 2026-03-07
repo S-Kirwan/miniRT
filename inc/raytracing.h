@@ -57,7 +57,7 @@ float	dot(t_vector a, t_vector b);
 int		cylinder_hit(t_data *all, t_vector ray_o, t_vector ray_dir, float *t);
 
 //check_cylinder_body.c
-int	check_body(t_data *all, t_vector ray_o, t_vector ray_dir, float *t);
+int		check_body(t_data *all, t_vector ray_o, t_vector ray_dir, float *t);
 //free.c
 void	free_all(t_data *all);
 
