@@ -44,9 +44,13 @@ void	color_pixel(t_data *all, int x, int y);
 
 //sphere.c
 int		sphere_hit(t_data *all, t_vector ray_origin, t_vector ray_dir, float *t);
+void	origin_to_center(t_data *all, t_vector ray_o, float *position);
 
 //plane.c
 int		plane_hit(t_shape *plane, t_vector ray_o, t_vector ray_dir, float *t);
+
+//cylinder.c
+int		cylinder_hit(t_data *all, t_vector ray_o, t_vector ray_dir, float *t);
 
 //free.c
 void	free_all(t_data *all);

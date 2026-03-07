@@ -14,7 +14,6 @@
 #include "../inc/parsing.h"
 #include "../inc/raytracing.h"
 #include "window_management.h"
-#include <stdio.h>
 
 void	raytracing(t_data *all)
 {

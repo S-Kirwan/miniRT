@@ -11,10 +11,7 @@
 /* ************************************************************************** */
 
 #include "../inc/miniRT.h"
-#include "../inc/parsing.h"
 #include "../inc/raytracing.h"
-#include "window_management.h"
-#include <stdio.h>
 
 void	origin_to_center(t_data *all, t_vector ray_o, float *position)
 {

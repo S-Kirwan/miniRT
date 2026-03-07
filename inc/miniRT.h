@@ -152,7 +152,6 @@ typedef struct  s_raytracing
 	float			light_distance;
 } t_raytracing;
 
-// structure has changed post merge therefore current code in src/screen.c will break
 typedef struct s_data
 {
 	t_ambience		*ambience;

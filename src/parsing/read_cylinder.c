@@ -13,10 +13,12 @@
 #include "libft.h"
 #include "miniRT.h"
 #include "parsing.h"
+#include "raytracing.h"
 
 void	read_cylinder(t_list **list, t_parser *parser, char *line)
 {
-	t_shape	*cylinder;
+	t_shape		*cylinder;
+	t_vector	vector;
 
 	if (*line != 'y')
 		return (parsing_error(&parser->errors));
@@ -25,6 +27,7 @@ void	read_cylinder(t_list **list, t_parser *parser, char *line)
 	cylinder = malloc(sizeof(*cylinder));
 	if (cylinder == NULL)
 		return (parsing_error(&parser->errors));
+	cylinder->shape = CYLINDER;
 	line = read_coordinates(line, cylinder->position);
 	if (line == NULL)
 		return (free(cylinder), parsing_error(&parser->errors));
@@ -44,6 +47,11 @@ void	read_cylinder(t_list **list, t_parser *parser, char *line)
 	line = read_colours(line, cylinder->colour);
 	if (line == NULL)
 		return (free(cylinder), parsing_error(&parser->errors));
+	array_to_vector(cylinder->vectors, &vector);
+	normalize(&vector);
+	cylinder->vectors[0] = vector.x;
+	cylinder->vectors[1] = vector.y;
+	cylinder->vectors[2] = vector.z;
 	ft_lstadd_back(list, ft_lst_new_shape(cylinder));
 	parser->shapes++;
 }

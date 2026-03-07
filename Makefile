@@ -50,6 +50,7 @@ SRC =	$(SRC_DIR)/main.c \
 		$(SRC_DIR)/rendering/sphere.c \
 		$(SRC_DIR)/rendering/plane.c \
 		$(SRC_DIR)/rendering/free.c \
+		$(SRC_DIR)/rendering/cylinder.c \
 		$(SRC_DIR)/parsing/validate_file.c \
 		$(SRC_DIR)/parsing/receive_scene.c \
 		$(SRC_DIR)/parsing/read_ambience.c \
