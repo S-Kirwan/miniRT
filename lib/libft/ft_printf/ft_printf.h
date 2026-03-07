@@ -25,7 +25,7 @@
 
 typedef struct s_format
 {
-  int     fd;
+	int			fd;
 	char		pad;
 	int			flags;
 	int			width;
