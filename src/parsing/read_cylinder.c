@@ -15,10 +15,44 @@
 #include "parsing.h"
 #include "raytracing.h"
 
+void	normalise_vector_array(float *vector_array)
+{
+	t_vector	vector;
+
+	array_to_vector(vector_array, &vector);
+	normalize(&vector);
+	vector_array[0] = vector.x;
+	vector_array[1] = vector.y;
+	vector_array[2] = vector.z;
+}
+
+int	read_cylinder_data(t_shape *cylinder, char *line)
+{
+	line = read_coordinates(line, cylinder->position);
+	if (line == NULL)
+		return (free(cylinder), -1);
+	skip_whitespace(&line);
+	line = read_vectors(line, cylinder->vectors);
+	if (line == NULL)
+		return (free(cylinder), -1);
+	skip_whitespace(&line);
+	line = read_diam_height(line, &cylinder->diameter);
+	if (line == NULL)
+		return (free(cylinder), -1);
+	skip_whitespace(&line);
+	line = read_diam_height(line, &cylinder->height);
+	if (line == NULL)
+		return (free(cylinder), -1);
+	skip_whitespace(&line);
+	line = read_colours(line, cylinder->colour);
+	if (line == NULL)
+		return (free(cylinder), -1);
+	return (0);
+}
+
 void	read_cylinder(t_list **list, t_parser *parser, char *line)
 {
 	t_shape		*cylinder;
-	t_vector	vector;
 
 	if (*line != 'y')
 		return (parsing_error(&parser->errors));
@@ -28,30 +62,9 @@ void	read_cylinder(t_list **list, t_parser *parser, char *line)
 	if (cylinder == NULL)
 		return (parsing_error(&parser->errors));
 	cylinder->shape = CYLINDER;
-	line = read_coordinates(line, cylinder->position);
-	if (line == NULL)
-		return (free(cylinder), parsing_error(&parser->errors));
-	skip_whitespace(&line);
-	line = read_vectors(line, cylinder->vectors);
-	if (line == NULL)
-		return (free(cylinder), parsing_error(&parser->errors));
-	skip_whitespace(&line);
-	line = read_diam_height(line, &cylinder->diameter);
-	if (line == NULL)
-		return (free(cylinder), parsing_error(&parser->errors));
-	skip_whitespace(&line);
-	line = read_diam_height(line, &cylinder->height);
-	if (line == NULL)
-		return (free(cylinder), parsing_error(&parser->errors));
-	skip_whitespace(&line);
-	line = read_colours(line, cylinder->colour);
-	if (line == NULL)
-		return (free(cylinder), parsing_error(&parser->errors));
-	array_to_vector(cylinder->vectors, &vector);
-	normalize(&vector);
-	cylinder->vectors[0] = vector.x;
-	cylinder->vectors[1] = vector.y;
-	cylinder->vectors[2] = vector.z;
+	if (read_cylinder_data(cylinder, line) == -1)
+		return (parsing_error(&parser->errors));
+	normalise_vector_array(cylinder->vectors);
 	ft_lstadd_back(list, ft_lst_new_shape(cylinder));
 	parser->shapes++;
 }
