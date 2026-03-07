@@ -23,9 +23,7 @@ void	shape_list_trav_helper_cyl(t_raytracing *rt, t_vector ray_dir)
 
 	rt->closest_t = rt->t_tmp;
 	rt->hit_shape = rt->node->shape;
-	ax.x = rt->node->shape->vectors[0];
-	ax.y = rt->node->shape->vectors[1];
-	ax.z = rt->node->shape->vectors[2];
+	array_to_vector(rt->node->shape->vectors, &ax);
 	hp.x = rt->ray_o->x + rt->t_tmp * ray_dir.x;
 	hp.y = rt->ray_o->y + rt->t_tmp * ray_dir.y;
 	hp.z = rt->ray_o->z + rt->t_tmp * ray_dir.z;
