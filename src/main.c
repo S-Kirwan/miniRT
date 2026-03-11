@@ -27,8 +27,7 @@ int	main(int argc, char **argv)
 		return (1);
 	if (initialise_data(&data) == -1)
 		return (1);
-	if (receive_scene(data, scene_fd) == -1)
-		return (1);
+	receive_scene(data, scene_fd);
 	initialise_mlx(data);
 	start_raytracing(data);
 	mlx_put_image_to_window(data->mlx_data->mlx_instance,

@@ -66,6 +66,7 @@ SRC =	$(SRC_DIR)/main.c \
 		$(SRC_DIR)/parsing/read_plane.c \
 		$(SRC_DIR)/parsing/read_cylinder.c \
 		$(SRC_DIR)/parsing/parsing_utils.c \
+		$(SRC_DIR)/parsing/parsing_utils2.c \
 		$(SRC_DIR)/parsing/parsing_tests.c \
 		$(SRC_DIR)/window_management/window_initialisation.c \
 		$(SRC_DIR)/window_management/window_destruction.c \
