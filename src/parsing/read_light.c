@@ -15,21 +15,19 @@
 
 void	read_light(t_light *light, t_parser *parser, char *line)
 {
-	if (parser->light != 0)
-		return (parsing_error(&parser->errors));
 	skip_whitespace(&line);
 	line = read_coordinates(line, light->position);
 	if (line == NULL)
-		return (parsing_error(&parser->errors));
+		return (parsing_error(&parser->errors, "light coordinates"));
 	skip_whitespace(&line);
 	line = read_ratio(line, &light->brightness);
 	if (line == NULL)
-		return (parsing_error(&parser->errors));
+		return (parsing_error(&parser->errors, "light ratio"));
 	skip_whitespace(&line);
 	if (*line == '\0')
 		return ;
 	line = read_colours(line, light->colour);
 	if (line == NULL)
-		return (parsing_error(&parser->errors));
+		return (parsing_error(&parser->errors, "light colours"));
 	parser->light++;
 }

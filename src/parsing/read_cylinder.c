@@ -55,15 +55,15 @@ void	read_cylinder(t_list **list, t_parser *parser, char *line)
 	t_shape		*cylinder;
 
 	if (*line != 'y')
-		return (parsing_error(&parser->errors));
+		return (parsing_error(&parser->errors, "shape name"));
 	line++;
 	skip_whitespace(&line);
 	cylinder = malloc(sizeof(*cylinder));
 	if (cylinder == NULL)
-		return (parsing_error(&parser->errors));
+		return (parsing_error(&parser->errors, "Bad malloc"));
 	cylinder->shape = CYLINDER;
 	if (read_cylinder_data(cylinder, line) == -1)
-		return (parsing_error(&parser->errors));
+		return (parsing_error(&parser->errors, "cylinder data"));
 	normalise_vector_array(cylinder->vectors);
 	ft_lstadd_back(list, ft_lst_new_shape(cylinder));
 	parser->shapes++;

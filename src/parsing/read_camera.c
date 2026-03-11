@@ -40,19 +40,17 @@ char	*read_fov(char *line, int *fov_ref)
 
 void	read_camera(t_camera *camera, t_parser *parser, char *line)
 {
-	if (parser->camera != 0)
-		return (parsing_error(&parser->errors));
 	skip_whitespace(&line);
 	line = read_coordinates(line, camera->position);
 	if (line == NULL)
-		return (parsing_error(&parser->errors));
+		return (parsing_error(&parser->errors, "camera coordinates"));
 	skip_whitespace(&line);
 	line = read_vectors(line, camera->orientation);
 	if (line == NULL)
-		return (parsing_error(&parser->errors));
+		return (parsing_error(&parser->errors, "camera vectors"));
 	skip_whitespace(&line);
 	line = read_fov(line, &camera->fov);
 	if (line == NULL)
-		return (parsing_error(&parser->errors));
+		return (parsing_error(&parser->errors, "camera fov"));
 	parser->camera++;
 }

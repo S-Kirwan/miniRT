@@ -1,26 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   read_ambience.c                                    :+:      :+:    :+:   */
+/*   parsing_utils2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/25 14:38:54 by skirwan           #+#    #+#             */
-/*   Updated: 2026/02/08 15:34:38 by skirwan          ###   ########.fr       */
+/*   Created: 2026/03/11 18:58:00 by skirwan           #+#    #+#             */
+/*   Updated: 2026/03/11 18:58:59 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
 #include "parsing.h"
 
-void	read_ambience(t_ambience *ambience, t_parser *parser, char *line)
+void	line_error(void)
 {
-	skip_whitespace(&line);
-	line = read_ratio(line, &ambience->ratio);
-	if (line == NULL)
-		return (parsing_error(&parser->errors, "ambience ratio"));
-	skip_whitespace(&line);
-	if (read_colours(line, ambience->colour) == NULL)
-		return (parsing_error(&parser->errors, "ambience colours"));
-	parser->ambience++;
+	write(2, "Error\n", 6);
+	write(2, "Invalid character\n", 18);
 }

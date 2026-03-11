@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 11:43:28 by skirwan           #+#    #+#             */
-/*   Updated: 2026/02/21 16:10:55 by skirwan          ###   ########.fr       */
+/*   Updated: 2026/03/11 18:58:33 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,11 @@ char	*read_vectors(char *line, float vectors[3]);
 t_list	*ft_lst_new_shape(t_shape *shape);
 char	*read_diam_height(char *line, float *ref);
 void	skip_whitespace(char **line);
-void	parsing_error(int *errors);
+void	parsing_error(int *errors, char *error);
 int		valid_char_post_element(int i, char c);
+
+// parsing_utils2.c
+void	line_error(void);
 
 // parsing_tests.c
 void	print_shape_list(t_list *shape_list);

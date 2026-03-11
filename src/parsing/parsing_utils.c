@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 12:46:09 by skirwan           #+#    #+#             */
-/*   Updated: 2026/01/18 17:53:53 by skirwan          ###   ########.fr       */
+/*   Updated: 2026/03/11 19:08:10 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,12 @@
 #include "parsing.h"
 #include <stdio.h>
 
-void	parsing_error(int *errors)
+void	parsing_error(int *errors, char *error)
 {
+	write(2, "Error\n", 6);
+	write(2, "Invalid ", 8);
+	write(2, error, ft_strlen(error));
+	write(2, "\n", 1);
 	*errors += 1;
 	return ;
 }
