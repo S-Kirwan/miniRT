@@ -6,7 +6,7 @@
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 15:07:13 by aramos            #+#    #+#             */
-/*   Updated: 2026/03/04 18:35:45 by aramos           ###   ########.fr       */
+/*   Updated: 2026/03/07 22:36:48 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,13 @@
 int		start_raytracing(t_data *all);
 
 //rt_utils.c
-
 void	array_to_vector(float source[3], t_vector *dest);
 void	get_world_up(t_data *all);
 void	shape_list_traversal(t_raytracing *rt, t_vector ray_dir, float pos[3]);
 void	hit_helper(t_data *all, int x, int y);
+
+//cylinder_rt_utils.c
+void	shape_list_trav_helper_cyl(t_raytracing *rt);
 
 //calculations.c
 void	cross_product(t_vector *a, t_vector *b, t_vector *result, int up);
@@ -43,11 +45,19 @@ void	calculte_diffuse(t_data *all, int in_shadow);
 void	color_pixel(t_data *all, int x, int y);
 
 //sphere.c
-int		sphere_hit(t_data *all, t_vector ray_origin, t_vector ray_dir, float *t);
+int		sphere_hit(t_data *all, t_vector ray_origin, \
+t_vector ray_dir, float *t);
+void	origin_to_center(t_data *all, t_vector ray_o, float *position);
 
 //plane.c
 int		plane_hit(t_shape *plane, t_vector ray_o, t_vector ray_dir, float *t);
 
+//cylinder.c
+float	dot(t_vector a, t_vector b);
+int		cylinder_hit(t_data *all, t_vector ray_o, t_vector ray_dir, float *t);
+
+//check_cylinder_body.c
+int		check_body(t_data *all, t_vector ray_o, t_vector ray_dir, float *t);
 //free.c
 void	free_all(t_data *all);
 

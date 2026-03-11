@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 11:44:15 by skirwan           #+#    #+#             */
-/*   Updated: 2026/02/08 15:53:33 by skirwan          ###   ########.fr       */
+/*   Updated: 2026/03/07 21:13:38 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
-typedef enum
+typedef enum s_en_shape
 {
 	CYLINDER,
 	PLANE,
@@ -43,7 +43,7 @@ typedef enum
 // will need to be freed. The allocation order will always be the same
 // therefore it will always be known what must be freed.
 // E.G
-typedef enum
+typedef enum s_en_bad_allocation
 {
 	AMBIENCE,
 	CAMERA,
@@ -52,7 +52,7 @@ typedef enum
 	MLX_DATA_IMG
 }	t_en_bad_allocation;
 
-typedef struct	s_vector//Struct to do math and store temp values
+typedef struct s_vector//Struct to do math and store temp values
 {
 	float	x;
 	float	y;
@@ -63,11 +63,11 @@ typedef struct	s_vector//Struct to do math and store temp values
 typedef struct s_shape
 {
 	t_en_shape	shape;
-	float	position[3];
-	float	vectors[3];
-	float	diameter;
-	float	height;
-	int		colour[3];
+	float		pos[3];
+	float		vectors[3];
+	float		diameter;
+	float		height;
+	int			colour[3];
 }	t_shape;
 
 typedef struct s_ambience
@@ -94,7 +94,7 @@ typedef struct s_light
 	int		colour[3];
 }	t_light;
 
-typedef struct	s_mlx_img
+typedef struct s_mlx_img
 {
 	void	*image;
 	char	*addr;
@@ -111,13 +111,13 @@ typedef struct s_mlx_data
 
 }	t_mlx_data;
 
-typedef struct  s_sphere_hit
+typedef struct s_sphere_hit
 {
-  float a;
-  float b;
-  float c;
-  float discriminant;
-} t_sp;
+	float	a;
+	float	b;
+	float	c;
+	float	discriminant;
+}	t_sp;
 
 typedef struct quadratic_function
 {
@@ -126,7 +126,7 @@ typedef struct quadratic_function
 	float	c;
 }	t_quad_function;
 
-typedef struct  s_raytracing
+typedef struct s_raytracing
 {
 	t_quad_function	*qf;
 	t_vector		*up;
@@ -134,6 +134,7 @@ typedef struct  s_raytracing
 	t_sp			*sp;
 	struct s_data	*all;
 	t_list			*node;
+	float			denom;
 	t_vector		*ray_o;//ray_o
 	float			t_tmp;
 	t_vector		*hit_n;//hit_n
@@ -150,9 +151,8 @@ typedef struct  s_raytracing
 	float			shadow_factor;
 	t_vector		*shadow_origin;
 	float			light_distance;
-} t_raytracing;
+}	t_raytracing;
 
-// structure has changed post merge therefore current code in src/screen.c will break
 typedef struct s_data
 {
 	t_ambience		*ambience;

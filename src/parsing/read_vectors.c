@@ -12,6 +12,17 @@
 
 #include "parsing.h"
 
+void	check_sign(char *line, int *i, int *sign)
+{
+	*i = 0;
+	*sign = 1;
+	if (line[*i] == '-')
+	{
+		*sign = -1;
+		*i = 1;
+	}
+}
+
 int	read_vector(char *line, float *vector_ref)
 {
 	float	vector;
@@ -19,15 +30,9 @@ int	read_vector(char *line, float *vector_ref)
 	int		decimal_points;
 	int		sign;
 	int		i;
-	
+
 	decimal_points = 0;
-	i = 0;
-	sign = 1;
-	if (line[i] == '-')
-	{
-		sign = -1;
-		i++;
-	}
+	check_sign(line, &i, &sign);
 	while (ft_isdigit(line[i]) || line[i] == '.')
 	{
 		if (line[i] == '.')

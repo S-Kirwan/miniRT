@@ -13,7 +13,7 @@
 #ifndef LIBFT_H
 # define LIBFT_H
 
-#include "miniRT.h"
+# include "miniRT.h"
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1000
@@ -89,7 +89,8 @@ int					run_format(const char *format, va_list valist);
 int					put_format(char c, va_list valist);
 
 char				*get_next_line(int fd);
-char				*read_loop(int fd, char *buffer, char *str, ssize_t bytes_read);
+char				*read_loop(int fd, char *buffer, \
+char *str, ssize_t bytes_read);
 void				clean_buffer(char *buffer);
 char				*gnl_join(char *s1, char *s2);
 char				*strip_past_nl(char *line);

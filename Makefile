@@ -24,7 +24,7 @@ DARK_YELLOW =	\033[38;5;143m
 
 #Compiler Info
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -Iinc -Ilibft -Iminilibx-linux -MMD -MP -g3
+CFLAGS = -std=gnu11 -Wall -Wextra -Werror -Iinc -Ilibft -Iminilibx-linux -MMD -MP -g3
 
 #Libraries
 LIBFT_DIR = ./lib/libft
@@ -44,12 +44,15 @@ SRC_DIR = src
 SRC =	$(SRC_DIR)/main.c \
 		$(SRC_DIR)/rendering/raytracing.c \
 		$(SRC_DIR)/rendering/rt_utils.c \
+		$(SRC_DIR)/rendering/cylinder_rt_utils.c \
 		$(SRC_DIR)/rendering/calculations.c \
 		$(SRC_DIR)/rendering/shadows.c \
 		$(SRC_DIR)/rendering/color.c \
 		$(SRC_DIR)/rendering/sphere.c \
 		$(SRC_DIR)/rendering/plane.c \
 		$(SRC_DIR)/rendering/free.c \
+		$(SRC_DIR)/rendering/cylinder.c \
+		$(SRC_DIR)/rendering/check_cylinder_body.c \
 		$(SRC_DIR)/parsing/validate_file.c \
 		$(SRC_DIR)/parsing/receive_scene.c \
 		$(SRC_DIR)/parsing/read_ambience.c \
@@ -63,6 +66,7 @@ SRC =	$(SRC_DIR)/main.c \
 		$(SRC_DIR)/parsing/read_plane.c \
 		$(SRC_DIR)/parsing/read_cylinder.c \
 		$(SRC_DIR)/parsing/parsing_utils.c \
+		$(SRC_DIR)/parsing/parsing_utils2.c \
 		$(SRC_DIR)/parsing/parsing_tests.c \
 		$(SRC_DIR)/window_management/window_initialisation.c \
 		$(SRC_DIR)/window_management/window_destruction.c \

@@ -27,11 +27,11 @@ int	main(int argc, char **argv)
 		return (1);
 	if (initialise_data(&data) == -1)
 		return (1);
-	if (receive_scene(data, scene_fd) == -1)
-		return (1);
-	initialise_mlx(data);//, data->mlx_data);
+	receive_scene(data, scene_fd);
+	initialise_mlx(data);
 	start_raytracing(data);
-	mlx_put_image_to_window(data->mlx_data->mlx_instance, data->mlx_data->window, data->mlx_data->mlx_img->image, 0, 0);
+	mlx_put_image_to_window(data->mlx_data->mlx_instance,
+		data->mlx_data->window, data->mlx_data->mlx_img->image, 0, 0);
 	mlx_loop(data->mlx_data->mlx_instance);
 	return (0);
 }

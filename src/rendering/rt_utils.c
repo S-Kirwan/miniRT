@@ -1,20 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   screen.c                                           :+:      :+:    :+:   */
+/*   rt_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 19:53:41 by aramos            #+#    #+#             */
-/*   Updated: 2026/03/03 20:20:53 by aramos           ###   ########.fr       */
+/*   Updated: 2026/03/07 21:19:08 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/miniRT.h"
 #include "../inc/parsing.h"
 #include "../inc/raytracing.h"
-#include "window_management.h"
-#include <stdio.h>
 
 void	array_to_vector(float source[3], t_vector *dest)
 {
@@ -69,6 +67,12 @@ ray_dir, &rt->t_tmp) && rt->t_tmp < rt->closest_t)
 			rt->hit_n->z = rt->node->shape->vectors[2];
 			normalize(rt->hit_n);
 		}
+	}
+	else if (rt->node->shape->shape == CYLINDER)
+	{
+		if (cylinder_hit(rt->all, *(rt->ray_o), ray_dir, &rt->t_tmp)
+			&& rt->t_tmp < rt->closest_t)
+			shape_list_trav_helper_cyl(rt);
 	}
 	rt->node = rt->node->next;
 }

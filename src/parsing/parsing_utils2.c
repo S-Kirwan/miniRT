@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ambient_lighting.c                                 :+:      :+:    :+:   */
+/*   parsing_utils2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aramos <alejandro.ramos.gua@gmail.com>     +#+  +:+       +#+        */
+/*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/19 19:25:08 by aramos            #+#    #+#             */
-/*   Updated: 2025/12/19 19:25:09 by aramos           ###   ########.fr       */
+/*   Created: 2026/03/11 18:58:00 by skirwan           #+#    #+#             */
+/*   Updated: 2026/03/11 18:58:59 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minirt.h"
+#include "parsing.h"
 
-ambient(t_data *all)
+void	line_error(void)
 {
-	
+	write(2, "Error\n", 6);
+	write(2, "Invalid character\n", 18);
 }

@@ -15,14 +15,12 @@
 
 void	read_ambience(t_ambience *ambience, t_parser *parser, char *line)
 {
-	if (parser->ambience != 0)
-		return (parsing_error(&parser->errors));
 	skip_whitespace(&line);
 	line = read_ratio(line, &ambience->ratio);
 	if (line == NULL)
-		return (parsing_error(&parser->errors));
+		return (parsing_error(&parser->errors, "ambience ratio"));
 	skip_whitespace(&line);
 	if (read_colours(line, ambience->colour) == NULL)
-		return (parsing_error(&parser->errors));
+		return (parsing_error(&parser->errors, "ambience colours"));
 	parser->ambience++;
 }
