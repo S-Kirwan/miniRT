@@ -24,7 +24,7 @@ DARK_YELLOW =	\033[38;5;143m
 
 #Compiler Info
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -Iinc -Ilibft -Iminilibx-linux -MMD -MP -g3
+CFLAGS = -std=gnu11 -Wall -Wextra -Werror -Iinc -Ilibft -Iminilibx-linux -MMD -MP -g3
 
 #Libraries
 LIBFT_DIR = ./lib/libft

@@ -15,16 +15,27 @@
 #include "miniRT.h"
 #include "window_management.h"
 
-void	p_clean(t_data *data, char *line)
+void	p_clean(t_data *data, char *line, int fd)
 {
+	char	*buffer;
+	char	*line_2;
+
 	write(2, "Error\n", 6);
 	free(line);
+	buffer = get_next_line(fd);
+	while (buffer)
+	{
+		line_2 = buffer;
+		free (line_2);
+		buffer = get_next_line(fd);
+	}
 	free(data->ambience);
 	free(data->camera);
 	free(data->light);
 	free(data->mlx_data->mlx_img);
 	free(data->mlx_data);
 	free(data);
+	close(fd);
 }
 
 void	read_scene(t_data *data, t_parser *parser)
@@ -50,7 +61,7 @@ void	read_scene(t_data *data, t_parser *parser)
 		else if (*line == 'c')
 			read_cylinder(&data->shape_list, parser, line + 1);
 		else if (*line != '\n' || parser->errors > 0)
-			(p_clean(data, line), close(parser->scene_fd), exit(0));
+			(p_clean(data, line, parser->scene_fd), exit(0));
 		free(buffer);
 		buffer = get_next_line(parser->scene_fd);
 	}
@@ -61,17 +72,17 @@ int	validate_scene(t_data *data, t_parser parser)
 	if (parser.light != 1)
 	{
 		free_shape_list(data);
-		(p_clean(data, NULL), exit(0));
+		(p_clean(data, NULL, parser.scene_fd), exit(0));
 	}
 	if (parser.camera != 1)
 	{
 		free_shape_list(data);
-		(p_clean(data, NULL), exit(0));
+		(p_clean(data, NULL, parser.scene_fd), exit(0));
 	}
 	if (parser.ambience != 1)
 	{
 		free_shape_list(data);
-		(p_clean(data, NULL), exit(0));
+		(p_clean(data, NULL, parser.scene_fd), exit(0));
 	}
 	return (0);
 }
