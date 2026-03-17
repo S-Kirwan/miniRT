@@ -17,11 +17,11 @@
 # include "mlx.h"
 
 # ifndef WIDTH
-#  define WIDTH 1000
+#  define WIDTH 1920
 # endif
 
 # ifndef HEIGHT
-#  define HEIGHT 1000
+#  define HEIGHT 1080
 # endif
 
 # define ESC 0xff1b
